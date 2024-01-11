@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('admin.pages.dashboard_home');
+// });
+
+
+/*********************ROUTE BACKEND ********************************************** */
+
+  
+  Route::prefix("admin")->group(function(){
+
+//Home dashboard
+        Route::controller(DashboardController::class)->group(function(){
+            Route::get('/', 'index')->name('dashboard.index');
+        });
+
+
+        //Category dashboard
+        Route::controller(CategoryController::class)->group(function(){
+            Route::get('/categorie', 'index')->name('categorie.index');
+        });
+
+  });
