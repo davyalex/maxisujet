@@ -20,7 +20,7 @@
 
             <!-- Main Content -->
             <div class="main-content">
-                <section class="section">
+                <section class="">
                     @include('admin.components.breadcrumb')
                     @yield('content')
                 </section>

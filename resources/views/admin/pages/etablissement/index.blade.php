@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Categorie')
+@section('title', 'etablissement')
 
 @section('content')
 
@@ -18,9 +18,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Liste des Categories</h4>
+                        <h4>Liste des etablissements</h4>
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalAdd">
-                            <i class="fas fa-plus"></i> Ajouter une categorie</button>
+                            <i class="fas fa-plus"></i> Ajouter un etablissement</button>
                     </div>
                     <div class="card-body">
                         @include('admin.components.validationMessage')
@@ -37,7 +37,7 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($categories as $key => $item)
+                                    @foreach ($etablissements as $key => $item)
                                         <tr>
                                             <td>{{ ++$key }} </td>
                                             <td>{{ $item['title'] }} </td>
@@ -52,13 +52,13 @@
                                             </td>
                                         </tr>
                                          {{-- modal edit form --}}
-                            @include('admin.pages.categorie.edit')
+                            @include('admin.pages.etablissement.edit')
                                     @endforeach
                                 </tbody>
                             </table>
 
                             {{-- modal create form --}}
-                            @include('admin.pages.categorie.create')
+                            @include('admin.pages.etablissement.create')
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "/admin/categorie/destroy/" + Id,
+                            url: "/admin/etablissement/destroy/" + Id,
                             dataType: "json",
                             data: {
                                 _token: '{{ csrf_token() }}',
@@ -127,63 +127,14 @@
                                     });
                                     setTimeout(function() {
                                         window.location.href =
-                                            "{{ route('categorie.index') }}";
+                                            "{{ route('etablissement.index') }}";
                                     }, 500);
                                 }
                             }
                         });
                     }
                 });
-
-
-
-
-
-
-
-
-
-                swal.fire({
-                    title: "Suppression",
-                    text: "Veuillez confirmer la suppression",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Confirmer",
-                    cancelButtonText: "Annuler",
-                }).then((result) => {
-                    if (result) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/admin/categorie/destroy/" + Id,
-                            dataType: "json",
-                            data: {
-                                _token: '{{ csrf_token() }}',
-
-                            },
-                            success: function(response) {
-                                if (response.status === 200) {
-                                    Swal.fire({
-                                        toast: true,
-                                        icon: 'success',
-                                        title: 'Opération reussi',
-                                        animation: false,
-                                        position: 'top',
-                                        background: '#3da108e0',
-                                        iconColor: '#fff',
-                                        color: '#fff',
-                                        showConfirmButton: false,
-                                        timer: 500,
-                                        timerProgressBar: true,
-                                    });
-                                    setTimeout(function() {
-                                        window.location.href =
-                                            "{{ route('categorie.index') }}";
-                                    }, 500);
-                                }
-                            }
-                        });
-                    }
-                });
+              
             });
         });
     </script>

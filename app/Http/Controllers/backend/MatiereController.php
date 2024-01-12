@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\Categorie;
+use App\Models\Matiere;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+class MatiereController extends Controller
 {
+    //
 
-    //index __Liste category
+    //index __Liste Matiere
     public function index()
     {
-        $categories = Categorie::orderBy('title', 'ASC')->get();
-        return view('admin.pages.categorie.index', compact('categories'));
+        $matieres = Matiere::orderBy('title', 'ASC')->get();
+        return view('admin.pages.matiere.index', compact('matieres'));
     }
 
-    //store category
+    //store Matiere
     public function store(Request $request)
     {
         //validation
@@ -24,15 +25,15 @@ class CategoryController extends Controller
             'title' => 'required',
         ]);
 
-        $category = Categorie::firstOrCreate([
+        $Matiere = Matiere::firstOrCreate([
             'title' => $request['title'],
         ]);
 
-        return back()->with('success', 'Nouvelle categorie ajoutée avec success');
+        return back()->with('success', 'Nouvelle Matiere ajoutée avec success');
     }
 
 
-    //update category
+    //update Matiere
     public function update(Request $request, string $id)
     {
 
@@ -41,19 +42,19 @@ class CategoryController extends Controller
         ]);
 
 
-        Categorie::whereId($id)->update([
+        Matiere::whereId($id)->update([
             'title' => $request['title'],
         ]);
 
-        return back()->withSuccess('Categorie modifiée avec success');
+        return back()->withSuccess('Matiere modifiée avec success');
     }
 
 
-    //delete category
+    //delete Matiere
     public function destroy(string $id)
     {
         //
-        Categorie::whereId($id)->delete();
+        Matiere::whereId($id)->delete();
         return response()->json([
             'status' => 200
         ]);

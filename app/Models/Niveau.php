@@ -12,8 +12,15 @@ class Niveau extends Model
 
     protected $fillable = [
         'title',
+        'parent_id',
         'created_at',
         'updated_at',
         'deleted_at'
         ];
+
+        public function parent(){
+            return $this->belongsTo(Niveau::class,'parent_id');
+        }
+
+        
 }

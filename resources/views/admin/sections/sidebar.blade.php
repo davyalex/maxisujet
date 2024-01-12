@@ -13,33 +13,43 @@
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="briefcase"></i><span>Categories</span></a>
+                        data-feather="grid"></i><span>Categories</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{route('categorie.index')}}">Ajouter une categorie</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="command"></i><span>Niveau</span></a>
+                        data-feather="activity"></i><span>Niveau</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="chat.html">Ajouter un niveau</a></li>
+                    <li><a class="nav-link" href="{{route('niveau.index')}}">Ajouter un niveau</a></li>
                   
                 </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="mail"></i><span>Matiere</span></a>
+                        data-feather="book"></i><span>Matiere</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="email-inbox.html">Ajouter une matiere</a></li>
+                    <li><a class="nav-link" href="{{route('matiere.index')}}">Ajouter une matiere</a></li>
                    
                 </ul>
             </li>
 
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                        data-feather="mail"></i><span>Etablissement</span></a>
+                        data-feather="home"></i><span>Etablissement</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="email-inbox.html">Ajouter un etablissement</a></li>
+                    <li><a class="nav-link" href="{{route('etablissement.index')}}">Ajouter un etablissement</a></li>
+                   
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                        data-feather="file"></i><span>SUJET</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="">Ajouter un sujet</a></li>
                    
                 </ul>
             </li>

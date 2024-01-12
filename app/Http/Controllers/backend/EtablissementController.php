@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\Categorie;
 use Illuminate\Http\Request;
+use App\Models\Etablissement;
 use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+class EtablissementController extends Controller
 {
-
-    //index __Liste category
+    //
+    
+    //index __Liste etablissement
     public function index()
     {
-        $categories = Categorie::orderBy('title', 'ASC')->get();
-        return view('admin.pages.categorie.index', compact('categories'));
+        $etablissements = Etablissement::orderBy('title', 'ASC')->get();
+        return view('admin.pages.etablissement.index', compact('etablissements'));
     }
 
-    //store category
+    //store etablissement
     public function store(Request $request)
     {
         //validation
@@ -24,15 +25,15 @@ class CategoryController extends Controller
             'title' => 'required',
         ]);
 
-        $category = Categorie::firstOrCreate([
+        $etablissement = Etablissement::firstOrCreate([
             'title' => $request['title'],
         ]);
 
-        return back()->with('success', 'Nouvelle categorie ajoutée avec success');
+        return back()->with('success', 'Nouvelle Etablissement ajoutée avec success');
     }
 
 
-    //update category
+    //update etablissement
     public function update(Request $request, string $id)
     {
 
@@ -41,19 +42,19 @@ class CategoryController extends Controller
         ]);
 
 
-        Categorie::whereId($id)->update([
+        Etablissement::whereId($id)->update([
             'title' => $request['title'],
         ]);
 
-        return back()->withSuccess('Categorie modifiée avec success');
+        return back()->withSuccess('Etablissement modifiée avec success');
     }
 
 
-    //delete category
+    //delete etablissement
     public function destroy(string $id)
     {
         //
-        Categorie::whereId($id)->delete();
+        Etablissement::whereId($id)->delete();
         return response()->json([
             'status' => 200
         ]);
