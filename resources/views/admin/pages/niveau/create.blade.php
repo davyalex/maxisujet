@@ -26,7 +26,7 @@
                             <div class="input-group">
                                 <select style="width:600px" name="parent_id" class="form-control">
                                     <option></option>
-                                   @foreach ($niveaux_parent as $item) 
+                                   @foreach ($niveaux as $item) 
                                        <option value="{{$item['id']}}">{{$item['title']}} </option>
                                    @endforeach
                                 </select>

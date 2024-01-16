@@ -21,7 +21,7 @@
                             <div class="input-group">
                                 <select style="width:600px" name="parent_id" class="form-control  ">
                                     <option disabled selected value></option>
-                                   @foreach ($niveaux_parent as $niveau)
+                                   @foreach ($niveaux as $niveau)
                                        <option value="{{$niveau['id']}}"  {{ $niveau['id'] == $item['parent_id'] ? 'selected' : '' }}>{{$niveau['title']}} </option>
                                    @endforeach
                                 </select>

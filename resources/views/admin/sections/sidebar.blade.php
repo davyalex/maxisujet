@@ -49,7 +49,7 @@
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
                         data-feather="file"></i><span>SUJET</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="">Ajouter un sujet</a></li>
+                    <li><a class="nav-link" href="{{route('sujet.index')}}">Ajouter un sujet</a></li>
                    
                 </ul>
             </li>

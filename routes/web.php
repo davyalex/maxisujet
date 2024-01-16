@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\SujetController;
 use App\Http\Controllers\backend\NiveauController;
 use App\Http\Controllers\backend\MatiereController;
 use App\Http\Controllers\backend\CategoryController;
@@ -66,6 +67,15 @@ Route::prefix("admin")->group(function () {
     Route::post('/store', 'store')->name('etablissement.store');
     route::post('update/{id}', 'update')->name('etablissement.update');
     route::post('destroy/{id}', 'destroy')->name('etablissement.destroy');
+  });
+
+
+   //Sujet dashboard
+   Route::controller(SujetController::class)->prefix('sujet')->group(function () {
+    Route::get('/', 'index')->name('sujet.index');
+    Route::post('/store', 'store')->name('sujet.store');
+    // route::post('update/{id}', 'update')->name('etablissement.update');
+    // route::post('destroy/{id}', 'destroy')->name('etablissement.destroy');
   });
 
 

@@ -319,7 +319,10 @@ $(function () {
 
   // Select2
   if (jQuery().select2) {
-    $(".select2").select2();
+    $(".select2").select2({
+      placeholder: "Selectionner",
+      allowClear: true
+    });
   }
 
   // Selectric

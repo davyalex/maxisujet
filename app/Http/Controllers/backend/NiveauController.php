@@ -12,7 +12,9 @@ class NiveauController extends Controller
     //index __Liste Niveau
     public function index()
     {
+        //liste de tous les niveaux
         $niveaux = Niveau::with('parent')->orderBy('parent_id', 'DESC')->get();
+        //liste des niveaux uniquement parent
         $niveaux_parent = Niveau::where('parent_id', null)->orderBy('parent_id', 'DESC')->get();
 
         // dd($niveaux->toArray());
