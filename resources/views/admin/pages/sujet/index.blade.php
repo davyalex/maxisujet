@@ -36,7 +36,6 @@
                                         <th>Sujet</th>
                                         <th>Corrigé</th>
                                         <th>action</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,8 +73,10 @@
 
 
                                             <td>
-                                                <a href="#" data-toggle="modal"
+                                                {{-- <a href="{{ route('sujet.edit', $item['id']) }}" data-toggle="modal"
                                                     data-target="#modalEdit{{ $item['id'] }}"><i
+                                                        class="fas fa-edit fs-20" style="font-size: 20px;"></i></a> --}}
+                                                <a href="{{ route('sujet.edit', $item['id']) }}"><i
                                                         class="fas fa-edit fs-20" style="font-size: 20px;"></i></a>
 
                                                 <a href="#" class="delete" role="button"
@@ -84,7 +85,7 @@
                                             </td>
                                         </tr>
                                         {{-- modal edit form --}}
-                                        @include('admin.pages.sujet.edit')
+                                        {{-- @include('admin.pages.sujet.edit') --}}
                                     @endforeach
                                 </tbody>
                             </table>
@@ -138,7 +139,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "/admin/niveau/destroy/" + Id,
+                            url: "/admin/sujet/destroy/" + Id,
                             dataType: "json",
                             data: {
                                 _token: '{{ csrf_token() }}',
@@ -161,7 +162,7 @@
                                     });
                                     setTimeout(function() {
                                         window.location.href =
-                                            "{{ route('niveau.index') }}";
+                                            "{{ route('sujet.index') }}";
                                     }, 500);
                                 }
                             }

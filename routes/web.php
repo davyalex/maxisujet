@@ -70,13 +70,12 @@ Route::prefix("admin")->group(function () {
   });
 
 
-   //Sujet dashboard
-   Route::controller(SujetController::class)->prefix('sujet')->group(function () {
+  //Sujet dashboard
+  Route::controller(SujetController::class)->prefix('sujet')->group(function () {
     Route::get('/', 'index')->name('sujet.index');
     Route::post('/store', 'store')->name('sujet.store');
-    // route::post('update/{id}', 'update')->name('etablissement.update');
-    // route::post('destroy/{id}', 'destroy')->name('etablissement.destroy');
+    route::get('edit/{id}', 'edit')->name('sujet.edit');
+    route::post('update/{id}', 'update')->name('sujet.update');
+    route::post('destroy/{id}', 'destroy')->name('sujet.destroy');
   });
-
-
 });
