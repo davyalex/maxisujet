@@ -41,11 +41,23 @@
                             <div class="input-group">
                                 <select style="width:600px" name="niveaux[]" class="form-control select2" multiple
                                     required>
+                                    {{-- On affiche tous les niveau et sous niveaux --}}
                                     @foreach ($niveaux_with_subNiveaux as $item)
-                                        <option disabled>{{ $item['title'] }} </option>
+                                        <option disabled> {{ $item['title'] }} </option>
+
+                                        {{-- On affiche tous les sous niveau du niveau  --}}
                                         @foreach ($item->subNiveaux as $sub_niveaux)
-                                            <option value="{{ $sub_niveaux['id'] }}">{{ $sub_niveaux['title'] }}
-                                            </option>
+                                            @if ($sub_niveaux->subNiveaux->count() < 1)
+                                                <option value="{{ $sub_niveaux['id'] }}">{{ $sub_niveaux['title'] }}
+                                                </option>
+                                            @endif
+                                            {{-- On affiche tous les sous niveau qui ont des sous niveaux(parent)  --}}
+                                            @if ($sub_niveaux->subNiveaux->count() > 0)
+                                                @foreach ($sub_niveaux->subNiveaux as $sub_niveaux2)
+                                                    <option value="{{ $sub_niveaux2['id'] }}">
+                                                        {{ $sub_niveaux2['title'] }}
+                                                @endforeach
+                                            @endif
                                         @endforeach
                                     @endforeach
                                 </select>
@@ -74,7 +86,7 @@
                         <label>Etablissement</label>
                         <div class="input-group">
                             <select style="width:600px" name="etablissement_id" class="form-control" required>
-                              <option >Selectionner</option>
+                                <option>Selectionner</option>
                                 @foreach ($etablissements as $item)
                                     <option value="{{ $item['id'] }}">{{ $item['title'] }} </option>
                                 @endforeach
@@ -87,12 +99,12 @@
                         <label>Année</label>
                         <div class="input-group">
                             <select style="width:600px" name="annee" class="form-control" required>
-                                <option >Selectionner</option>
-                              
-                              @for ($i = 1994; $i <=date("Y"); $i++)
-                              <option value="{{$i}}">{{$i}} </option>
-                              @endfor
-                             
+                                <option>Selectionner</option>
+
+                                @for ($i = 1994; $i <= date('Y'); $i++)
+                                    <option value="{{ $i }}">{{ $i }} </option>
+                                @endfor
+
                             </select>
                             <div class="invalid-feedback">
                                 {{ $msg_validation }}
@@ -109,7 +121,7 @@
                             </div>
                         </div>
 
-                     
+
 
                         <div class="form-group">
                             <label>Corrigé du sujet</label>

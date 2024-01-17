@@ -18,7 +18,7 @@ class NiveauController extends Controller
         $niveaux_parent = Niveau::where('parent_id', null)->orderBy('parent_id', 'DESC')->get();
 
         // dd($niveaux->toArray());
-        return view('admin.pages.niveau.index', compact('niveaux','niveaux_parent' ));
+        return view('admin.pages.niveau.index', compact('niveaux', 'niveaux_parent'));
     }
 
     //store Niveau

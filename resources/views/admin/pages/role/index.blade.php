@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'matiere')
+@section('title', 'role')
 
 @section('content')
 
@@ -18,9 +18,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Liste des matieres</h4>
+                        <h4>Liste des roles</h4>
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalAdd">
-                            <i class="fas fa-plus"></i> Ajouter une matiere</button>
+                            <i class="fas fa-plus"></i> Ajouter un role</button>
                     </div>
                     <div class="card-body">
                         @include('admin.components.validationMessage')
@@ -37,10 +37,10 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($matieres as $key => $item)
+                                    @foreach ($roles as $key => $item)
                                         <tr>
                                             <td>{{ ++$key }} </td>
-                                            <td>{{ $item['title'] }} </td>
+                                            <td>{{ $item['name'] }} </td>
                                             <td>{{ $item['created_at']->format('d-m-Y') }} </td>
                                             <td>
                                                 <a href="#" data-toggle="modal" data-target="#modalEdit{{$item['id']}}"><i class="fas fa-edit fs-20"
@@ -52,13 +52,13 @@
                                             </td>
                                         </tr>
                                          {{-- modal edit form --}}
-                            @include('admin.pages.matiere.edit')
+                            @include('admin.pages.role.edit')
                                     @endforeach
                                 </tbody>
                             </table>
 
                             {{-- modal create form --}}
-                            @include('admin.pages.matiere.create')
+                            @include('admin.pages.role.create')
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "/admin/matiere/destroy/" + Id,
+                            url: "/admin/role/destroy/" + Id,
                             dataType: "json",
                             data: {
                                 _token: '{{ csrf_token() }}',
@@ -127,7 +127,7 @@
                                     });
                                     setTimeout(function() {
                                         window.location.href =
-                                            "{{ route('matiere.index') }}";
+                                            "{{ route('role.index') }}";
                                     }, 500);
                                 }
                             }

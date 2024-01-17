@@ -1,10 +1,11 @@
 @extends('admin.layouts.app')
 
-@section('title', 'matiere')
+@section('title', 'Utilisateur')
 
 @section('content')
 
     @push('css')
+        <link rel="stylesheet" href="{{ asset('back/assets/bundles/select2/dist/css/select2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('back/assets/bundles/datatables/datatables.min.css') }}">
         <link rel="stylesheet"
             href="{{ asset('back/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
@@ -18,18 +19,36 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Liste des matieres</h4>
+                        <h4>Liste des utilisateurs</h4>
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalAdd">
-                            <i class="fas fa-plus"></i> Ajouter une matiere</button>
+                            <i class="fas fa-plus"></i> Ajouter un utilisateur</button>
                     </div>
                     <div class="card-body">
+                        {{-- <div class="mb-4">
+                            @if (session('user_auth'))
+                                @php
+                                    $getData = Session::get('user_auth');
+                                @endphp
+
+                                <div class="alert alert-primary">
+                                    <h5>Les informations de connexions du dernier utilisateur</h5>
+                                    Username: {{ $getData['username'] }}
+                                    Email: {{ $getData['email'] }}
+                                    <br> Mot de passe : {{ $getData['pwd'] }}
+
+                                </div>
+                            @endif
+                        </div> --}}
+
                         @include('admin.components.validationMessage')
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Title</th>
+                                        <th>username</th>
+                                        <th>email</th>
+                                        <th>role</th>
                                         <th>Date de création</th>
                                         <th>action</th>
 
@@ -37,28 +56,30 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($matieres as $key => $item)
+                                    @foreach ($users as $key => $item)
                                         <tr>
                                             <td>{{ ++$key }} </td>
-                                            <td>{{ $item['title'] }} </td>
+                                            <td>{{ $item['username'] }} </td>
+                                            <td>{{ $item['email'] }} </td>
+                                            <td>{{ $item['roles'][0]['name'] }} </td>
                                             <td>{{ $item['created_at']->format('d-m-Y') }} </td>
                                             <td>
-                                                <a href="#" data-toggle="modal" data-target="#modalEdit{{$item['id']}}"><i class="fas fa-edit fs-20"
-                                                        style="font-size: 20px;"></i></a>
+                                                <a href="#" data-toggle="modal" data-target="#modalEdit{{$item['id']}}"><i
+                                                        class="fas fa-edit fs-20" style="font-size: 20px;"></i></a>
 
                                                 <a href="#" class="delete" role="button"
                                                     data-id="{{ $item['id'] }}"><i class="fas fa-trash text-danger"
                                                         style="font-size: 20px;"></i></a>
                                             </td>
                                         </tr>
-                                         {{-- modal edit form --}}
-                            @include('admin.pages.matiere.edit')
+                                        {{-- modal edit form --}}
+                                        @include('admin.pages.user.edit')
                                     @endforeach
                                 </tbody>
                             </table>
 
                             {{-- modal create form --}}
-                            @include('admin.pages.matiere.create')
+                            @include('admin.pages.user.create')
                         </div>
                     </div>
                 </div>
@@ -74,7 +95,8 @@
 
     @push('js')
         <script src="{{ asset('back/assets/bundles/datatables/datatables.min.js') }}"></script>
-        <script src="{{ asset('back/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('back/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}">
+        </script>
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/dataTables.buttons.min.js') }}"></script>
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/buttons.flash.min.js') }}"></script>
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/jszip.min.js') }}"></script>
@@ -82,6 +104,7 @@
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/vfs_fonts.js') }}"></script>
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/buttons.print.min.js') }}"></script>
         <script src="{{ asset('back/assets/js/page/datatables.js') }}"></script>
+        <script src="{{ asset('back/assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
     @endpush
 
 
@@ -104,7 +127,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "/admin/matiere/destroy/" + Id,
+                            url: "/admin/auth-admin/destroy/" + Id,
                             dataType: "json",
                             data: {
                                 _token: '{{ csrf_token() }}',
@@ -127,7 +150,7 @@
                                     });
                                     setTimeout(function() {
                                         window.location.href =
-                                            "{{ route('matiere.index') }}";
+                                            "{{ route('user.index') }}";
                                     }, 500);
                                 }
                             }

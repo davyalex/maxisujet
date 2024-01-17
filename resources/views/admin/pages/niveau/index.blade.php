@@ -5,11 +5,10 @@
 @section('content')
 
     @push('css')
-    <link rel="stylesheet" href="{{ asset('back/assets/bundles/select2/dist/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('back/assets/bundles/select2/dist/css/select2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('back/assets/bundles/datatables/datatables.min.css') }}">
         <link rel="stylesheet"
             href="{{ asset('back/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
-
     @endpush
 
 
@@ -44,11 +43,12 @@
                                         <tr>
                                             <td>{{ ++$key }} </td>
                                             <td>{{ $item['title'] }} </td>
-                                            <td>{{ $item['parent'] ? $item['parent']['title'] : ''  }} </td>
+                                            <td>{{ $item['parent'] ? $item['parent']['title'] : '' }} </td>
                                             <td>{{ $item['created_at']->format('d-m-Y') }} </td>
                                             <td>
-                                                <a href="#" data-toggle="modal" data-target="#modalEdit{{$item['id']}}"><i
-                                                        class="fas fa-edit fs-20" style="font-size: 20px;"></i></a>
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#modalEdit{{ $item['id'] }}"><i class="fas fa-edit fs-20"
+                                                        style="font-size: 20px;"></i></a>
 
                                                 <a href="#" class="delete" role="button"
                                                     data-id="{{ $item['id'] }}"><i class="fas fa-trash text-danger"
@@ -78,7 +78,8 @@
 
     @push('js')
         <script src="{{ asset('back/assets/bundles/datatables/datatables.min.js') }}"></script>
-        <script src="{{ asset('back/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('back/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}">
+        </script>
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/dataTables.buttons.min.js') }}"></script>
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/buttons.flash.min.js') }}"></script>
         <script src="{{ asset('back/assets/bundles/datatables/export-tables/jszip.min.js') }}"></script>

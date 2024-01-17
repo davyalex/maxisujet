@@ -12,14 +12,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('matiere.update', $item['id'])}}" class="needs-validation" novalidate="" method="post"
+                <form action="{{route('role.update', $item['id'])}}" class="needs-validation" novalidate="" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Title</label>
+                            <label>Name</label>
                             <div class="input-group">
-                                <input type="text" value="{{$item['title']}}" class="form-control" placeholder="title" name="title" required>
+                                <input type="text" value="{{$item['name']}}" class="form-control" placeholder="Gestionnaire" name="name" required>
                                 <div class="invalid-feedback">
                                     {{ $msg_validation }}
                                 </div>
