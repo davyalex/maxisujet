@@ -50,7 +50,7 @@ class AuthAdminController extends Controller
                 'username' => $request['username'],
                 'email' => $request->email,
                 // 'role' => $request->role,
-                'password' => Hash::make($request->email),
+                'password' => Hash::make($request->password),
             ]);
             if ($request->has('role')) {
                 $user->assignRole([$request['role']]);
@@ -69,11 +69,11 @@ class AuthAdminController extends Controller
         }
     }
 
-    // public function edit($id)
-    // {
-    //     $user = User::with('roles')->whereId($id)->first();
-    //     return view('admin.pages.user.edit_user', compact('user'));
-    // }
+    public function edit($id)
+    {
+        $user = User::with('roles')->whereId($id)->first();
+        return view('admin.pages.user.profil.edit', compact('user'));
+    }
 
     public function update(Request $request, $id)
     {
@@ -85,7 +85,6 @@ class AuthAdminController extends Controller
             // 'password' => Hash::make($pwd_generate),
         ]);
 
-        // DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         if ($request->has('role')) {
             $user->syncRoles($request['role']);
@@ -112,11 +111,11 @@ class AuthAdminController extends Controller
             return view('admin.pages.user.login');
         } elseif (request()->method() == 'POST') {
 
-            $credentials = $request->validate([
+            $data = $request->validate([
                 'email' => ['required',],
                 'password' => ['required'],
             ]);
-            if (Auth::attempt($credentials)) {
+            if (Auth::attempt($data)) {
                 return redirect()->route('dashboard.index')->withSuccess('Connexion réussi,  Bienvenue  ' . Auth::user()->name);
             } else {
                 return back()->withError('Email ou mot de passe incorrect');

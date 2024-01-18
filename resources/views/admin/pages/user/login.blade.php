@@ -3,9 +3,9 @@
 
 @section('content')
 <section class="section">
-    <div class="container mt-1">
+    <div class="container">
       <div class="row">
-        <div class="col-12 col-sm-12 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2 m-auto">
+        <div class="col-6 col-sm-12 offset-sm-1 col-md-6 offset-md-1 col-lg-6 offset-lg-2 col-xl-6">
           <div class="card card-primary">
             @include('admin.components.validationMessage')
             <div class="card-header">

@@ -1,3 +1,4 @@
+@if (Route::currentRouteName() !== 'auth.login')
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
@@ -72,3 +73,5 @@
         </ul>
     </aside>
 </div>
+@endif
+

@@ -29,15 +29,19 @@ use App\Http\Controllers\backend\EtablissementController;
 
 /*********************ROUTE BACKEND ********************************************** */
 
+##login  for dashboard
+Route::controller(AuthAdminController::class)->group(function () {
+  route::get('/sign-in', 'login')->name('auth.login');
+  route::post('/sign-in', 'login')->name('auth.login');
+});
 
-Route::prefix("admin")->group(function () {
-
+Route::prefix("admin")->middleware('admin')->group(function () {
 //Authentification 
 Route::controller(AuthAdminController::class)->prefix('auth-admin')->group(function () {
   route::get('', 'listUser')->name('user.index');
   // route::get('create', 'create')->name('user.create');
   route::post('store', 'store')->name('user.store');
-  // route::get('edit/{id}', 'edit')->name('user.edit');
+  route::get('edit/{id}', 'edit')->name('user.edit');
   route::post('update/{id}', 'update')->name('user.update');
   route::post('destroy/{id}', 'destroy')->name('user.destroy');
   route::get('logout', 'logout')->name('user.logout');

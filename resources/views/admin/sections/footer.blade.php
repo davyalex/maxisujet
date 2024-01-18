@@ -1,4 +1,5 @@
   {{-- setting --}}
+  @if (Route::currentRouteName() !== 'auth.login')
   @include('admin.sections.setting')
 
   <footer class="main-footer">
@@ -8,6 +9,9 @@
       <div class="footer-right">
       </div>
   </footer>
+  @endif
+
+ 
   </div>
   </div>
   <!-- General JS Scripts -->
