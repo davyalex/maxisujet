@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\Sujet;
+use App\Models\Categorie;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,7 +38,12 @@ class SujetController extends Controller
             $request->corrige_file->storeAs('public/', $fileNameCorrige);
         }
 
+        //get category name from category_id
+        $category_name = Categorie::whereId($request['category_id'])->first();
+        $category_name =  $category_name->title;
+        
         $sujet = Sujet::firstOrCreate([
+            'sujet_title' =>  $category_name.mt_rand(),
             'category_id' => $request['category_id'],
             'description' => $request['description'],
             'annee' => $request['annee'],

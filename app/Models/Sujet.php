@@ -10,6 +10,7 @@ class Sujet extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'sujet_title',
         'category_id',
         'etablissement_id',
         'annee',

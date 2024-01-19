@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sujets', function (Blueprint $table) {
             $table->id();
+            $table->string('sujet_title')->nullable();
             $table->text('description')->nullable();
 
             $table->foreignId('category_id')

@@ -36,25 +36,24 @@ Route::controller(AuthAdminController::class)->group(function () {
 });
 
 Route::prefix("admin")->middleware('admin')->group(function () {
-//Authentification 
-Route::controller(AuthAdminController::class)->prefix('auth-admin')->group(function () {
-  route::get('', 'listUser')->name('user.index');
-  // route::get('create', 'create')->name('user.create');
-  route::post('store', 'store')->name('user.store');
-  route::get('edit/{id}', 'edit')->name('user.edit');
-  route::post('update/{id}', 'update')->name('user.update');
-  route::post('destroy/{id}', 'destroy')->name('user.destroy');
-  route::get('logout', 'logout')->name('user.logout');
+  //Authentification 
+  Route::controller(AuthAdminController::class)->prefix('auth-admin')->group(function () {
+    route::get('', 'listUser')->name('user.index');
+    // route::get('create', 'create')->name('user.create');
+    route::post('store', 'store')->name('user.store');
+    route::get('edit/{id}', 'edit')->name('user.edit');
+    route::post('update/{id}', 'update')->name('user.update');
+    route::post('destroy/{id}', 'destroy')->name('user.destroy');
+    route::get('logout', 'logout')->name('user.logout');
+  });
 
-});
-
- //role dashboard
- Route::controller(RoleController::class)->prefix('role')->group(function () {
-  Route::get('/', 'index')->name('role.index');
-  Route::post('/store', 'store')->name('role.store');
-  route::post('update/{id}', 'update')->name('role.update');
-  route::post('destroy/{id}', 'destroy')->name('role.destroy');
-});
+  //role dashboard
+  Route::controller(RoleController::class)->prefix('role')->group(function () {
+    Route::get('/', 'index')->name('role.index');
+    Route::post('/store', 'store')->name('role.store');
+    route::post('update/{id}', 'update')->name('role.update');
+    route::post('destroy/{id}', 'destroy')->name('role.destroy');
+  });
 
 
 
