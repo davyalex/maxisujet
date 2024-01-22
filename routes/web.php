@@ -108,3 +108,10 @@ Route::prefix("admin")->middleware('admin')->group(function () {
     route::post('destroy/{id}', 'destroy')->name('sujet.destroy');
   });
 });
+
+
+/*********************ROUTE FRONTEND ********************************************** */
+
+Route::get('/'  , function(){
+  return view('front.home');
+});
