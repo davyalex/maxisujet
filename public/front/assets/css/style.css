@@ -1811,7 +1811,7 @@ footer.style-2
 .news-letter .section-wrapper .news-form form .nf-list::after,
 .form-message.success,
 .skill-section .section-header .lab-btn span {
-    color: #26c976;
+    color: #f16126;
 }
 
 .widget.widget-tags ul.widget-wrapper li a.active,
@@ -1961,7 +1961,7 @@ footer.style-2
 .post-item.qute-post .post-inner .post-thumb,
 .course-navi:hover,
 .course-navi.active {
-    background: #26c976;
+    background: #f16126;
 }
 
 .widget.widget-search .search-wrapper button,
@@ -3681,7 +3681,7 @@ button {
 }
 @media (min-width: 992px) {
     .padding-tb {
-        padding: 110px 0;
+        padding: 50px 0;
     }
 }
 
@@ -6929,7 +6929,7 @@ button {
 .about-section::before {
     width: 50%;
     height: 100%;
-    border-bottom: 753px solid #26c976;
+    border-bottom: 753px solid #f16126;
     border-right: 960px solid transparent;
 }
 @media (min-width: 1440px) {
@@ -7472,7 +7472,7 @@ button {
     height: 100%;
     top: 0;
     left: 0px;
-    border-bottom: 690px solid #26c976;
+    border-bottom: 690px solid #f16126;
     border-right: 648px solid transparent;
 }
 @media (min-width: 1200px) {
@@ -7486,7 +7486,7 @@ button {
     .instructor-single-section
         .instructor-wrapper
         .instructor-single-top::before {
-        border-bottom: 645px solid #26c976;
+        border-bottom: 645px solid #f16126;
         border-right: 635px solid transparent;
     }
 }
@@ -8729,7 +8729,7 @@ button {
     width: 50%;
     height: 100%;
     top: 0;
-    border-bottom: 786px solid #26c976;
+    border-bottom: 786px solid #f16126;
     border-right: 960px solid transparent;
 }
 @media (min-width: 1440px) {

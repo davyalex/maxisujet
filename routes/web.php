@@ -113,5 +113,5 @@ Route::prefix("admin")->middleware('admin')->group(function () {
 /*********************ROUTE FRONTEND ********************************************** */
 
 Route::get('/'  , function(){
-  return view('front.home');
+  return view('front.pages.home');
 });
