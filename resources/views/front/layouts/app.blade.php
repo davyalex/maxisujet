@@ -200,8 +200,10 @@
         <div class="footer-bottom style-2">
             <div class="container">
                 <div class="section-wrapper">
-                    <p>&copy; 2021 <a href="index.html">Edukon</a> Designed by <a
-                            href="https://themeforest.net/user/CodexCoder" target="_blank">CodexCoder</a> </p>
+                    <p>&copy; @php
+                        echo date('Y')
+                    @endphp <a href="index.html">MaxiSujets</a> Developpé par <a
+                            href="" target="_blank">Tic@frique</a> </p>
                 </div>
             </div>
         </div>

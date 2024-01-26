@@ -16,8 +16,9 @@ class News extends Model implements HasMedia
     protected $fillable = [
         'title',
         'content',
-        'categorie_information_id',
-        // 'user_id',
+        'image',
+        'category_news_id',
+        'user_id',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -39,5 +40,10 @@ class News extends Model implements HasMedia
         return $this->belongsTo(CategoryNews::class);
     }
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
 }

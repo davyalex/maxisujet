@@ -16,10 +16,17 @@ return new class extends Migration
             $table->longText('slug');
             $table->longText('title')->nullable();
             $table->longText('content')->nullable();
+            $table->string('image')->nullable();
 
             $table->foreignId('category_news_id')
             ->nullable()
             ->constrained('category_news')
+            ->onUpdate('cascade')
+            ->onDelete('set null');
+
+            $table->foreignId('user_id')
+            ->nullable()
+            ->constrained('users')
             ->onUpdate('cascade')
             ->onDelete('set null');
             $table->softDeletes();

@@ -81,17 +81,19 @@
                                                 {{ $item['created_at'] }}
 
                                             </div>
-                                            <a href="{{ asset('storage/' . $item->sujet_file) }}" class="lab-btn mt-2"><span>Télecharger le sujet
+                                            <a href="{{ asset('storage/' . $item->sujet_file) }}"
+                                                class="lab-btn mt-2"><span>Télecharger le sujet
                                                     <i class="icofont-download"></i></span></a>
 
-                                                    <a href="{{ asset('storage/' . $item->corrige_file) }}" class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none'}}"><span>Télecharger le corrigé
-                                                        <i class="icofont-download"></i></span></a>
+                                            <a href="{{ asset('storage/' . $item->corrige_file) }}"
+                                                class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
+                                                    le corrigé
+                                                    <i class="icofont-download"></i></span></a>
 
-                                                    <a href="#" type="button" class="lab-btn mt-2"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#sujet{{ $item['id'] }}"><span>Details
+                                            <a href="#" type="button" class="lab-btn mt-2" data-bs-toggle="modal"
+                                                data-bs-target="#sujet{{ $item['id'] }}"><span>Details
 
-                                                        <i class="icofont-eye"></i></span></a>
+                                                    <i class="icofont-eye"></i></span></a>
                                         </div>
                                     </div>
                                     @include('front.components.modal_detail_sujet')
@@ -100,7 +102,8 @@
                             </div>
                         </div>
                         <div class="my-2 text-center">
-                            <a href="{{route('allsujet')}}" role="button" class="btn btn-primary w-50 py-3 btn-all-sujet">
+                            <a href="{{ route('allsujet') }}" role="button"
+                                class="btn btn-primary w-50 py-3 btn-all-sujet">
                                 <span>Voir tous les sujets</span>
                             </a>
                         </div>
@@ -161,114 +164,47 @@
         <div class="container">
             <div class="">
                 <h3 class="title-recent-sujet" style="color: rgb(255, 132, 0)">Maxi Actualités
-                    <i class="icofont-caret-right"></i> <a href="">Tous voir</a>
+                    <i class="icofont-caret-right"></i> <a href="/news?n={{ $actualite['slug'] }}">Tous voir</a>
                 </h3>
                 <hr class="under">
             </div>
             <div class="section-wrapper">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center g-4">
-                    <div class="col">
-                        <div class="post-item">
-                            <div class="post-inner">
-                                <div class="post-thumb">
-                                    <a href="blog-single.html"><img src="front/assets/images/blog/01.jpg"
-                                            alt="blog thumb"></a>
-                                </div>
-                                <div class="post-content">
-                                    <a href="blog-single.html">
-                                        <h4>Scottish Creatives To Receive Funded Business.</h4>
-                                    </a>
-                                    <div class="meta-post">
-                                        <ul class="lab-ul">
-                                            <li><i class="icofont-ui-user"></i>Begrass Tyson</li>
-                                            <li><i class="icofont-calendar"></i>April 23,2021</li>
-                                        </ul>
+                    @foreach ($actualites as $item)
+                        <div class="col">
+                            <div class="post-item">
+                                <div class="post-inner">
+                                    <div class="post-thumb">
+                                        <a href="/news-detail?d={{$item['slug']}}"><img src="{{ asset('/storage/news/' . $item['image']) }}"
+                                                alt="blog thumb"></a>
                                     </div>
-                                    <p>Pluoresnts customize prancing apcente customer service anding ands asing
-                                        in straelg
-                                        Interacvely cordinate performe</p>
-                                </div>
-                                <div class="post-footer">
-                                    <div class="pf-left">
-                                        <a href="blog-single.html" class="lab-btn-text">Read more <i
-                                                class="icofont-external-link"></i></a>
+                                    <div class="post-content">
+                                        <a href="/news-detail?d={{$item['slug']}}">
+                                            <h4> {{ $item['title'] }} </h4>
+                                        </a>
+                                        <div class="meta-post">
+                                            <ul class="lab-ul">
+                                                <li><i class="icofont-ui-user"></i>{{ $item['user']['username'] }} </li>
+                                                <li><i class="icofont-calendar"></i>
+                                                    {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }} </li>
+                                            </ul>
+                                        </div>
+                                        <p class="content-news"> {!! substr(strip_tags($item->content), 0, 180) !!}.... </p>
                                     </div>
-                                    <div class="pf-right">
-                                        <i class="icofont-comment"></i>
-                                        <span class="comment-count">3</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="post-item">
-                            <div class="post-inner">
-                                <div class="post-thumb">
-                                    <a href="blog-single.html"><img src="front/assets/images/blog/02.jpg"
-                                            alt="blog thumb"></a>
-                                </div>
-                                <div class="post-content">
-                                    <a href="blog-single.html">
-                                        <h4>Scottish Creatives To Receive Funded Business.</h4>
-                                    </a>
-                                    <div class="meta-post">
-                                        <ul class="lab-ul">
-                                            <li><i class="icofont-ui-user"></i>Begrass Tyson</li>
-                                            <li><i class="icofont-calendar"></i>April 23,2021</li>
-                                        </ul>
-                                    </div>
-                                    <p>Pluoresnts customize prancing apcente customer service anding ands asing
-                                        in straelg
-                                        Interacvely cordinate performe</p>
-                                </div>
-                                <div class="post-footer">
-                                    <div class="pf-left">
-                                        <a href="blog-single.html" class="lab-btn-text">Read more <i
-                                                class="icofont-external-link"></i></a>
-                                    </div>
-                                    <div class="pf-right">
-                                        <i class="icofont-comment"></i>
-                                        <span class="comment-count">3</span>
+                                    <div class="post-footer">
+                                        <div class="pf-left">
+                                            <a href="/news-detail?d={{$item['slug']}}" class="lab-btn-text">Lire plus<i
+                                                    class="icofont-external-link"></i></a>
+                                        </div>
+                                        <div class="pf-right">
+                                            <i class="icofont-comment"></i>
+                                            <span class="comment-count">3</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="post-item">
-                            <div class="post-inner">
-                                <div class="post-thumb">
-                                    <a href="blog-single.html"><img src="front/assets/images/blog/03.jpg"
-                                            alt="blog thumb"></a>
-                                </div>
-                                <div class="post-content">
-                                    <a href="blog-single.html">
-                                        <h4>Scottish Creatives To Receive Funded Business.</h4>
-                                    </a>
-                                    <div class="meta-post">
-                                        <ul class="lab-ul">
-                                            <li><i class="icofont-ui-user"></i>Begrass Tyson</li>
-                                            <li><i class="icofont-calendar"></i>April 23,2021</li>
-                                        </ul>
-                                    </div>
-                                    <p>Pluoresnts customize prancing apcente customer service anding ands asing
-                                        in straelg
-                                        Interacvely cordinate performe</p>
-                                </div>
-                                <div class="post-footer">
-                                    <div class="pf-left">
-                                        <a href="blog-single.html" class="lab-btn-text">Read more <i
-                                                class="icofont-external-link"></i></a>
-                                    </div>
-                                    <div class="pf-right">
-                                        <i class="icofont-comment"></i>
-                                        <span class="comment-count">3</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -277,10 +213,9 @@
 
 
     <!-- maxi sujet par cycle start here -->
-    <div class="category-section padding-tb section-bg style-2">
+    {{-- <div class="category-section padding-tb section-bg style-2">
         <div class="container">
             <div class="section-header text-center">
-                {{-- <span class="subtitle">Popular Category</span> --}}
                 <h2 class="title text-uppercase">Maxi sujet par cycle</h2>
                 <hr class="under m-auto">
             </div>
@@ -409,7 +344,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- maxi sujet par cycle start here -->
 
 
@@ -421,81 +356,52 @@
                     <div class="">
                         <h3 class="title-recent-sujet" style="color: rgb(255, 132, 0)">Maxi astuces et
                             conseils
-                            <i class="icofont-caret-right"></i> <a href="">Tous voir</a>
+                            <i class="icofont-caret-right"></i> <a href="/news?n={{ $astuce['slug'] }}">Tous voir</a>
                         </h3>
                         <hr class="under">
                     </div>
                     <article>
                         <div class="section-wrapper">
                             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 justify-content-center g-4">
-                                <div class="col">
-                                    <div class="post-item">
-                                        <div class="post-inner">
-                                            <div class="post-thumb">
-                                                <a href="blog-single.html"><img src="front/assets/images/blog/01.jpg"
-                                                        alt="blog thumb"></a>
-                                            </div>
-                                            <div class="post-content">
-                                                <a href="blog-single.html">
-                                                    <h4>Scottish Creatives To Receive Funded Business.</h4>
-                                                </a>
-                                                <div class="meta-post">
-                                                    <ul class="lab-ul">
-                                                        <li><i class="icofont-ui-user"></i>Begrass Tyson</li>
-                                                        <li><i class="icofont-calendar"></i>April 23,2021</li>
-                                                    </ul>
+                                @foreach ($astuces as $item)
+                                    <div class="col">
+                                        <div class="post-item">
+                                            <div class="post-inner">
+                                                <div class="post-thumb">
+                                                    <a href="blog-single.html"><img
+                                                            src="{{ asset('/storage/news/' . $item['image']) }}"
+                                                            alt="blog thumb"></a>
                                                 </div>
-                                                <p>Pluoresnts customize prancing apcente customer service anding
-                                                    ands asing
-                                                    in straelg Interacvely cordinate performe</p>
-                                            </div>
-                                            <div class="post-footer">
-                                                <div class="pf-left">
-                                                    <a href="blog-single.html" class="lab-btn-text">Read more
-                                                        <i class="icofont-external-link"></i></a>
+                                                <div class="post-content">
+                                                    <a href="blog-single.html">
+                                                        <h4> {{ $item['title'] }} </h4>
+                                                    </a>
+                                                    <div class="meta-post">
+                                                        <ul class="lab-ul">
+                                                            <li><i
+                                                                    class="icofont-ui-user"></i>{{ $item['user']['username'] }}
+                                                            </li>
+                                                            <li><i class="icofont-calendar"></i>
+                                                                {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <p class="content-news"> {!! substr(strip_tags($item->content), 0, 180) !!}.... </p>
                                                 </div>
-                                                <div class="pf-right">
-                                                    <i class="icofont-comment"></i>
-                                                    <span class="comment-count">3</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="post-item">
-                                        <div class="post-inner">
-                                            <div class="post-thumb">
-                                                <a href="blog-single.html"><img src="front/assets/images/blog/02.jpg"
-                                                        alt="blog thumb"></a>
-                                            </div>
-                                            <div class="post-content">
-                                                <a href="blog-single.html">
-                                                    <h4>Scottish Creatives To Receive Funded Business.</h4>
-                                                </a>
-                                                <div class="meta-post">
-                                                    <ul class="lab-ul">
-                                                        <li><i class="icofont-ui-user"></i>Begrass Tyson</li>
-                                                        <li><i class="icofont-calendar"></i>April 23,2021</li>
-                                                    </ul>
-                                                </div>
-                                                <p>Pluoresnts customize prancing apcente customer service anding
-                                                    ands asing
-                                                    in straelg Interacvely cordinate performe</p>
-                                            </div>
-                                            <div class="post-footer">
-                                                <div class="pf-left">
-                                                    <a href="blog-single.html" class="lab-btn-text">Read more
-                                                        <i class="icofont-external-link"></i></a>
-                                                </div>
-                                                <div class="pf-right">
-                                                    <i class="icofont-comment"></i>
-                                                    <span class="comment-count">3</span>
+                                                <div class="post-footer">
+                                                    <div class="pf-left">
+                                                        <a href="blog-single.html" class="lab-btn-text">Lire plus<i
+                                                                class="icofont-external-link"></i></a>
+                                                    </div>
+                                                    <div class="pf-right">
+                                                        <i class="icofont-comment"></i>
+                                                        <span class="comment-count">3</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </article>

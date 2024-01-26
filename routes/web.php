@@ -3,6 +3,7 @@
 
 use App\Models\CategoryInformation;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\NewsController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SujetController;
 use App\Http\Controllers\frontend\HomeController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\backend\MatiereController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\AuthAdminController;
 use App\Http\Controllers\backend\DashboardController;
+use App\Http\Controllers\frontend\NewsFrontController;
 use App\Http\Controllers\frontend\SujetFrontController;
 use App\Http\Controllers\backend\CategoryNewsController;
 use App\Http\Controllers\backend\EtablissementController;
@@ -76,13 +78,25 @@ Route::prefix("admin")->middleware('admin')->group(function () {
   });
 
 
-    //Category information dashboard
-    Route::controller(CategoryNewsController::class)->prefix('categorie-news')->group(function () {
-      Route::get('/', 'index')->name('categorie-news.index');
-      Route::post('/store', 'store')->name('categorie-news.store');
-      route::post('update/{id}', 'update')->name('categorie-news.update');
-      route::post('destroy/{id}', 'destroy')->name('categorie-news.destroy');
-    });
+  //Category news dashboard
+  Route::controller(CategoryNewsController::class)->prefix('categorie-news')->group(function () {
+    Route::get('/', 'index')->name('categorie-news.index');
+    Route::post('/store', 'store')->name('categorie-news.store');
+    route::post('update/{id}', 'update')->name('categorie-news.update');
+    route::post('destroy/{id}', 'destroy')->name('categorie-news.destroy');
+  });
+
+
+  //news  dashboard
+  Route::controller(NewsController::class)->prefix('news')->group(function () {
+    Route::get('/', 'index')->name('news.index');
+    Route::get('/creer-un-news', 'create')->name('news.create');
+    Route::post('/store', 'store')->name('news.store');
+    Route::get('edit/{slug}', 'edit')->name('news.edit');
+    route::post('update/{id}', 'update')->name('news.update');
+    route::post('destroy/{id}', 'destroy')->name('news.destroy');
+  });
+
 
   //Niveau dashboard
   Route::controller(NiveauController::class)->prefix('niveau')->group(function () {
@@ -128,13 +142,22 @@ Route::prefix("admin")->middleware('admin')->group(function () {
 // });
 
 //Home page
-Route::controller(HomeController::class)->group(function(){
+Route::controller(HomeController::class)->group(function () {
   Route::get('/', 'home')->name('home');
 });
 
 //All sujet page
-Route::controller(SujetFrontController::class)->group(function(){
+Route::controller(SujetFrontController::class)->group(function () {
   Route::get('/sujet', 'allsujet')->name('allsujet');
   Route::post('/liste-des-sujets', 'search')->name('search');
-
 });
+
+
+Route::controller(NewsFrontController::class)->group(function () {
+  Route::get('/news', 'news')->name('news');
+  Route::get('/news-detail', 'detail')->name('news.detail');
+
+  // Route::post('/liste-des-sujets', 'search')->name('search');
+});
+
+

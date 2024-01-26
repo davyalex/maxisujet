@@ -53,40 +53,28 @@ class SujetFrontController extends Controller
         $matieres = $request['matieres'];
 
         $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])
-            ->when($category, function ($q) use($category) {
+            ->when($category, function ($q) use ($category) {
                 return $q->where('category_id', $category);
             })
 
-            ->when($code_sujet, function ($q) use($code_sujet) {
+            ->when($code_sujet, function ($q) use ($code_sujet) {
                 return $q->where('sujet_title', $code_sujet);
             })
 
 
-            ->when($niveaux, function ($q) use($niveaux)  {
-                return $q->whereHas('niveaux', function ($q) use($niveaux) {
-                    $q->where('niveau_sujet.niveau_id',$niveaux);
+            ->when($niveaux, function ($q) use ($niveaux) {
+                return $q->whereHas('niveaux', function ($q) use ($niveaux) {
+                    $q->where('niveau_sujet.niveau_id', $niveaux);
                 });
             })
 
-            ->when($matieres, function ($q) use($matieres)  {
-                return $q->whereHas('matieres', function ($q) use($matieres) {
-                    $q->where('matiere_sujet.matiere_id',$matieres);
+            ->when($matieres, function ($q) use ($matieres) {
+                return $q->whereHas('matieres', function ($q) use ($matieres) {
+                    $q->where('matiere_sujet.matiere_id', $matieres);
                 });
-            })
-
-            ->get();
-
+            })->get();
 
         return view('front.pages.sujet', compact('sujets'));
 
-
-
-
-
-
-
-
-
-        return view('front.pages.sujet');
     }
 }

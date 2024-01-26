@@ -76,7 +76,7 @@
                         data-feather="globe"></i><span>Informations</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{route('categorie-news.index')}}">Type information</a></li>
-                    <li><a class="nav-link" href="{{route('role.index')}}">Ajouter une information</a></li>
+                    <li><a class="nav-link" href="{{route('news.index')}}">Ajouter une information</a></li>
                 </ul>
             </li>
 

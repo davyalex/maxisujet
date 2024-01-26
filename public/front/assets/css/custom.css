@@ -16,6 +16,14 @@
     margin: 0 0 15px;
     text-align: center;
 } */
+
+.content-news{
+    /* background-color: red; */
+        display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
 .under{
     /* text-decoration: underline solid rgb(247, 115, 22) 3px;
     text-decoration-line:underline;

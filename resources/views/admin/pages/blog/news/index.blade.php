@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Categorie')
+@section('title', 'News')
 
 @section('content')
 
@@ -18,9 +18,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Liste des Categories d'information</h4>
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalAdd">
-                            <i class="fas fa-plus"></i> Ajouter une categorie</button>
+                        <h4>Liste des News</h4>
+                        <a href="{{route('news.create')}}" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> Ajouter une news</a>
                     </div>
                     <div class="card-body">
                         @include('admin.components.validationMessage')
@@ -29,7 +29,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Image</th>
                                         <th>Title</th>
+                                        <th>categorie</th>
                                         <th>Date de création</th>
                                         <th>action</th>
 
@@ -37,13 +39,15 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($categorie_news as $key => $item)
+                                    @foreach ($news as $key => $item)
                                         <tr>
                                             <td>{{ ++$key }} </td>
+                                            <td> <img src="{{asset('/storage/news/' .$item['image'] )}}" width="50px" alt=""> </td>
                                             <td>{{ $item['title'] }} </td>
+                                            <td>{{ $item['categoryNews'] ? $item['categoryNews']['title'] : ''  }} </td>
                                             <td>{{ $item['created_at']->format('d-m-Y') }} </td>
                                             <td>
-                                                <a href="#" data-toggle="modal" data-target="#modalEdit{{$item['id']}}"><i class="fas fa-edit fs-20"
+                                                <a href="{{route('news.edit', $item['slug'])}}"><i class="fas fa-edit fs-20"
                                                         style="font-size: 20px;"></i></a>
 
                                                 <a href="#" class="delete" role="button"
@@ -51,14 +55,9 @@
                                                         style="font-size: 20px;"></i></a>
                                             </td>
                                         </tr>
-                                         {{-- modal edit form --}}
-                            @include('admin.pages.blog.categorie.edit')
                                     @endforeach
                                 </tbody>
                             </table>
-
-                            {{-- modal create form --}}
-                            @include('admin.pages.blog.categorie.create')
                         </div>
                     </div>
                 </div>
@@ -104,7 +103,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "/admin/categorie-news/destroy/" + Id,
+                            url: "/admin/news/destroy/" + Id,
                             dataType: "json",
                             data: {
                                 _token: '{{ csrf_token() }}',
@@ -127,7 +126,7 @@
                                     });
                                     setTimeout(function() {
                                         window.location.href =
-                                            "{{ route('categorie-news.index') }}";
+                                            "{{ route('news.index') }}";
                                     }, 500);
                                 }
                             }

@@ -2,7 +2,7 @@
     $msg_validation = ' Champs obligatoire';
 @endphp
 <!-- Modal with form -->
-<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+<div class="modal fade" id="modalEdit{{$item['id']}}" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

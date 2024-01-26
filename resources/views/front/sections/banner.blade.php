@@ -13,10 +13,10 @@
                             <div class="banner-icon">
                                 <i class="icofont-search"></i>
                             </div>
-                            <input type="text" placeholder="Keywords of your course">
-                            <button type="submit">Search Course</button>
+                            <input type="text" placeholder="Ex: concour de police">
+                            <button type="submit">Rechercher</button>
                         </form>
-                        <div class="banner-catagory d-flex flex-wrap">
+                        {{-- <div class="banner-catagory d-flex flex-wrap">
                             <p>Most Popular : </p>
                             <ul class="lab-ul d-flex flex-wrap">
                                 <li><a href="#">Figma</a></li>
@@ -24,7 +24,7 @@
                                 <li><a href="#">illustration</a></li>
                                 <li><a href="#">Photoshop</a></li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-xxl-7 col-xl-6">
