@@ -1,42 +1,56 @@
 <div class="content-search mt-4">
-    <form action="">
+    <form action="{{route('search')}}" method="POST">
+        @csrf
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <label>Categorie</label>
-                    <select class="single">
+                    <select name="categorie" class="single">
                         <option value=""></option>
-                        <option>Select A</option>
-                        <option>Select B</option>
-                        <option>Select C</option>
-                        <option>Select D</option>
+                        @foreach ($categories as $item)
+                        <option value="{{$item['id']}}">{{$item['title']}} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <label>Niveaux</label>
-                    <select class="multiple" multiple="multiple">
-                        <option>Select A</option>
-                        <option>Select B</option>
-                        <option>Select C</option>
-                        <option>Select D</option>
+                    <select name="niveaux[]" class="multiple" multiple="multiple">
+                        {{-- On affiche tous les niveau et sous niveaux --}}
+                        @foreach ($niveaux_with_subNiveaux as $item)
+                        <option disabled> {{ $item['title'] }} </option>
+
+                        {{-- On affiche tous les sous niveau du niveau  --}}
+                        @foreach ($item->subNiveaux as $sub_niveaux)
+                            @if ($sub_niveaux->subNiveaux->count() < 1)
+                                <option value="{{ $sub_niveaux['id'] }}">{{ $sub_niveaux['title'] }}
+                                </option>
+                            @endif
+                            {{-- On affiche tous les sous niveau qui ont des sous niveaux(parent)  --}}
+                            @if ($sub_niveaux->subNiveaux->count() > 0)
+                                @foreach ($sub_niveaux->subNiveaux as $sub_niveaux2)
+                                    <option value="{{ $sub_niveaux2['id'] }}">
+                                        {{ $sub_niveaux2['title'] }}
+                                @endforeach
+                            @endif
+                        @endforeach
+                    @endforeach
                     </select>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <label>Matieres</label>
-                    <select class="multiple" multiple="multiple">
-                        <option>Select A</option>
-                        <option>Select B</option>
-                        <option>Select C</option>
-                        <option>Select D</option>
+                    <select name="matieres[]" class="multiple" multiple="multiple">
+                       @foreach ($matieres as $item)
+                           <option value="{{$item['id']}}">{{$item['title']}} </option>
+                       @endforeach
                     </select>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <label>Code sujet</label>
-                    <input class="form-control">
+                    <input name="code_sujet" class="form-control">
                 </div>
             </div>
             <div class="col-md-12 col-sm-6">
-                <button class="btn btn-primary btn-search w-100">Rechercher</button>
+                <button type="submit" class="btn btn-primary btn-search w-100">Rechercher</button>
             </div>
         </div>
     </form>

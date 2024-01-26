@@ -5405,7 +5405,7 @@ button {
 }
 .header-top-area .left li {
     padding: 15px 25px;
-    border-right: 1px solid rgba(16, 17, 21, 0.1);
+    border-right: 1px solid rgba(29, 57, 169, 0.1);
 }
 .header-top-area .left li:last-child {
     border-right: none;
@@ -5520,12 +5520,12 @@ button {
 
 @media (min-width: 992px) {
     .menu > ul {
-        margin-right: 30px;
+        margin-right: 0px;
     }
 }
 .menu > ul > li > a {
     color: #101115;
-    font-size: 1rem;
+    font-size: 15px;
     font-weight: 700;
     padding: 15px 22px;
     text-transform: capitalize;
@@ -5645,7 +5645,7 @@ button {
         width: 100%;
     }
     .menu > ul li ul li a {
-        font-size: 14px;
+        font-size: 12px;
         display: flex;
         justify-content: space-between;
     }
@@ -6440,8 +6440,8 @@ button {
 }
 /* @@@@@@@@@@@@@  Page Header Section Start Here  @@@@@@@@@@@@@@ */
 .pageheader-section {
-    padding: 250px 0 92px;
-    background-image: url(../images/pageheader/bg/01.jpg);
+    padding: 150px 0 12px;
+    /* background-image: url(../images/pageheader/bg/01.jpg); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

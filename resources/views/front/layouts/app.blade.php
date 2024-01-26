@@ -44,6 +44,12 @@
 
 
 
+<!-- banner section start here -->
+@if (Route::currentRouteName() == 'home')
+@include('front.sections.banner')
+@endif
+<!-- banner section ending here -->
+
 
 <div class="container-fluid">
     <div class="row">
@@ -207,14 +213,14 @@
 
 
 <!-- jQuery -->
-<script src="front/assets/js/jquery.js"></script>
-<script src="front/assets/js/bootstrap.min.js"></script>
-<script src="front/assets/js/swiper.min.js"></script>
-<script src="front/assets/js/progress.js"></script>
-<script src="front/assets/js/lightcase.js"></script>
-<script src="front/assets/js/counter-up.js"></script>
-<script src="front/assets/js/isotope.pkgd.js"></script>
-<script src="front/assets/js/functions.js"></script>
+<script src="{{asset('front/assets/js/jquery.js')}}"></script>
+<script src="{{asset('front/assets/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('front/assets/js/swiper.min.js')}}"></script>
+<script src="{{asset('front/assets/js/progress.js')}}"></script>
+<script src="{{asset('front/assets/js/lightcase.js')}}"></script>
+<script src="{{asset('front/assets/js/counter-up.js')}}"></script>
+<script src="{{asset('front/assets/js/isotope.pkgd.js')}}"></script>
+<script src="{{asset('front/assets/js/functions.js')}}"></script>
 <script src="{{ asset('back/assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
 
 

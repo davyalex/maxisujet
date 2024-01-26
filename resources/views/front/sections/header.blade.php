@@ -1,25 +1,33 @@
 <header class="header-section">
-    <div class="header-top ">
+    <div class="header-top" style="background-color: rgb(237, 236, 236)">
         <div class="container">
             <div class="header-top-area">
                 <ul class="lab-ul left">
                     <li>
-                        <i class="icofont-ui-call"></i> <span>+800-123-4567 6587</span>
+                       <a href="#">Actualités</a>
                     </li>
                     <li>
-                        <i class="icofont-location-pin"></i> Beverley, New York 224 USA
-                    </li>
+                        <a href="#">Forum</a>
+                     </li>
+                     <li>
+                        <a href="#">Librairies</a>
+                     </li>
+
+                     <li>
+                        <a href="#">Quiz</a>
+                     </li>
+                  
                 </ul>
                 <ul class="lab-ul social-icons d-flex align-items-center">
-                    <li>
-                        <p>Find us on : </p>
-                    </li>
-                    <li><a href="#" class="fb"><i class="icofont-facebook-messenger"></i></a></li>
+                    <li><a href="#" class="fb"><i class="icofont-facebook"></i></a></li>
                     <li><a href="#" class="twitter"><i class="icofont-twitter"></i></a></li>
-                    <li><a href="#" class="vimeo"><i class="icofont-vimeo"></i></a></li>
-                    <li><a href="#" class="skype"><i class="icofont-skype"></i></a></li>
                     <li><a href="#" class="rss"><i class="icofont-rss-feed"></i></a></li>
                 </ul>
+               <div class="">
+                <a href="" style="background: rgb(234, 92, 4); font-weight:bold" class="py-3 px-1 text-white text-bold"><i class="icofont-lock"></i> <span>Se connecter</span> </a>
+                <a href="" style="background: rgb(255, 255, 255); font-weight:bold" class="py-3 px-2 text-bold"><i class="icofont-user"></i> <span>S'inscrire</span> </a>
+               </div>
+
             </div>
         </div>
     </div>
@@ -33,8 +41,8 @@
                     <div class="menu">
                         <ul class="lab-ul">
                             <li>
-                                <a href="#0">Home</a>
-                                <ul class="lab-ul">
+                                <a href="{{route('home')}}">Accueil</a>
+                                {{-- <ul class="lab-ul">
                                     <li><a href="index.html" class="active">Home One</a></li>
                                     <li><a href="index-2.html">Home Two</a></li>
                                     <li><a href="index-3.html">Home Three</a></li>
@@ -42,52 +50,50 @@
                                     <li><a href="index-5.html">Home Five</a></li>
                                     <li><a href="index-6.html">Home Six</a></li>
                                     <li><a href="index-7.html">Home Seven</a></li>
-                                </ul>
+                                </ul> --}}
                             </li>
 
+                           
                             <li>
-                                <a href="#0">Courses</a>
+                                <a href="#0" class="">Categories</a>
                                 <ul class="lab-ul">
-                                    <li><a href="course.html">Course</a></li>
-                                    <li><a href="course-single.html">Course Details</a></li>
+                                  @foreach ($categories as $item)
+                                  <li><a href="/sujet?category={{$item['id']}}" class="text-uppercase">{{$item['title']}} </a></li>
+                                  @endforeach
+                                </ul>
+                            </li>
+                            @foreach ($niveaux_with_subNiveaux as $cycle)
+                            <li>
+                                <a href="#0" style="text-transform:Capitalize">{{$cycle['title']}} </a>
+                                <ul class="lab-ul">
+                                    @foreach ($cycle->subNiveaux as $niveaux)
 
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Blog</a>
-                                <ul class="lab-ul">
-                                    <li><a href="blog.html">Blog Grid</a></li>
-                                    <li><a href="blog-2.html">Blog Style 2</a></li>
-                                    <li><a href="blog-3.html">Blog Style 3</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Pages</a>
-                                <ul class="lab-ul">
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="team.html">Team</a></li>
-                                    <li><a href="instructor.html">Instructor</a></li>
+                                    @if ($niveaux->subNiveaux->count() < 1)
+                                    <li><a href="/sujet?niveau={{$niveaux['id']}}">{{$niveaux['title']}}</a></li>
+
+                                    @elseif ($niveaux->subNiveaux->count() > 0)
                                     <li>
-                                        <a href="#0">Shop Pages</a>
+                                        <a href="#0"> {{$niveaux['title']}} </a>
                                         <ul class="lab-ul">
-                                            <li><a href="shop.html">Shop Page</a></li>
-                                            <li><a href="shop-single.html">Shop Details Page</a></li>
-                                            <li><a href="cart-page.html">Shop Cart Page</a></li>
+                                        @foreach ($niveaux->subNiveaux as $subNiveau2)
+                                        <li><a href="/sujet?niveau={{$subNiveau2['id']}}">{{$subNiveau2['title']}} </a></li>   
+                                        @endforeach
                                         </ul>
                                     </li>
-                                    <li><a href="search-page.html">Search Page</a></li>
-                                    <li><a href="search-none.html">Search None</a></li>
-                                    <li><a href="404.html">404</a></li>
+                                    @endif
+                    
+                                    @endforeach
+                                  
+                                   
                                 </ul>
                             </li>
-                            <li><a href="contact.html">Contact</a></li>
+                            @endforeach
+                          
+                            <li><a href="#">Contact</a></li>
                         </ul>
                     </div>
 
-                    <a href="login.html" class="login"><i class="icofont-user"></i> <span>LOG IN</span> </a>
-                    <a href="signup.html" class="signup"><i class="icofont-users"></i> <span>SIGN UP</span> </a>
-
+                  
                     <!-- toggle icons -->
                     <div class="header-bar d-lg-none">
                         <span></span>

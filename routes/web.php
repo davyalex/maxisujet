@@ -1,15 +1,20 @@
 <?php
 
 
+use App\Models\CategoryInformation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SujetController;
+use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\backend\NiveauController;
 use App\Http\Controllers\backend\MatiereController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\AuthAdminController;
 use App\Http\Controllers\backend\DashboardController;
+use App\Http\Controllers\frontend\SujetFrontController;
+use App\Http\Controllers\backend\CategoryNewsController;
 use App\Http\Controllers\backend\EtablissementController;
+use App\Http\Controllers\backend\CategoryInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,9 +60,6 @@ Route::prefix("admin")->middleware('admin')->group(function () {
     route::post('destroy/{id}', 'destroy')->name('role.destroy');
   });
 
-
-
-
   //Home dashboard
   Route::controller(DashboardController::class)->group(function () {
     Route::get('/', 'index')->name('dashboard.index');
@@ -72,6 +74,15 @@ Route::prefix("admin")->middleware('admin')->group(function () {
     route::post('update/{id}', 'update')->name('categorie.update');
     route::post('destroy/{id}', 'destroy')->name('categorie.destroy');
   });
+
+
+    //Category information dashboard
+    Route::controller(CategoryNewsController::class)->prefix('categorie-news')->group(function () {
+      Route::get('/', 'index')->name('categorie-news.index');
+      Route::post('/store', 'store')->name('categorie-news.store');
+      route::post('update/{id}', 'update')->name('categorie-news.update');
+      route::post('destroy/{id}', 'destroy')->name('categorie-news.destroy');
+    });
 
   //Niveau dashboard
   Route::controller(NiveauController::class)->prefix('niveau')->group(function () {
@@ -112,6 +123,18 @@ Route::prefix("admin")->middleware('admin')->group(function () {
 
 /*********************ROUTE FRONTEND ********************************************** */
 
-Route::get('/'  , function(){
-  return view('front.pages.home');
+// Route::get('/'  , function(){
+//   return view('front.pages.home');
+// });
+
+//Home page
+Route::controller(HomeController::class)->group(function(){
+  Route::get('/', 'home')->name('home');
+});
+
+//All sujet page
+Route::controller(SujetFrontController::class)->group(function(){
+  Route::get('/sujet', 'allsujet')->name('allsujet');
+  Route::post('/liste-des-sujets', 'search')->name('search');
+
 });

@@ -6,8 +6,10 @@ use App\Models\Sujet;
 use App\Models\Niveau;
 use App\Models\Matiere;
 use App\Models\Categorie;
+use App\Models\CategoryNews;
 use App\Models\Etablissement;
 use Spatie\Permission\Models\Role;
+use App\Models\CategoryInformation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,7 +28,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //categories 
-        $categories = Categorie::orderBy('title', 'ASC')->get();
+        $categories = Categorie::with('sujets')
+        ->orderBy('title', 'ASC')->get();
+
+        $categorie_news = CategoryNews::with('news')
+        ->orderBy('title', 'ASC')->get();
+
+        
 
         //niveaux
         $niveaux = Niveau::with('parent')->orderBy('parent_id', 'DESC')
@@ -49,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
 
 
         //sujets
-        $sujets = Sujet::with(['niveaux', 'matieres','categorie','etablissement'])->get();
+        // $sujets = Sujet::with(['niveaux', 'matieres','categorie','etablissement'])->get();
 
 
         //roles 
@@ -57,14 +65,15 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-        view()->composer('*', function ($view) use ($roles,$sujets,$categories, $niveaux, $matieres, $niveaux_with_subNiveaux, $etablissements) {
+        view()->composer('*', function ($view) use ($categorie_news,$roles,$categories, $niveaux, $matieres, $niveaux_with_subNiveaux, $etablissements) {
             $view->with([
                 'categories' => $categories,
+                'categorie_news' => $categorie_news,
                 'niveaux' => $niveaux,
                 'matieres' => $matieres,
                 'niveaux_with_subNiveaux' => $niveaux_with_subNiveaux,
                 'etablissements' => $etablissements,
-                'sujets' => $sujets,
+                // 'sujets' => $sujets,
                 'roles' => $roles
 
 

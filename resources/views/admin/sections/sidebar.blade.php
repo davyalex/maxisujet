@@ -68,6 +68,18 @@
                 </ul>
             </li>
 
+
+            <li class="menu-header">Blog</li>
+
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                        data-feather="globe"></i><span>Informations</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{route('categorie-news.index')}}">Type information</a></li>
+                    <li><a class="nav-link" href="{{route('role.index')}}">Ajouter une information</a></li>
+                </ul>
+            </li>
+
           
            
         </ul>
