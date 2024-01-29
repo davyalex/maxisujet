@@ -35,7 +35,7 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
-                    <a href="index.html"><img src="front/assets/images/logo/01.png" alt="logo"></a>
+                    <a href="{{route('home')}}"><img src="{{asset('front/assets/images/custom/logo.png')}}" width="80%" alt="logo"></a>
                 </div>
                 <div class="menu-area">
                     <div class="menu">

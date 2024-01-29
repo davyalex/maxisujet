@@ -119,34 +119,30 @@
                     </div>
                     <aside>
                         <div class="widget widget-search">
-                            <h4>Need a new search?</h4>
+                            <h4 class="text-uppercase">Top télechargements</h4>
                             <p>
-                                If you didn't find what you were looking for, try a new
-                                search!
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor sequi quae soluta inventore ex? Suscipit, numquam repudiandae! Accusamus eligendi quam obcaecati, asperiores unde eum natus labore, quis distinctio voluptatibus magni?
                             </p>
 
                         </div>
                         <div class="widget widget-search">
-                            <h4>Need a new search?</h4>
+                            <h4 class="text-uppercase">Maxi Sujets</h4>
                             <p>
-                                If you didn't find what you were looking for, try a new
-                                search!
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi officiis voluptatibus itaque corporis nemo quod fugit aut dignissimos. Recusandae ratione quis, consequuntur facere esse suscipit odio tenetur voluptatibus in voluptas?
                             </p>
 
                         </div>
                         <div class="widget widget-search">
-                            <h4>Need a new search?</h4>
+                            <h4 class="text-uppercase">Maxi concours</h4>
                             <p>
-                                If you didn't find what you were looking for, try a new
-                                search!
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt incidunt consectetur quo. Ducimus ipsum dolores inventore suscipit quas, expedita cupiditate ratione quos animi nobis dignissimos labore nihil odit exercitationem nesciunt.
                             </p>
 
                         </div>
                         <div class="widget widget-search">
-                            <h4>Need a new search?</h4>
+                            <h4 class="text-uppercase">Maxi matieres</h4>
                             <p>
-                                If you didn't find what you were looking for, try a new
-                                search!
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolore perspiciatis in et architecto. Ipsa vitae eos natus, veniam, commodi praesentium veritatis dignissimos debitis neque repudiandae sequi ab excepturi libero?
                             </p>
 
                         </div>
@@ -368,12 +364,12 @@
                                         <div class="post-item">
                                             <div class="post-inner">
                                                 <div class="post-thumb">
-                                                    <a href="blog-single.html"><img
+                                                    <a href="/news-detail?d={{$item['slug']}}"><img
                                                             src="{{ asset('/storage/news/' . $item['image']) }}"
                                                             alt="blog thumb"></a>
                                                 </div>
                                                 <div class="post-content">
-                                                    <a href="blog-single.html">
+                                                    <a href="/news-detail?d={{$item['slug']}}">
                                                         <h4> {{ $item['title'] }} </h4>
                                                     </a>
                                                     <div class="meta-post">
@@ -390,7 +386,7 @@
                                                 </div>
                                                 <div class="post-footer">
                                                     <div class="pf-left">
-                                                        <a href="blog-single.html" class="lab-btn-text">Lire plus<i
+                                                        <a href="/news-detail?d={{$item['slug']}}" class="lab-btn-text">Lire plus<i
                                                                 class="icofont-external-link"></i></a>
                                                     </div>
                                                     <div class="pf-right">

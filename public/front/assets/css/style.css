@@ -2355,7 +2355,7 @@ footer.style-2
     ul.office-address,
 .newsletter-form button,
 .pageheader-section.style-2 .pageheader-content .phs-thumb {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .instructor-section .section-wrapper .footer-btn p a {
@@ -6448,6 +6448,7 @@ button {
 }
 .pageheader-section .pageheader-content h2 {
     margin-bottom: 10px;
+    margin-top: 40px;
 }
 .pageheader-section.style-2 {
     padding-top: 250px;

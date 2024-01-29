@@ -4,11 +4,12 @@
             <div class="row align-items-center flex-row-reverse">
                 <div class="col-xxl-5 col-xl-6 col-lg-10 me-auto">
                     <div class="banner-content">
-                        <h6 class="subtitle text-uppercase fw-medium">Online education</h6>
-                        <h2 class="title"><span class="d-lg-block">Build Skills With</span> Experts Any Time <span
-                                class="d-lg-block">Anywhere</span></h2>
-                        <p class="desc">Free online courses from the world’s Leading experts. join 18+ million
-                            Learners today.</p>
+                        <h6 class="subtitle text-uppercase fw-medium">Télécharger et composer vos exercices</h6>
+                        <h2 class="title">
+
+                            Vous ne serez plus seul ,
+                        </h2>
+                        <p class="desc">maxisujets vous accompagne partout, et vous facilite l'apprentissage....</p>
                         <form action="/">
                             <div class="banner-icon">
                                 <i class="icofont-search"></i>

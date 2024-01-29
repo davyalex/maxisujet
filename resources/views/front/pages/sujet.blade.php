@@ -13,7 +13,9 @@
                         <h2> <span style="color:rgb(255, 84, 5)">{{ count($sujets) }} </span> Sujets disponibles</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:history.back()"><i class="icofont-caret-left"></i> Retour</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icofont-home"></i> Accueil</a></li>
+
                                 <li class="breadcrumb-item active" aria-current="page">Listes des sujets</li>
                             </ol>
                         </nav>
@@ -49,7 +51,7 @@
                                         <ul class="widget-wrapper">
                                             @foreach ($categories as $item)
                                                 <li>
-                                                    <a href="/sujet?category={{$item['id']}}"
+                                                    <a href="/sujet?category={{ $item['id'] }}"
                                                         class="d-flex flex-wrap justify-content-between"><span><i
                                                                 class="icofont-double-right"></i> {{ $item['title'] }}
                                                         </span><span> {{ $item->sujets->count() }} </span></a>
@@ -81,7 +83,8 @@
                                                                 {{ $matieres['title'] }} ,
                                                             @endforeach
 
-                                                           <br> <span style="font-weight: bold" class="">Niveaux</span>:
+                                                            <br> <span style="font-weight: bold"
+                                                                class="">Niveaux</span>:
                                                             @foreach ($item['niveaux'] as $niveaux)
                                                                 {{ $niveaux['title'] }} ,
                                                             @endforeach
@@ -96,9 +99,9 @@
                                                             class="lab-btn mt-2"><span>Télecharger le sujet
                                                                 <i class="icofont-download"></i></span></a>
 
-                                                                <a href="{{ asset('storage/' . $item->sujet_file) }}"
-                                                                    class="lab-btn mt-2"><span>Télecharger le corrigé
-                                                                        <i class="icofont-download"></i></span></a>
+                                                        <a href="{{ asset('storage/' . $item->sujet_file) }}"
+                                                            class="lab-btn mt-2"><span>Télecharger le corrigé
+                                                                <i class="icofont-download"></i></span></a>
 
                                                         <a href="#" type="button" class="lab-btn mt-2"
                                                             data-bs-toggle="modal"

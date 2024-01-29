@@ -46,7 +46,7 @@
 
 <!-- banner section start here -->
 @if (Route::currentRouteName() == 'home')
-@include('front.sections.banner')
+    @include('front.sections.banner')
 @endif
 <!-- banner section ending here -->
 
@@ -60,7 +60,7 @@
 
         <div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
 
-               @yield('content')
+            @yield('content')
 
         </div>
 
@@ -94,7 +94,7 @@
         <div class="container">
             <div class="section-wrapper">
                 <div class="news-title">
-                    <h3>Want Us To Email You About Special Offers And Updates?</h3>
+                    <img src="{{ asset('front/assets/images/custom/logo.png') }}" alt="">
                 </div>
                 <div class="news-form">
                     <form action="/">
@@ -119,15 +119,21 @@
                             <div class="footer-inner">
                                 <div class="footer-content">
                                     <div class="title">
-                                        <h4>Site Map</h4>
+                                        <h4>CONTACT</h4>
                                     </div>
                                     <div class="content-footer">
                                         <ul class="lab-ul">
-                                            <li><a href="#">Documentation</a></li>
-                                            <li><a href="#">Feedback</a></li>
-                                            <li><a href="#">Plugins</a></li>
-                                            <li><a href="#">Support Forums</a></li>
-                                            <li><a href="#">Themes</a></li>
+                                            <li>
+                                                <p class="text-white">
+                                                    Ce site regroupe de nombreux supports de sujets et de cours portant
+                                                    sur divers domaines de votre parcours scolaire, universitaire et
+                                                    votre entrée dans la vie professionnelle.
+                                                </p>
+                                            </li>
+                                            <li><a href="mailto:info@maxisujets.net ">Email : info@maxisujets.net</a>
+                                            </li>
+                                            <li><a href="tel:(+225) 25 22 00 20 77 ">Tel : (+225) 25 22 00 20 77</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -139,15 +145,18 @@
                             <div class="footer-inner">
                                 <div class="footer-content">
                                     <div class="title">
-                                        <h4>Useful Links</h4>
+                                        <h4>RESSOURCES</h4>
                                     </div>
                                     <div class="content-footer">
                                         <ul class="lab-ul">
-                                            <li><a href="#">About Us</a></li>
-                                            <li><a href="#">Help Link</a></li>
-                                            <li><a href="#">Terms & Conditions</a></li>
-                                            <li><a href="#">Contact Us</a></li>
-                                            <li><a href="#">Privacy Policy</a></li>
+                                            <li><a href="#">Université de Côte D'Ivoire</a></li>
+                                            <li><a href="#">Qui-Sommes-nous</a></li>
+                                            <li><a href="#">Bibliothèque en ligne</a></li>
+                                            <li><a href="#">Rapport de Stage</a></li>
+                                            <li><a href="#">Rédiger un CV</a></li>
+                                            <li><a href="#">Annonce/Emploi</a></li>
+                                            <li><a href="#">QCM</a></li>
+                                            <li><a href="#">Testez votre mémoire</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -159,15 +168,16 @@
                             <div class="footer-inner">
                                 <div class="footer-content">
                                     <div class="title">
-                                        <h4>Social Contact</h4>
+                                        <h4>MAXISUJETS</h4>
                                     </div>
                                     <div class="content-footer">
                                         <ul class="lab-ul">
-                                            <li><a href="#">Facebook</a></li>
-                                            <li><a href="#">Twitter</a></li>
-                                            <li><a href="#">Instagram</a></li>
-                                            <li><a href="#">YouTube</a></li>
-                                            <li><a href="#">Github</a></li>
+                                            @foreach ($categories as $item)
+                                                <li><a
+                                                        href="/sujet?category={{ $item['id'] }}">{{ $item['title'] }}</a>
+                                                </li>
+                                            @endforeach
+
                                         </ul>
                                     </div>
                                 </div>
@@ -179,15 +189,16 @@
                             <div class="footer-inner">
                                 <div class="footer-content">
                                     <div class="title">
-                                        <h4>Our Support</h4>
+                                        <h4>RÉSEAUX SOCIAUX</h4>
                                     </div>
                                     <div class="content-footer">
                                         <ul class="lab-ul">
-                                            <li><a href="#">Help Center</a></li>
-                                            <li><a href="#">Paid with Mollie</a></li>
-                                            <li><a href="#">Status</a></li>
-                                            <li><a href="#">Changelog</a></li>
-                                            <li><a href="#">Contact Support</a></li>
+                                            <li><a href="#" class="fb"><i class="icofont-facebook"></i></a>
+                                            </li>
+                                            <li><a href="#" class="twitter"><i class="icofont-twitter"></i></a>
+                                            </li>
+                                            <li><a href="#" class="rss"><i class="icofont-rss-feed"></i></a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -200,10 +211,12 @@
         <div class="footer-bottom style-2">
             <div class="container">
                 <div class="section-wrapper">
-                    <p>&copy; @php
-                        echo date('Y')
-                    @endphp <a href="index.html">MaxiSujets</a> Developpé par <a
-                            href="" target="_blank">Tic@frique</a> </p>
+                    <p>Copyright © @php
+                        echo date('Y');
+                    @endphp Maxisujets All Rights Reserved. Designed by <a
+                            href="https://ticafrique.com/" target="blank">ticafrique.com</a>.</p>
+
+
                 </div>
             </div>
         </div>
@@ -215,14 +228,14 @@
 
 
 <!-- jQuery -->
-<script src="{{asset('front/assets/js/jquery.js')}}"></script>
-<script src="{{asset('front/assets/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('front/assets/js/swiper.min.js')}}"></script>
-<script src="{{asset('front/assets/js/progress.js')}}"></script>
-<script src="{{asset('front/assets/js/lightcase.js')}}"></script>
-<script src="{{asset('front/assets/js/counter-up.js')}}"></script>
-<script src="{{asset('front/assets/js/isotope.pkgd.js')}}"></script>
-<script src="{{asset('front/assets/js/functions.js')}}"></script>
+<script src="{{ asset('front/assets/js/jquery.js') }}"></script>
+<script src="{{ asset('front/assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('front/assets/js/swiper.min.js') }}"></script>
+<script src="{{ asset('front/assets/js/progress.js') }}"></script>
+<script src="{{ asset('front/assets/js/lightcase.js') }}"></script>
+<script src="{{ asset('front/assets/js/counter-up.js') }}"></script>
+<script src="{{ asset('front/assets/js/isotope.pkgd.js') }}"></script>
+<script src="{{ asset('front/assets/js/functions.js') }}"></script>
 <script src="{{ asset('back/assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
 
 

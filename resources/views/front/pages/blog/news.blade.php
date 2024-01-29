@@ -13,7 +13,11 @@
                         <h4> <span style="color:rgb(255, 84, 5)">Categorie:  </span>  {{$categoryNews['title']}}</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item active" aria-current="page">{{ count($news) }} disponibles </li>
+                                 <li class="breadcrumb-item"><a href="javascript:history.back()"><i class="icofont-caret-left"></i> Retour</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icofont-home"></i> Accueil</a></li>
+
+                                <li class="breadcrumb-item active" aria-current="page">{{ count($news) }} Article(s) disponibles </li>
+
                             </ol>
                         </nav>
                     </div>
@@ -72,7 +76,7 @@
                                 @endforeach
 
                             </div>
-                            <ul class="default-pagination lab-ul">
+                            {{-- <ul class="default-pagination lab-ul">
                                 <li>
                                     <a href="#"><i class="icofont-rounded-left"></i></a>
                                 </li>
@@ -88,7 +92,7 @@
                                 <li>
                                     <a href="#"><i class="icofont-rounded-right"></i></a>
                                 </li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </article>
                 </div>
