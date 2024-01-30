@@ -67,7 +67,7 @@
                                                     </div>
                                                     <div class="pf-right">
                                                         <i class="icofont-comment"></i>
-                                                        <span class="comment-count">3</span>
+                                                        <span class="comment-count"> {{count($item['commentaires'])}} </span>
                                                     </div>
                                                 </div>
                                             </div>

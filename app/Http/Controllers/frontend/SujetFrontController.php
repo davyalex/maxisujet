@@ -11,22 +11,10 @@ class SujetFrontController extends Controller
     //
     public function allSujet()
     {
-        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])
+        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'commentaires'])
             ->when(request('category'), function ($q) {
                 return $q->where('category_id', request('category'));
             })
-
-            // ->when(request('niveau'),  function ($q) {
-            //     if (is_array(request('niveau'))) {
-            //         return $q->whereIn('niveau_id', request('niveau'));
-            //     } else {
-            //         return $q->where(
-            //             'niveau_id',
-            //             '=',
-            //             request('niveau')
-            //         );
-            //     }
-            // })
 
             ->when(request('niveau'), function ($q) {
                 return $q->whereHas('niveaux', function ($q) {

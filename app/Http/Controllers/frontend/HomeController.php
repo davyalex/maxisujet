@@ -15,11 +15,11 @@ class HomeController extends Controller
     {
         //get news of actualite
         $actualite = CategoryNews::whereSlug('maxi-actualites')->first();
-        $actualites = News::with(['categoryNews', 'user'])->where('category_news_id', $actualite['id'])->orderBy("created_at", "desc")->get();
+        $actualites = News::with(['categoryNews', 'user'])->where('category_news_id', $actualite['id'])->orderBy("created_at", "desc")->take(6)->get();
         
           //get news of astuce et conseils
         $astuce = CategoryNews::whereSlug('astuce-conseil')->first();
-        $astuces = News::with(['categoryNews', 'user'])->where('category_news_id', $astuce['id'])->orderBy("created_at", "desc")->get();
+        $astuces = News::with(['categoryNews', 'user'])->where('category_news_id', $astuce['id'])->orderBy("created_at", "desc")->take(6)->get();
 
         // dd($astuce);
         //get subject recent

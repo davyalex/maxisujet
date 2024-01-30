@@ -45,5 +45,10 @@ class News extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
     
 }

@@ -81,14 +81,31 @@
                                                 {{ $item['created_at'] }}
 
                                             </div>
-                                            <a href="{{ asset('storage/' . $item->sujet_file) }}"
-                                                class="lab-btn mt-2"><span>Télecharger le sujet
-                                                    <i class="icofont-download"></i></span></a>
 
-                                            <a href="{{ asset('storage/' . $item->corrige_file) }}"
-                                                class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
-                                                    le corrigé
-                                                    <i class="icofont-download"></i></span></a>
+                                            {{-- si utilisateur connecté il peut telecharger --}}
+                                            @auth
+                                                <a href="{{ asset('storage/' . $item->sujet_file) }}"
+                                                    class="lab-btn mt-2"><span>Télecharger le sujet
+                                                        <i class="icofont-download"></i></span></a>
+
+                                                <a href="{{ asset('storage/' . $item->corrige_file) }}"
+                                                    class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
+                                                        le corrigé
+                                                        <i class="icofont-download"></i></span></a>
+                                            @endauth
+
+
+                                            {{-- si  utilisateur n'est pas connecté on le redirige vers login --}}
+                                            @guest
+                                                <a href="{{ route('auth.login') }}" class="lab-btn mt-2"><span>Télecharger le
+                                                        sujet
+                                                        <i class="icofont-lock"></i></span></a>
+
+                                                <a href="{{ route('user.login') }}"
+                                                    class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
+                                                        le corrigé
+                                                        <i class="icofont-lock"></i></span></a>
+                                            @endguest
 
                                             <a href="#" type="button" class="lab-btn mt-2" data-bs-toggle="modal"
                                                 data-bs-target="#sujet{{ $item['id'] }}"><span>Details
@@ -121,28 +138,36 @@
                         <div class="widget widget-search">
                             <h4 class="text-uppercase">Top télechargements</h4>
                             <p>
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor sequi quae soluta inventore ex? Suscipit, numquam repudiandae! Accusamus eligendi quam obcaecati, asperiores unde eum natus labore, quis distinctio voluptatibus magni?
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor sequi quae soluta inventore
+                                ex? Suscipit, numquam repudiandae! Accusamus eligendi quam obcaecati, asperiores unde eum
+                                natus labore, quis distinctio voluptatibus magni?
                             </p>
 
                         </div>
                         <div class="widget widget-search">
                             <h4 class="text-uppercase">Maxi Sujets</h4>
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi officiis voluptatibus itaque corporis nemo quod fugit aut dignissimos. Recusandae ratione quis, consequuntur facere esse suscipit odio tenetur voluptatibus in voluptas?
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi officiis voluptatibus itaque
+                                corporis nemo quod fugit aut dignissimos. Recusandae ratione quis, consequuntur facere esse
+                                suscipit odio tenetur voluptatibus in voluptas?
                             </p>
 
                         </div>
                         <div class="widget widget-search">
                             <h4 class="text-uppercase">Maxi concours</h4>
                             <p>
-                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt incidunt consectetur quo. Ducimus ipsum dolores inventore suscipit quas, expedita cupiditate ratione quos animi nobis dignissimos labore nihil odit exercitationem nesciunt.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt incidunt consectetur quo.
+                                Ducimus ipsum dolores inventore suscipit quas, expedita cupiditate ratione quos animi nobis
+                                dignissimos labore nihil odit exercitationem nesciunt.
                             </p>
 
                         </div>
                         <div class="widget widget-search">
                             <h4 class="text-uppercase">Maxi matieres</h4>
                             <p>
-                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolore perspiciatis in et architecto. Ipsa vitae eos natus, veniam, commodi praesentium veritatis dignissimos debitis neque repudiandae sequi ab excepturi libero?
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolore perspiciatis in et
+                                architecto. Ipsa vitae eos natus, veniam, commodi praesentium veritatis dignissimos debitis
+                                neque repudiandae sequi ab excepturi libero?
                             </p>
 
                         </div>
@@ -171,11 +196,11 @@
                             <div class="post-item">
                                 <div class="post-inner">
                                     <div class="post-thumb">
-                                        <a href="/news-detail?d={{$item['slug']}}"><img src="{{ asset('/storage/news/' . $item['image']) }}"
-                                                alt="blog thumb"></a>
+                                        <a href="/news-detail?d={{ $item['slug'] }}"><img
+                                                src="{{ asset('/storage/news/' . $item['image']) }}" alt="blog thumb"></a>
                                     </div>
                                     <div class="post-content">
-                                        <a href="/news-detail?d={{$item['slug']}}">
+                                        <a href="/news-detail?d={{ $item['slug'] }}">
                                             <h4> {{ $item['title'] }} </h4>
                                         </a>
                                         <div class="meta-post">
@@ -189,12 +214,12 @@
                                     </div>
                                     <div class="post-footer">
                                         <div class="pf-left">
-                                            <a href="/news-detail?d={{$item['slug']}}" class="lab-btn-text">Lire plus<i
+                                            <a href="/news-detail?d={{ $item['slug'] }}" class="lab-btn-text">Lire plus<i
                                                     class="icofont-external-link"></i></a>
                                         </div>
                                         <div class="pf-right">
                                             <i class="icofont-comment"></i>
-                                            <span class="comment-count">3</span>
+                                            <span class="comment-count"> {{ count($item['commentaires']) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -364,12 +389,12 @@
                                         <div class="post-item">
                                             <div class="post-inner">
                                                 <div class="post-thumb">
-                                                    <a href="/news-detail?d={{$item['slug']}}"><img
+                                                    <a href="/news-detail?d={{ $item['slug'] }}"><img
                                                             src="{{ asset('/storage/news/' . $item['image']) }}"
                                                             alt="blog thumb"></a>
                                                 </div>
                                                 <div class="post-content">
-                                                    <a href="/news-detail?d={{$item['slug']}}">
+                                                    <a href="/news-detail?d={{ $item['slug'] }}">
                                                         <h4> {{ $item['title'] }} </h4>
                                                     </a>
                                                     <div class="meta-post">
@@ -386,12 +411,15 @@
                                                 </div>
                                                 <div class="post-footer">
                                                     <div class="pf-left">
-                                                        <a href="/news-detail?d={{$item['slug']}}" class="lab-btn-text">Lire plus<i
+                                                        <a href="/news-detail?d={{ $item['slug'] }}"
+                                                            class="lab-btn-text">Lire plus<i
                                                                 class="icofont-external-link"></i></a>
                                                     </div>
                                                     <div class="pf-right">
                                                         <i class="icofont-comment"></i>
-                                                        <span class="comment-count">3</span>
+                                                        <span class="comment-count"> {{ count($item['commentaires']) }}
+                                                        </span>
+
                                                     </div>
                                                 </div>
                                             </div>

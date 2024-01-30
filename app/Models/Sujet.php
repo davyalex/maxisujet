@@ -41,4 +41,8 @@ class Sujet extends Model
             return $this->belongsTo(Etablissement::class, 'etablissement_id');
         }
 
+        public function commentaires(){
+            return $this->hasMany(Commentaire::class);
+        }
+
 }

@@ -308,4 +308,16 @@ border: none;
   }
   @media (max-width: 575.98px) {
   }
+
+
+  /************ Dashboard user css  ***********/
   
+/****  TABS**/
+.nav-tabs .nav-link.active {
+    background-color: #f56142;
+    color: white;
+    font-weight: 500;
+}
+
+
+

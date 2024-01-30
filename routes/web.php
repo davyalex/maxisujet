@@ -10,13 +10,15 @@ use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\backend\NiveauController;
 use App\Http\Controllers\backend\MatiereController;
 use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\frontend\AccountController;
 use App\Http\Controllers\backend\AuthAdminController;
 use App\Http\Controllers\backend\DashboardController;
+use App\Http\Controllers\frontend\AuthUserController;
 use App\Http\Controllers\frontend\NewsFrontController;
 use App\Http\Controllers\frontend\SujetFrontController;
 use App\Http\Controllers\backend\CategoryNewsController;
+use App\Http\Controllers\frontend\CommentaireController;
 use App\Http\Controllers\backend\EtablissementController;
-use App\Http\Controllers\backend\CategoryInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -159,5 +161,28 @@ Route::controller(NewsFrontController::class)->group(function () {
 
   // Route::post('/liste-des-sujets', 'search')->name('search');
 });
+
+ //Auth user
+Route::controller(AuthUserController::class)->group(function () {
+  route::get('/connexion', 'login')->name('user.login');
+  route::post('/connexion', 'login')->name('user.login');
+
+  route::get('/inscription', 'register')->name('user.register');
+  route::post('/inscription', 'register')->name('user.register');
+  route::get('logout', 'logout')->name('user.logout')->middleware('auth');
+
+});
+
+//user account dashboard
+Route::controller(AccountController::class)->group(function () {
+  route::get('/mon-compte', 'dashboard')->name('user_account.dashboard');
+
+
+});
+
+Route::controller(CommentaireController::class)->group(function () {
+  route::post('store', 'store')->name('addComment')->middleware('auth');
+});
+
 
 

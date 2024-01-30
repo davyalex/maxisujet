@@ -13,8 +13,10 @@
                         <h2> <span style="color:rgb(255, 84, 5)">{{ count($sujets) }} </span> Sujets disponibles</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="javascript:history.back()"><i class="icofont-caret-left"></i> Retour</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icofont-home"></i> Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:history.back()"><i
+                                            class="icofont-caret-left"></i> Retour</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icofont-home"></i>
+                                        Accueil</a></li>
 
                                 <li class="breadcrumb-item active" aria-current="page">Listes des sujets</li>
                             </ol>
@@ -95,14 +97,31 @@
                                                             {{ $item['created_at'] }}
 
                                                         </div>
-                                                        <a href="{{ asset('storage/' . $item->corrige_file) }}"
-                                                            class="lab-btn mt-2"><span>Télecharger le sujet
-                                                                <i class="icofont-download"></i></span></a>
+                                                        {{-- si utilisateur connecté il peut telecharger --}}
+                                                        @auth
+                                                            <a href="{{ asset('storage/' . $item->sujet_file) }}"
+                                                                class="lab-btn mt-2"><span>Télecharger le sujet
+                                                                    <i class="icofont-download"></i></span></a>
 
-                                                        <a href="{{ asset('storage/' . $item->sujet_file) }}"
-                                                            class="lab-btn mt-2"><span>Télecharger le corrigé
-                                                                <i class="icofont-download"></i></span></a>
+                                                            <a href="{{ asset('storage/' . $item->corrige_file) }}"
+                                                                class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
+                                                                    le corrigé
+                                                                    <i class="icofont-download"></i></span></a>
+                                                        @endauth
 
+
+                                                        {{-- si  utilisateur n'est pas connecté on le redirige vers login --}}
+                                                        @guest
+                                                            <a href="{{ route('auth.login') }}"
+                                                                class="lab-btn mt-2"><span>Télecharger le
+                                                                    sujet
+                                                                    <i class="icofont-lock"></i></span></a>
+
+                                                            <a href="{{ route('user.login') }}"
+                                                                class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
+                                                                    le corrigé
+                                                                    <i class="icofont-lock"></i></span></a>
+                                                        @endguest
                                                         <a href="#" type="button" class="lab-btn mt-2"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#sujet{{ $item['id'] }}"><span>Details

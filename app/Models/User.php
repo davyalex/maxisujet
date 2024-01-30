@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles,HasPermissions;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPermissions;
 
     /**
      * The attributes that are mass assignable.
@@ -24,18 +24,25 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'last_login_at',
+        'last_login_ip'
     ];
 
 
 
     /**
-     * Get all of the comments for the User
+     * Get all of the news for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function news(): HasMany
     {
         return $this->hasMany(News::class);
+    }
+
+    public function commentaires(): HasMany
+    {
+        return $this->hasMany(Commentaire::class);
     }
 
     /**

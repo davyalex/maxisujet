@@ -19,7 +19,7 @@ class NewsFrontController extends Controller
             $categoryNews = CategoryNews::whereSlug($slug)->first();
             $id = $categoryNews['id'];
 
-            $news = News::with(['user', 'categoryNews'])
+            $news = News::with(['user', 'categoryNews','commentaire'])
                 ->when($slug, function ($q) use ($id) {
                     return $q->where('category_news_id', $id);
                 })->get();
@@ -36,7 +36,7 @@ class NewsFrontController extends Controller
     public function detail( Request $request){
         try {
             $slug = request('d');
-            $news_detail = News::with(['user', 'categoryNews'])
+            $news_detail = News::with(['user', 'categoryNews', 'commentaires'])
                 ->whereSlug($slug)->first();
 
                 if (!$news_detail) {

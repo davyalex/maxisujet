@@ -14,8 +14,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
                                 {{-- <li class="breadcrumb-item active" aria-current="page"></li> --}}
-                                   <li class="breadcrumb-item"><a href="javascript:history.back()"><i class="icofont-caret-left"></i> Retour</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icofont-home"></i> Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:history.back()"><i
+                                            class="icofont-caret-left"></i> Retour</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icofont-home"></i>
+                                        Accueil</a></li>
 
                             </ol>
                         </nav>
@@ -45,81 +47,76 @@
                                                 <h2>{{ $news_detail['title'] }} </h2>
                                                 <div class="meta-post">
                                                     <ul class="lab-ul">
-                                                       <li><i class="icofont-ui-user"></i>{{ $news_detail['user']['username'] }} </li>
-                                                <li><i class="icofont-calendar"></i>
-                                                    {{ \Carbon\Carbon::parse($news_detail['created_at'])->diffForHumans() }} </li>
-                                                        <li><a href="#"><i class="icofont-speech-comments"></i>09
-                                                                Comments</a></li>
+                                                        <li><i
+                                                                class="icofont-ui-user"></i>{{ $news_detail['user']['username'] }}
+                                                        </li>
+                                                        <li><i class="icofont-calendar"></i>
+                                                            {{ \Carbon\Carbon::parse($news_detail['created_at'])->diffForHumans() }}
+                                                        </li>
+                                                        <li><a href="#"><i class="icofont-speech-comments"></i>  {{count($news_detail['commentaires'])}} </a></li>
                                                     </ul>
                                                 </div>
                                                 <p>
-                                                    {!!  htmlspecialchars_decode($news_detail['content']) !!}
+                                                    {!! htmlspecialchars_decode($news_detail['content']) !!}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
 
-    
+
                                     <div id="comments" class="comments">
-                                        <h4 class="title-border">02 Comment</h4>
+                                        <h4 class="title-border"> Commentaires ( {{ count($news_detail->commentaires) }})</h4>
                                         <ul class="comment-list">
+                                            @foreach ($news_detail['commentaires'] as $item)
+                                                
                                             <li class="comment">
                                                 <div class="com-thumb">
-                                                    <img alt="rajibraj91" src="assets/images/author/02.jpg">
+                                                    <img alt="" class="img-thumbnail" width="70%" src="{{asset('front/assets/images/custom/user_avatar.png')}}">
                                                 </div>
                                                 <div class="com-content">
                                                     <div class="com-title">
                                                         <div class="com-title-meta">
-                                                            <h6>Linsa Faith</h6>
-                                                            <span> October 5, 2018 at 12:41 pm </span>
+                                                            <h6 id="auth_user"> {{$item['user']['username']}} </h6>
+                                                            <span id="created_at">  {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
                                                         </div>
-                                                        <span class="reply">
-                                                            <a class="comment-reply-link" href="#"><i
-                                                                    class="icofont-reply-all"></i>Reply</a>
-                                                        </span>
                                                     </div>
-                                                    <p>The inner sanctuary, I throw myself down among the tall grass bye the
-                                                        trckli stream and, as I lie close to the earth</p>
+                                                    <p id="news_content"> {{$item['content']}} </p>
                                                 </div>
-                                                <ul class="comment-list">
-                                                    <li class="comment">
-                                                        <div class="com-thumb">
-                                                            <img alt="rajibraj91" src="assets/images/author/03.jpg">
-                                                        </div>
-                                                        <div class="com-content">
-                                                            <div class="com-title">
-                                                                <div class="com-title-meta">
-                                                                    <h6>James Jusse</h6>
-                                                                    <span> October 5, 2018 at 12:41 pm </span>
-                                                                </div>
-                                                                <span class="reply">
-                                                                    <a class="comment-reply-link" href="#"><i
-                                                                            class="icofont-reply-all"></i>Reply</a>
-                                                                </span>
-                                                            </div>
-                                                            <p>A wonderful serenity has taken possession of my entire soul,
-                                                                like these sweet mornings spring which I enjoy with my whole
-                                                                heart</p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
                                             </li>
+                                            @endforeach
                                         </ul>
                                     </div>
 
-                                    <div id="respond" class="comment-respond mb-lg-0">
-                                        <h4 class="title-border">Leave a Comment</h4>
+                                   @auth
+                                        <div id="respond" class="comment-respond mb-lg-0">
+                                        <h4 class="title-border">Laisser un commentaire</h4>
                                         <div class="add-comment">
+                                            <p class="msgError text-danger text-center text-bold">
+                                                Le champs commentaire est vide
+                                            </p>
                                             <form action="#" method="post" id="commentform" class="comment-form">
-                                                <input name="name" type="text" value="" placeholder="Name">
+                                                {{-- <input name="name" type="text" value="" placeholder="Name">
                                                 <input name="email" type="text" value="" placeholder="Email">
                                                 <input name="url" type="text" value=""
-                                                    placeholder="Subject">
-                                                <textarea id="comment-reply" name="comment" rows="5" placeholder="Type Here Your Comment"></textarea>
-                                                <button type="submit" class="lab-btn"><span>send comment</span></button>
+                                                    placeholder="Subject"> --}}
+                                                <textarea name="content" id="content" rows="5" placeholder="Ecrivez votre commentaire ici" required></textarea>
+                                                <input type="text" name="model" value="News" id="model" hidden>
+                                                <input type="text" name="news_id" id="news_id"
+                                                    value="{{ $news_detail['id'] }}" hidden>
+                                                <button type="submit" id="submit"
+                                                    class="lab-btn"><span>Envoyez</span></button>
                                             </form>
                                         </div>
                                     </div>
+                                   @endauth
+
+                                   @guest
+                                        @guest
+                                <a href="{{ route('user.login') }}" type="button" class="lab-btn mt-4"><span>
+
+                                        <i class="icofont-lock"></i> Connectez vous pour laisser un commentaire</span></a>
+                            @endguest
+                                   @endguest
                                 </div>
                             </div>
                         </div>
@@ -297,5 +294,63 @@
     </div>
     <!-- blog section ending here -->
 
+
+
+    <script type="text/javascript">
+        //send content comment
+        $(document).ready(function() {
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            //hide error message
+            $('.msgError').hide();
+
+            $('#submit').click(function(e) {
+                e.preventDefault();
+
+                var newsId = $('#news_id').val();
+                var model = $('#model').val();
+                var content = $("#content").val();
+
+                if (content == '') {
+                    $('.msgError').show(200);
+                } else {
+                    $('.msgError').hide();
+
+                    //send data to controller
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('addComment') }}",
+                        data: {
+                            newsId: newsId,
+                            model: model,
+                            content: content
+                        },
+                        dataType: "json",
+                        success: function(response) {
+
+                            if (response.message =='data found') {
+                                location.reload();
+                            }
+                            // $("#content").val('');
+                            // $('#news_content').append(response.data.content);
+                            // $('#created_at').append(response.data.created_at);
+                        }
+                    });
+                }
+
+
+
+            });
+
+        });
+    </script>
 
 @endsection
