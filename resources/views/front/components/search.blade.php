@@ -55,3 +55,19 @@
         </div>
     </form>
 </div>
+
+@push('js')
+    <script>
+          $(".multiple").select2({
+        placeholder: "Choisir......",
+        allowClear: true
+        // closeOnSelect: false
+    });
+
+      $(".single").select2({
+        placeholder: "Choisir......",
+        allowClear: true
+        // closeOnSelect: false
+    });
+    </script>
+@endpush

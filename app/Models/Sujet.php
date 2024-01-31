@@ -12,6 +12,7 @@ class Sujet extends Model
     protected $fillable = [
         'sujet_title',
         'category_id',
+        'user_id',
         'etablissement_id',
         'annee',
         'sujet_file',
@@ -22,6 +23,10 @@ class Sujet extends Model
         'deleted_at'
         ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
         public function niveaux():BelongsToMany {
             return $this->belongsToMany(Niveau::class)->withTimestamps();
@@ -44,5 +49,11 @@ class Sujet extends Model
         public function commentaires(){
             return $this->hasMany(Commentaire::class);
         }
+
+    public function user_download(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'telechargements_table', 'sujet_id', 'user_id')->withTimestamps();
+    }
+
 
 }

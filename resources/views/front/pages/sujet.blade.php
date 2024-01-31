@@ -71,7 +71,7 @@
                                             @foreach ($sujets as $item)
                                                 <div class="col">
                                                     <div class="sujet-recent bg-white p-2">
-                                                        <a href="blog-single.html">
+                                                        <a href="#">
                                                             <h3>
                                                                 {{ $item['sujet_title'] }}
                                                             </h3>
@@ -100,11 +100,13 @@
                                                         {{-- si utilisateur connecté il peut telecharger --}}
                                                         @auth
                                                             <a href="{{ asset('storage/' . $item->sujet_file) }}"
-                                                                class="lab-btn mt-2"><span>Télecharger le sujet
+                                                                class="lab-btn mt-2 btn-download"
+                                                                data-id="{{ $item['id'] }}"><span>Télecharger le sujet
                                                                     <i class="icofont-download"></i></span></a>
 
                                                             <a href="{{ asset('storage/' . $item->corrige_file) }}"
-                                                                class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
+                                                                class="lab-btn mt-2 btn-download  {{ $item->corrige_file ? ' ' : 'd-none' }} "
+                                                                data-id="{{ $item['id'] }}"><span>Télecharger
                                                                     le corrigé
                                                                     <i class="icofont-download"></i></span></a>
                                                         @endauth
@@ -166,16 +168,21 @@
     </div>
     <!-- course section ending here -->
     <script>
-        (function($) {
-            "use strict";
-            $(document).ready(function() {
-                $('.modal-link').on('click', function() {
-                    $('body').addClass("modal-open");
-                });
-                $('.close-modal').on('click', function() {
-                    $('body').removeClass("modal-open");
-                });
+        $(document).ready(function() {
+            $('.btn-download').click(function(e) {
+                e.preventDefault();
+
+                var userId = {{ Js::from(Auth::user()->id) }} //Id du user connecté
+                var userPoint = {{ Js::from(Auth::user()->point) }} //Point du user connecté
+                var sujetId = $(this).attr("data-id");
+
+                if (userPoint == 0) {
+                    
+                }
+
+
+
             });
-        }(jQuery));
+        });
     </script>
 @endsection

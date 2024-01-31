@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="front/assets/css/lightcase.css">
     <link rel="stylesheet" href="front/assets/css/style.css">
     <link rel="stylesheet" href="front/assets/css/custom.css">
+    @stack('css')
 </head>
 
 
@@ -239,18 +240,25 @@
 <script src="{{ asset('front/assets/js/functions.js') }}"></script>
 <script src="{{ asset('back/assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
 
+@stack('js')
 
 <script>
-    $(".single").select2({
-        placeholder: "Choisir ......",
-        allowClear: true
-        // closeOnSelect: false
-    });
-    $(".multiple").select2({
-        placeholder: "Choisir......",
-        allowClear: true
-        // closeOnSelect: false
-    });
+    // $(".single").select2({
+    //     placeholder: "Choisir ......",
+    //     allowClear: true
+    //     // closeOnSelect: false
+    // });
+    // $(".multiple").select2({
+    //     placeholder: "Choisir......",
+    //     allowClear: true
+    //     // closeOnSelect: false
+    // });
+    
+
+
+
+    
+    
 </script>
 </body>
 

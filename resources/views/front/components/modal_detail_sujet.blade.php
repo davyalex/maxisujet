@@ -36,7 +36,7 @@
 
                         <li class="{{ $item['etablissement'] ? ' ' : 'd-none' }}">
                             <span style="font-weight:bold" class="">Etablissement</span>:
-                            <span class=""> {{ $item['etablissement']['title'] }}</span>
+                            <span class=""> {{ $item['etablissement'] ? $item['etablissement']['title'] : '' }}</span>
 
                         </li>
 
@@ -95,7 +95,7 @@
                             <h5>Ajouter un commentaire</h5>
                             <textarea class="form-control" name="content" id="content" cols="20" rows="
                         5"></textarea>
-                        <input type="text" name="model" value="Sujet" id="" hidden>
+                        <input type="text" name="model" value="Sujet"  hidden>
                         <input type="text" name="sujet_id" value="{{$item['id']}}" hidden>
 
                             <button type="submit" id="submit" class="btn btn-outline-primary">Envoyer</button><br><br>

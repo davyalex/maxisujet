@@ -61,7 +61,7 @@
                                 @foreach ($sujet_recents as $item)
                                     <div class="col">
                                         <div class="sujet-recent bg-white p-2">
-                                            <a href="blog-single.html">
+                                            <a href="#">
                                                 <h3>
                                                     {{ $item['sujet_title'] }}
                                                 </h3>

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Telechargement;
 use App\Models\CategoryInformation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backend\NewsController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\frontend\SujetFrontController;
 use App\Http\Controllers\backend\CategoryNewsController;
 use App\Http\Controllers\frontend\CommentaireController;
 use App\Http\Controllers\backend\EtablissementController;
+use App\Http\Controllers\frontend\TelechargementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +46,7 @@ Route::controller(AuthAdminController::class)->group(function () {
   route::post('/sign-in', 'login')->name('auth.login');
 });
 
-Route::prefix("admin")->middleware('admin')->group(function () {
+Route::prefix("admin")->middleware(['admin'])->group(function () {
   //Authentification 
   Route::controller(AuthAdminController::class)->prefix('auth-admin')->group(function () {
     route::get('', 'listUser')->name('user.index');
@@ -136,6 +138,15 @@ Route::prefix("admin")->middleware('admin')->group(function () {
   });
 });
 
+//Sujet dashboard and user
+Route::controller(SujetController::class)->prefix('sujet')->group(function () {
+  Route::get('/', 'index')->name('sujet.index')->middleware('auth');;
+  Route::post('/store', 'store')->name('sujet.store');
+  route::get('edit/{id}', 'edit')->name('sujet.edit');
+  route::post('update/{id}', 'update')->name('sujet.update');
+  route::post('destroy/{id}', 'destroy')->name('sujet.destroy');
+});
+
 
 /*********************ROUTE FRONTEND ********************************************** */
 
@@ -162,7 +173,7 @@ Route::controller(NewsFrontController::class)->group(function () {
   // Route::post('/liste-des-sujets', 'search')->name('search');
 });
 
- //Auth user
+//Auth user
 Route::controller(AuthUserController::class)->group(function () {
   route::get('/connexion', 'login')->name('user.login');
   route::post('/connexion', 'login')->name('user.login');
@@ -170,13 +181,12 @@ Route::controller(AuthUserController::class)->group(function () {
   route::get('/inscription', 'register')->name('user.register');
   route::post('/inscription', 'register')->name('user.register');
   route::get('logout', 'logout')->name('user.logout')->middleware('auth');
-
 });
 
 //user account dashboard
 Route::controller(AccountController::class)->group(function () {
-  route::get('/mon-compte', 'dashboard')->name('user_account.dashboard');
-
+  route::get('/mon-compte', 'dashboard')->name('user_account.dashboard')->middleware('auth');
+  route::get('/mon-compte/sujet/edit/{id}', 'edit')->name('user_account.edit-sujet')->middleware('auth');;
 
 });
 
@@ -184,5 +194,6 @@ Route::controller(CommentaireController::class)->group(function () {
   route::post('store', 'store')->name('addComment')->middleware('auth');
 });
 
-
-
+Route::controller(TelechargementController::class)->group(function () {
+  route::get('saveDownload', 'store')->name('addComment')->middleware('auth');
+});

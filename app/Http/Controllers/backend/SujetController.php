@@ -7,6 +7,7 @@ use App\Models\Categorie;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SujetController extends Controller
@@ -14,7 +15,7 @@ class SujetController extends Controller
     //index
     public function index()
     {
-        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])->get();
+        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'user'])->get();
         // dd($sujets->toArray());
         return view('admin.pages.sujet.index', compact('sujets'));
     }
@@ -36,6 +37,8 @@ class SujetController extends Controller
         if ($request->hasFile('corrige_file')) {
             $fileNameCorrige =  $uuid2 . '.' . $request->corrige_file->extension();
             $request->corrige_file->storeAs('public/', $fileNameCorrige);
+        }else {
+            $fileNameCorrige = '';
         }
 
         //get category name from category_id
@@ -50,6 +53,7 @@ class SujetController extends Controller
             'etablissement_id' => $request['etablissement_id'],
             'sujet_file' => $fileNameSujet,
             'corrige_file' => $fileNameCorrige,
+            'user_id' => Auth::user()->id,
         ]);
 
 
@@ -71,7 +75,7 @@ class SujetController extends Controller
     //edit
     public function edit(Request $request, $id)
     {
-        $sujet = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])
+        $sujet = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement','user'])
         ->whereId($id)
         ->first();
         // dd($sujet->toArray());
@@ -120,6 +124,8 @@ class SujetController extends Controller
             'etablissement_id' => $request['etablissement_id'],
             'sujet_file' => $fileNameSujet,
             'corrige_file' => $fileNameCorrige,
+            'user_id' => Auth::user()->id,
+
         ]);
 
         //update pivot table

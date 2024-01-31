@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use App\Models\Sujet;
 use App\Models\Niveau;
 use App\Models\Matiere;
@@ -10,6 +11,7 @@ use App\Models\CategoryNews;
 use App\Models\Etablissement;
 use Spatie\Permission\Models\Role;
 use App\Models\CategoryInformation;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+    
         //categories 
         $categories = Categorie::with('sujets')
         ->orderBy('title', 'ASC')->get();

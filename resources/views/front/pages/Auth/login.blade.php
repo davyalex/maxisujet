@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <input type="password" placeholder="Mot de passe" name="password" required>
                     </div>
-                    <input type="text" name="url_previous" value="{{ url()->previous() }}" id="" hidden>
+                    <input type="text" name="url_previous" value="{{ url()->previous() }}"  hidden>
 
                     <div class="form-group">
                         <button type="submit" class="lab-btn"><span>Se connecter</span></button>

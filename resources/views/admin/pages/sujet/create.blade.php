@@ -86,7 +86,7 @@
                         <label>Etablissement</label>
                         <div class="input-group">
                             <select style="width:600px" name="etablissement_id" class="form-control" required>
-                                <option>Selectionner</option>
+                                <option></option>
                                 @foreach ($etablissements as $item)
                                     <option value="{{ $item['id'] }}">{{ $item['title'] }} </option>
                                 @endforeach
@@ -99,7 +99,7 @@
                         <label>Année</label>
                         <div class="input-group">
                             <select style="width:600px" name="annee" class="form-control" required>
-                                <option>Selectionner</option>
+                                <option></option>
 
                                 @for ($i = 1994; $i <= date('Y'); $i++)
                                     <option value="{{ $i }}">{{ $i }} </option>

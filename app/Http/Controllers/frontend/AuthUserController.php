@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Events\LoginAt;
+use App\Events\NewRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -46,13 +47,13 @@ class AuthUserController extends Controller
                 //on connecte l'utilisateur
                 Auth::login($user);
 
-                event(new LoginAt($user));
+                event(new NewRegister(Auth::user()));
 
                 // url vers la page precendente
                 $url_previous = $request['url_previous'];
 
                 return redirect()->away($url_previous)->with([
-                    'success' => "Inscription réussi",
+                    'success' => "Inscription réussi, Vous avez obtenu".Auth::user()->point. 'point',
                 ]);
             }
         }
@@ -79,7 +80,7 @@ class AuthUserController extends Controller
 
             if (Auth::attempt((array($fieldType => $request['username'], 'password' => $request['password'])))) {
                 event(new LoginAt(Auth::user()));
-                return redirect()->away($url_previous)->withSuccess('connexion reussi');
+                return redirect()->away($url_previous)->withSuccess('connexion reussi,  points '.Auth::user()->point.'!');
             } else {
                 return back()->withError('Identifiant ou mot de passe incorrect');
             }

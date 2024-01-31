@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->datetime('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
+            $table->integer('point')->nullable()->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

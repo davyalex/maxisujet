@@ -48,12 +48,17 @@
                                             <p style="font-weight:bold; font-size:20px;"> {{ Auth::user()->username }} </p>
                                             <p> {{ Auth::user()->email }} </p>
 
+                                             <p>
+                                                <span><i class="icofont-book"></i> Publications:</span>
+                                                <span style="color: rgb(246, 108, 3)"> {{Auth::user()->sujets->count()}} </span>
+                                            </p>
+
                                             <p>
                                                 <span><i class="icofont-download"></i> Télechargement:</span>
                                                 <span style="color: rgb(246, 108, 3)">0</span>
                                             </p>
 
-                                            <h2 style="color: rgb(246, 108, 3)">0
+                                            <h2 style="color: rgb(246, 108, 3)">{{ Auth::user()->point }}
                                                 <span class="text-danger" style="font-size: 16px">point</span>
                                             </h2>
                                         </div>
@@ -71,104 +76,67 @@
                                                 <nav>
                                                     <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
 
-                                                        <button class="nav-link active" id="nav-contact-tab" data-bs-toggle="tab"
-                                                            data-bs-target="#nav-contact" type="button" role="tab"
-                                                            aria-controls="nav-contact" aria-selected="false">
+                                                        <button class="nav-link active" id="nav-sujet-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#nav-sujet" type="button"
+                                                            role="tab" aria-controls="nav-contact"
+                                                            aria-selected="false">
                                                             <i class="icofont-files-stack"></i>
+                                                            Mes sujet</button>
+
+                                                        <button class="nav-link " id="nav-publier-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#nav-publier" type="button" role="tab"
+                                                            aria-controls="nav-contact" aria-selected="false">
+                                                            <i class="icofont-plus"></i>
                                                             Publier un sujet</button>
 
-                                                        <button class="nav-link " id="nav-home-tab"
-                                                            data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-                                                            role="tab" aria-controls="nav-home" aria-selected="true">
+
+                                                        <button class="nav-link " id="nav-home-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#nav-home" type="button" role="tab"
+                                                            aria-controls="nav-home" aria-selected="true">
                                                             <i class="icofont-download"></i>
                                                             Mes télechargements</button>
 
-                                                              <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                                        {{-- <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
                                                             data-bs-target="#nav-profile" type="button" role="tab"
                                                             aria-controls="nav-profile" aria-selected="false">
                                                             <i class="icofont-user"></i>
                                                             Mon
-                                                            profil</button>
+                                                            profil</button> --}}
 
 
                                                     </div>
                                                 </nav>
 
-
+                                                @includeIf('admin.components.validationMessage')
                                                 <div class="tab-content p-3 border bg-light" id="nav-tabContent">
-                                                    <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
+                                                    <div class="tab-pane fade " id="nav-home" role="tabpanel"
                                                         aria-labelledby="nav-home-tab">
-                                                        <p><strong>This is some placeholder content the Home tab's
-                                                                associated content.</strong>
-                                                            Clicking another tab will toggle the visibility of this one for
-                                                            the next. The tab JavaScript swaps
-                                                            classes to control the content visibility and styling. You can
-                                                            use it with tabs, pills, and any
-                                                            other <code>.nav</code>-powered navigation.</p>
+                                                        <p>
+                                                        <h3>Vous n'avez pas encore fait de télechargement</h3>
+                                                        @include('front.pages.account.telechargement.liste')
+                                                        </p>
                                                     </div>
                                                     <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                                                         aria-labelledby="nav-profile-tab">
                                                         <p>
+                                                            @include('front.pages.account.profil.profil')
 
-                                                            <!-- Login Section Section Starts Here -->
-                                                        <div class="login-section padding-tb section-bg">
-                                                            <div class="container">
-                                                                <div class="col-md-6 m-auto">
-                                                                    @include('admin.components.validationMessage')
-                                                                </div>
-                                                                <div class="account-wrapper">
-                                                                    <h3 class="title">S'inscrire</h3>
-                                                                    <small class="text-danger">Inscrivez vous pour
-                                                                        télecharger les sujets</small>
-                                                                    <form class="account-form" method="POST"
-                                                                        action="{{ route('user.register') }}">
-                                                                        @csrf
-                                                                        <div class="form-group">
-                                                                            <input type="text"
-                                                                                placeholder="Nom utilisateur"
-                                                                                name="username" required>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <input type="text" placeholder="Email"
-                                                                                name="email" required>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <input type="password"
-                                                                                placeholder="Mot de passe" name="password"
-                                                                                required>
-                                                                        </div>
-                                                                        {{-- <div class="form-group">
-                        <input type="password" placeholder="Confirm Password" name="password">
-                    </div> --}}
-                                                                        <input type="text" name="role"
-                                                                            value="client" id="" hidden>
-                                                                        <input type="text" name="url_previous"
-                                                                            value="{{ url()->previous() }}" id=""
-                                                                            hidden>
-
-                                                                        <div class="form-group">
-                                                                            <button type="submit"
-                                                                                class="lab-btn"><span>S'inscrire</span></button>
-                                                                        </div>
-                                                                    </form>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Login Section Section Ends Here -->
                                                         </p>
                                                     </div>
-                                                    <div class="tab-pane fade" id="nav-contact" role="tabpanel"
-                                                        aria-labelledby="nav-contact-tab">
-                                                        <p><strong>This is some placeholder content the Contact tab's
-                                                                associated content.</strong>
-                                                            Clicking another tab will toggle the visibility of this one for
-                                                            the next.
-                                                            The tab JavaScript swaps classes to control the content
-                                                            visibility and styling. You can use it with
-                                                            tabs, pills, and any other <code>.nav</code>-powered navigation.
+                                                    <div class="tab-pane fade active show" id="nav-sujet" role="tabpanel"
+                                                        aria-labelledby="nav-sujet-tab">
+                                                        <p>
+                                                            @include('front.pages.account.sujet.liste')
                                                         </p>
                                                     </div>
+
+                                                    <div class="tab-pane fade" id="nav-publier" role="tabpanel"
+                                                        aria-labelledby="nav-publier-tab">
+                                                        <p>
+                                                            @include('front.pages.account.sujet.create')
+                                                        </p>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -189,6 +157,36 @@
 
 
 
+    @push('js')
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+                'use strict'
 
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                    .forEach(function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })
+            ()
+
+            $(".multiple").select2({
+                placeholder: "Choisir......",
+                allowClear: true
+                // closeOnSelect: false
+            });
+        </script>
+    @endpush
 
 @endsection

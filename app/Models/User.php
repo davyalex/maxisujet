@@ -10,6 +10,7 @@ use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -25,7 +26,9 @@ class User extends Authenticatable
         'email',
         'password',
         'last_login_at',
-        'last_login_ip'
+        'last_login_ip',
+        'point'
+
     ];
 
 
@@ -40,9 +43,20 @@ class User extends Authenticatable
         return $this->hasMany(News::class);
     }
 
+    public function sujets(): HasMany
+    {
+        return $this->hasMany(Sujet::class);
+    }
+
     public function commentaires(): HasMany
     {
         return $this->hasMany(Commentaire::class);
+    }
+
+    
+    public function sujet_download(): BelongsToMany
+    {
+        return $this->belongsToMany(Sujet::class, 'telechargements_table', 'user_id', 'sujet_id')->withTimestamps();
     }
 
     /**

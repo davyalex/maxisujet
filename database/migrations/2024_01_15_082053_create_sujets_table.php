@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('sujet_title')->nullable();
             $table->text('description')->nullable();
+            
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
 
             $table->foreignId('category_id')
             ->nullable()

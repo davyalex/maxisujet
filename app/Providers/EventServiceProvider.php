@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Events\LoginAt;
+use App\Events\NewRegister;
 use App\Listeners\LoginSuccess;
+use App\Listeners\RegisterSuccess;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,11 @@ class EventServiceProvider extends ServiceProvider
 
         LoginAt::class => [
             LoginSuccess::class,
+        ],
+
+        NewRegister::class => [
+            RegisterSuccess::class,
+
         ],
     ];
 

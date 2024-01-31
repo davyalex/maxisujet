@@ -51,8 +51,8 @@
                     {{-- <div class="form-group">
                         <input type="password" placeholder="Confirm Password" name="password">
                     </div> --}}
-                    <input type="text" name="role" value="client" id="" hidden>
-                    <input type="text" name="url_previous" value="{{url()->previous()}}" id="" hidden>
+                    <input type="text" name="role" value="client"  hidden>
+                    <input type="text" name="url_previous" value="{{url()->previous()}}"  hidden>
 
                     <div class="form-group">
                         <button type="submit" class="lab-btn"><span>S'inscrire</span></button>
