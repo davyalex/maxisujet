@@ -42,7 +42,7 @@
                         </li>
 
 
-                        <li>
+                        {{-- <li>
                             <span style="font-weight:bold" class="">Sujet</span>:
                             <span><i class="icofont-file-pdf"></i> Fichier du sujet</span>
                             @auth
@@ -72,7 +72,7 @@
 
                                         <i class="icofont-download"></i></span></a>
                             @endguest
-                        </li>
+                        </li> --}}
 
 
 
@@ -92,7 +92,7 @@
                     {{-- commentaire --}}
 
 
-                    {{-- <div id="comments" class="comments">
+                    <div id="comments" class="comments">
                         <h4 class="title-border"> Commentaires ( {{ count($item->commentaires) }})</h4>
                         <ul class="comment-list">
                             @foreach ($item['commentaires'] as $items)
@@ -114,9 +114,9 @@
                                 </li>
                             @endforeach
                         </ul>
-                    </div> --}}
+                    </div> 
 
-                    {{-- @auth
+                    @auth
                         <div class="form-comment">
                             <h5>Ajouter un commentaire</h5>
                             <p class="msgError text-danger text-center text-bold">
@@ -129,7 +129,7 @@
 
                             <button type="submit" id="submit" class="btn btn-outline-primary">Envoyer</button><br><br>
                         </div>
-                    @endauth --}}
+                    @endauth
 
 
 
@@ -167,6 +167,7 @@
 
         $('#submit').click(function(e) {
             e.preventDefault();
+           
 
             var sujetId = $('#sujet_id').val();
             var model = $('#model').val();

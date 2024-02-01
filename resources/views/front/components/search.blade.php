@@ -1,5 +1,5 @@
 <div class="content-search mt-4">
-    <form action="{{route('search')}}" method="POST">
+    <form action="{{route('search')}}" method="GET">
         @csrf
         <div class="container">
             <div class="row">

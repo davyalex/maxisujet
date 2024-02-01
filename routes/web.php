@@ -162,7 +162,7 @@ Route::controller(HomeController::class)->group(function () {
 //All sujet page
 Route::controller(SujetFrontController::class)->group(function () {
   Route::get('/sujet', 'allsujet')->name('allsujet');
-  Route::post('/liste-des-sujets', 'search')->name('search');
+  Route::get('/liste-des-sujets', 'search')->name('search');
 });
 
 
@@ -195,5 +195,5 @@ Route::controller(CommentaireController::class)->group(function () {
 });
 
 Route::controller(TelechargementController::class)->group(function () {
-  route::get('saveDownload', 'store')->name('download')->middleware('auth');
+  route::get('saveDownload', 'download')->name('download')->middleware('auth');
 });

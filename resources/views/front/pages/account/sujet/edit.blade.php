@@ -6,7 +6,7 @@
 
  <!-- Button trigger modal -->
  <!-- Modal -->
- <div class="modal fade" id="edit{{ $item['id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ {{-- <div class="modal fade" id="edit{{ $item['id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-dialog-scrollable">
          <div class="modal-content">
              <div class="modal-header">
@@ -14,7 +14,18 @@
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-                 <form action="{{ route('sujet.update', $item['id']) }}" class="needs-validation" novalidate=""
+               
+             </div>
+             <div class="modal-footer " style="display: none">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                 <button type="button" class="btn btn-primary">Valider</button>
+             </div>
+         </div>
+     </div>
+ </div> --}}
+
+
+   <form action="{{ route('sujet.update', $item['id']) }}" class="needs-validation" novalidate=""
                      method="post" enctype="multipart/form-data">
                      @csrf
                      <div class="card-body">
@@ -153,14 +164,6 @@
                          <button type="submit" class="btn btn-primary">Modifier</button>
                      </div>
                  </form>
-             </div>
-             <div class="modal-footer " style="display: none">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                 <button type="button" class="btn btn-primary">Valider</button>
-             </div>
-         </div>
-     </div>
- </div>
 
 
 

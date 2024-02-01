@@ -84,36 +84,53 @@
 
                                             {{-- si utilisateur connecté il peut telecharger --}}
                                             @auth
-                                                <a href="{{ asset('storage/' . $item->sujet_file) }}"
-                                                    class="lab-btn mt-2"><span>Télecharger le sujet
-                                                        <i class="icofont-download"></i></span></a>
+                                                <!-- ========== Verification sur le lien ========== -->
+                                                @if (Auth::user()->point > 0)
+                                                    <a href="{{ asset('storage/' . $item->sujet_file) }}"
+                                                    @elseif(Auth::user()->point == 0) <a href="#" @endif
+                                                        class="lab-btn mt-2 btn-download" data-id="{{ $item['id'] }}"
+                                                        data-file="{{ $item['sujet_file'] }}"><span>Télecharger le
+                                                            sujet
+                                                            <i class="icofont-download"></i></span></a>
 
-                                                <a href="{{ asset('storage/' . $item->corrige_file) }}"
-                                                    class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
-                                                        le corrigé
-                                                        <i class="icofont-download"></i></span></a>
-                                            @endauth
 
 
-                                            {{-- si  utilisateur n'est pas connecté on le redirige vers login --}}
-                                            @guest
-                                                <a href="{{ route('auth.login') }}" class="lab-btn mt-2"><span>Télecharger le
-                                                        sujet
-                                                        <i class="icofont-lock"></i></span></a>
+                                                    <!-- ========== Verification sur le lien ========== -->
+                                                    @if (Auth::user()->point > 0)
+                                                        <a href="{{ asset('storage/' . $item->corrige_file) }}"
+                                                        @elseif(Auth::user()->point == 0) <a href="#" @endif
+                                                            class="lab-btn mt-2 btn-download  {{ $item->corrige_file ? ' ' : 'd-none' }} "
+                                                            data-id="{{ $item['id'] }}"
+                                                            data-file="{{ $item['corrige_file'] }}"><span>Télecharger
+                                                                le corrigé
+                                                                <i class="icofont-download"></i></span></a>
+                                                    @endauth
 
-                                                <a href="{{ route('user.login') }}"
-                                                    class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
-                                                        le corrigé
-                                                        <i class="icofont-lock"></i></span></a>
-                                            @endguest
 
-                                            <a href="#" type="button" class="lab-btn mt-2" data-bs-toggle="modal"
-                                                data-bs-target="#sujet{{ $item['id'] }}"><span>Details
 
-                                                    <i class="icofont-eye"></i></span></a>
-                                        </div>
-                                    </div>
-                                    @include('front.components.modal_detail_sujet')
+                                                    {{-- si  utilisateur n'est pas connecté on le redirige vers login --}}
+                                                    @guest
+                                                        <a href="{{ route('auth.login') }}"
+                                                            class="lab-btn mt-2"><span>Télecharger le
+                                                                sujet
+                                                                <i class="icofont-lock"></i></span></a>
+
+                                                        <a href="{{ route('user.login') }}"
+                                                            class="lab-btn mt-2  {{ $item->corrige_file ? ' ' : 'd-none' }}"><span>Télecharger
+                                                                le corrigé
+                                                                <i class="icofont-lock"></i></span></a>
+                                                    @endguest
+
+                                                    <a class="lab-btn mt-2" data-bs-toggle="collapse"
+                                                        href="#collapsewithlink{{ $item['id'] }}" role="button"
+                                                        aria-expanded="false" aria-controls="collapsewithlink">
+                                                        <span>Détails
+                                                            <i class="icofont-eye"></i></span> </a>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    @include('front.components.detail_sujet')
+                                    {{-- @include('front.components.modal_detail_sujet') --}}
                                 @endforeach
 
                             </div>
@@ -440,5 +457,11 @@
         </div>
     </div>
     <!-- Maxi astuces et conseils section ending here -->
+
+
+
+    @push('js')
+        @include('front.pages.account.sujet.script.download')
+    @endpush
 
 @endsection

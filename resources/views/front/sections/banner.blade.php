@@ -10,8 +10,8 @@
                             Vous ne serez plus seul ,
                         </h2>
                         <p class="desc">maxisujets vous accompagne partout, et vous facilite l'apprentissage....</p>
-                        <form action="/" method="POST">
-                            {{-- @csrf
+                        {{-- <form action="/" method="POST">
+                            @csrf
                             <div class="banner-icon">
                                 <i class="icofont-search"></i>
                             </div>

@@ -48,14 +48,16 @@
                                             <p style="font-weight:bold; font-size:20px;"> {{ Auth::user()->username }} </p>
                                             <p> {{ Auth::user()->email }} </p>
 
-                                             <p>
+                                            <p>
                                                 <span><i class="icofont-book"></i> Publications:</span>
-                                                <span style="color: rgb(246, 108, 3)"> {{Auth::user()->sujets->count()}} </span>
+                                                <span style="color: rgb(246, 108, 3)"> {{ Auth::user()->sujets->count() }}
+                                                </span>
                                             </p>
 
                                             <p>
                                                 <span><i class="icofont-download"></i> Télechargement:</span>
-                                                <span style="color: rgb(246, 108, 3)">0</span>
+                                                <span style="color: rgb(246, 108, 3)">
+                                                    {{ count(Auth::user()->sujet_download) }} </span>
                                             </p>
 
                                             <h2 style="color: rgb(246, 108, 3)">{{ Auth::user()->point }}
@@ -112,8 +114,15 @@
                                                     <div class="tab-pane fade " id="nav-home" role="tabpanel"
                                                         aria-labelledby="nav-home-tab">
                                                         <p>
-                                                        <h3>Vous n'avez pas encore fait de télechargement</h3>
-                                                        @include('front.pages.account.telechargement.liste')
+
+                                                            @if (count(Auth::user()->sujet_download) > 0)
+                                                                {{ count(Auth::user()->sujet_download) }}
+                                                                sujet(s) téléchargé(s).
+                                                                @include('front.pages.account.telechargement.liste')
+                                                            @else
+                                                                <h3> Vous n'avez pas encore télécharger de fichier</h3>
+                                                            @endif
+
                                                         </p>
                                                     </div>
                                                     <div class="tab-pane fade" id="nav-profile" role="tabpanel"

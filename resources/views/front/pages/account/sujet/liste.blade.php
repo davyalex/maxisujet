@@ -32,24 +32,34 @@
                              </div>
                              {{-- si utilisateur connecté il peut telecharger --}}
                              @auth
-                                 <a href="" type="button" class="lab-btn mt-2" data-bs-toggle="modal"
-                                     data-bs-target="#edit{{ $item['id'] }}" style="font-size: 20px;">
-                                     <i class="icofont-edit"></i></a>
-
-                                 <a href="#" class=" lab-btn mt-2 delete" role="button"
-                                     data-id="{{ $item['id'] }}"><i class="icofont-trash"
+                                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapsewithlink{{$item['id']}}"
+                                     role="button" aria-expanded="false" aria-controls="collapsewithlink"><i class="icofont-eye text-white"
                                          style="font-size: 20px;"></i></a>
 
 
-                                 <a href="#" type="button" class="lab-btn mt-2" data-bs-toggle="modal"
+                                 <div class="collapse" id="collapsewithlink{{$item['id']}}">
+                                     <div class="card card-body">
+                                         @include('front.pages.account.sujet.edit') </div>
+                                 </div>
+
+
+                                 <a href="#" class="btn btn-danger delete" role="button"
+                                     data-id="{{ $item['id'] }}"><i class="icofont-trash text-white"
+                                         style="font-size: 20px;"></i></a>
+
+
+                                 {{-- <a href="#" type="button" class="lab-btn mt-2" data-bs-toggle="modal"
                                      data-bs-target="#sujet{{ $item['id'] }}" style="font-size: 20px;">
-                                     <i class="icofont-eye"></i></a>
+                                     <i class="icofont-eye"></i></a> --}}
 
                              @endauth
 
                          </div>
                      </div>
-                     @include('front.pages.account.sujet.edit')
+
+
+
+
                      @include('front.components.modal_detail_sujet')
                  @endforeach
 
@@ -77,14 +87,10 @@
 
 
 
- <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
-
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
 
 
-
- {{-- script JS for delete data --}}
  <script>
+     //script JS for delete data 
      $(document).ready(function() {
          $('.delete').on("click", function(e) {
              e.preventDefault();
@@ -132,5 +138,31 @@
                  }
              });
          });
+     });
+
+
+
+     /***** script pour la gestion du sujet ******/
+
+     // cacher par defaut
+
+     $('.btn_edit').click(function(e) {
+         e.preventDefault();
+         //  var  btnId=  $(this).attr("data-id")
+         //  var  divId=  $('.sujet_edit').attr('data-id');
+         //  if (btnId === divId) {
+         //     $('.sujet_edit').show();
+         //  }
+         //  console.log(btnId===divId);
+
+
+
+
+
+         //on affiche les infos du sujet
+         //  $('.sujet_edit').toggle(200);
+
+
+
      });
  </script>

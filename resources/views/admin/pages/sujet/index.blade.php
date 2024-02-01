@@ -127,7 +127,7 @@
             $('.delete').on("click", function(e) {
                 e.preventDefault();
                 var Id = $(this).attr('data-id');
-                Swal.fire({
+                Swal.fire({else
                     title: "Etes vous sûr ?",
                     text: "Vous ne pourrez pas revenir en arrière !",
                     icon: "warning",

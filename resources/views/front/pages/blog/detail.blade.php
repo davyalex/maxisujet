@@ -53,7 +53,8 @@
                                                         <li><i class="icofont-calendar"></i>
                                                             {{ \Carbon\Carbon::parse($news_detail['created_at'])->diffForHumans() }}
                                                         </li>
-                                                        <li><a href="#"><i class="icofont-speech-comments"></i>  {{count($news_detail['commentaires'])}} </a></li>
+                                                        <li><a href="#"><i class="icofont-speech-comments"></i>
+                                                                {{ count($news_detail['commentaires']) }} </a></li>
                                                     </ul>
                                                 </div>
                                                 <p>
@@ -65,58 +66,61 @@
 
 
                                     <div id="comments" class="comments">
-                                        <h4 class="title-border"> Commentaires ( {{ count($news_detail->commentaires) }})</h4>
+                                        <h4 class="title-border"> Commentaires ( {{ count($news_detail->commentaires) }})
+                                        </h4>
                                         <ul class="comment-list">
                                             @foreach ($news_detail['commentaires'] as $item)
-                                                
-                                            <li class="comment">
-                                                <div class="com-thumb">
-                                                    <img alt="" class="img-thumbnail" width="70%" src="{{asset('front/assets/images/custom/user_avatar.png')}}">
-                                                </div>
-                                                <div class="com-content">
-                                                    <div class="com-title">
-                                                        <div class="com-title-meta">
-                                                            <h6 id="auth_user"> {{$item['user']['username']}} </h6>
-                                                            <span id="created_at">  {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
-                                                        </div>
+                                                <li class="comment">
+                                                    <div class="com-thumb">
+                                                        <img alt="" class="img-thumbnail" width="70%"
+                                                            src="{{ asset('front/assets/images/custom/user_avatar.png') }}">
                                                     </div>
-                                                    <p id="news_content"> {{$item['content']}} </p>
-                                                </div>
-                                            </li>
+                                                    <div class="com-content">
+                                                        <div class="com-title">
+                                                            <div class="com-title-meta">
+                                                                <h6 id="auth_user"> {{ $item['user']['username'] }} </h6>
+                                                                <span id="created_at">
+                                                                    {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <p id="news_content"> {{ $item['content'] }} </p>
+                                                    </div>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
 
-                                   @auth
+                                    @auth
                                         <div id="respond" class="comment-respond mb-lg-0">
-                                        <h4 class="title-border">Laisser un commentaire</h4>
-                                        <div class="add-comment">
-                                            <p class="msgError text-danger text-center text-bold">
-                                                Le champs commentaire est vide
-                                            </p>
-                                            <form action="#" method="post" id="commentform" class="comment-form">
-                                                {{-- <input name="name" type="text" value="" placeholder="Name">
+                                            <h4 class="title-border">Laisser un commentaire</h4>
+                                            <div class="add-comment">
+                                                <p class="msgError text-danger text-center text-bold">
+                                                    Le champs commentaire est vide
+                                                </p>
+                                                <form action="#" method="post" id="commentform" class="comment-form">
+                                                    {{-- <input name="name" type="text" value="" placeholder="Name">
                                                 <input name="email" type="text" value="" placeholder="Email">
                                                 <input name="url" type="text" value=""
                                                     placeholder="Subject"> --}}
-                                                <textarea name="content" id="content" rows="5" placeholder="Ecrivez votre commentaire ici" required></textarea>
-                                                <input type="text" name="model" value="News" id="model" hidden>
-                                                <input type="text" name="news_id" id="news_id"
-                                                    value="{{ $news_detail['id'] }}" hidden>
-                                                <button type="submit" id="submit"
-                                                    class="lab-btn"><span>Envoyez</span></button>
-                                            </form>
+                                                    <textarea name="content" id="content" rows="5" placeholder="Ecrivez votre commentaire ici" required></textarea>
+                                                    <input type="text" name="model" value="News" id="model" hidden>
+                                                    <input type="text" name="news_id" id="news_id"
+                                                        value="{{ $news_detail['id'] }}" hidden>
+                                                    <button type="submit" id="submit"
+                                                        class="lab-btn"><span>Envoyez</span></button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                   @endauth
+                                    @endauth
 
-                                   @guest
+                                    @guest
                                         @guest
-                                <a href="{{ route('user.login') }}" type="button" class="lab-btn mt-4"><span>
+                                            <a href="{{ route('user.login') }}" type="button" class="lab-btn mt-4"><span>
 
-                                        <i class="icofont-lock"></i> Connectez vous pour laisser un commentaire</span></a>
-                            @endguest
-                                   @endguest
+                                                    <i class="icofont-lock"></i> Connectez vous pour laisser un
+                                                    commentaire</span></a>
+                                        @endguest
+                                    @endguest
                                 </div>
                             </div>
                         </div>
@@ -336,7 +340,7 @@
                         dataType: "json",
                         success: function(response) {
 
-                            if (response.message =='data found') {
+                            if (response.message == 'data found') {
                                 location.reload();
                             }
                             // $("#content").val('');

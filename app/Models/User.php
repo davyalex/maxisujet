@@ -56,7 +56,7 @@ class User extends Authenticatable
     
     public function sujet_download(): BelongsToMany
     {
-        return $this->belongsToMany(Sujet::class, 'telechargements_table', 'user_id', 'sujet_id')->withTimestamps();
+        return $this->belongsToMany(Sujet::class, 'telechargements', 'user_id', 'sujet_id')->withTimestamps();
     }
 
     /**

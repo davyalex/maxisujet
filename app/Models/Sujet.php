@@ -52,7 +52,7 @@ class Sujet extends Model
 
     public function user_download(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'telechargements_table', 'sujet_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'telechargements', 'sujet_id', 'user_id')->withTimestamps();
     }
 
 
