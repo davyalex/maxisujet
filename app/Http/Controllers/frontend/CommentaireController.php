@@ -10,6 +10,7 @@ class CommentaireController extends Controller
 {
     //
     public function store(Request $request){
+       
         $data = Commentaire::create([
             'content'=>$request['content'],
             'user_id' => auth()->user()->id,

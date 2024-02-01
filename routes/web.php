@@ -195,5 +195,5 @@ Route::controller(CommentaireController::class)->group(function () {
 });
 
 Route::controller(TelechargementController::class)->group(function () {
-  route::get('saveDownload', 'store')->name('addComment')->middleware('auth');
+  route::get('saveDownload', 'store')->name('download')->middleware('auth');
 });

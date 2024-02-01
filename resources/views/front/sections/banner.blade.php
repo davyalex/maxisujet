@@ -10,13 +10,14 @@
                             Vous ne serez plus seul ,
                         </h2>
                         <p class="desc">maxisujets vous accompagne partout, et vous facilite l'apprentissage....</p>
-                        <form action="/">
+                        <form action="/" method="POST">
+                            {{-- @csrf
                             <div class="banner-icon">
                                 <i class="icofont-search"></i>
                             </div>
-                            <input type="text" placeholder="Ex: concour de police">
+                            <input type="text" name="q" placeholder="Ex: concour de police">
                             <button type="submit">Rechercher</button>
-                        </form>
+                        </form> --}}
                         {{-- <div class="banner-catagory d-flex flex-wrap">
                             <p>Most Popular : </p>
                             <ul class="lab-ul d-flex flex-wrap">

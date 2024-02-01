@@ -39,8 +39,9 @@ class SujetFrontController extends Controller
         $code_sujet = $request['code_sujet'];
         $niveaux = $request['niveaux'];
         $matieres = $request['matieres'];
+        // $search = $request['q'];
 
-        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])
+        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'commentaires'])
             ->when($category, function ($q) use ($category) {
                 return $q->where('category_id', $category);
             })
