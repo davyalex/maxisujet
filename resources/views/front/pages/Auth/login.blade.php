@@ -37,9 +37,9 @@
                 @include('admin.components.validationMessage')
             </div>
             <div class="account-wrapper">
-                <h3 class="title">Se connecter</h3>
-                <small class="text-danger">Connectez vous pour télecharger les sujets</small>
-                <form class="account-form" method="POST" action="{{ route('user.login') }}">
+                <h3 class="">Se connecter</h3>
+                <span class="text-bold">Connectez vous pour télecharger les sujets</span>
+                <form class="account-form mt-3" method="POST" action="{{ route('user.login') }}">
                     @csrf
                     <div class="form-group">
                         <input type="text" placeholder="Nom utilisateur ou Email" name="username" required>
