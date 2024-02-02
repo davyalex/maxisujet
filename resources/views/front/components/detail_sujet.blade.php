@@ -1,4 +1,4 @@
-<div class="collapse overflow-visible" id="collapsewithlink{{ $item['id'] }}">
+<div class="collapse" id="collapsewithlink{{ $item['id'] }}">
     <div class="card card-body">
 
         <div class="meta-post">
