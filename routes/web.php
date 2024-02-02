@@ -186,7 +186,7 @@ Route::controller(AuthUserController::class)->group(function () {
 //user account dashboard
 Route::controller(AccountController::class)->group(function () {
   route::get('/mon-compte', 'dashboard')->name('user_account.dashboard')->middleware('auth');
-  route::get('/mon-compte/sujet/edit/{id}', 'edit')->name('user_account.edit-sujet')->middleware('auth');;
+  route::get('/mon-compte/sujet/edit/{id}', 'edit')->name('user_account.edit-sujet')->middleware('auth');
 
 });
 

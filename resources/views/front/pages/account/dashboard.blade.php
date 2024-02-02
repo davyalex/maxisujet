@@ -111,7 +111,7 @@
 
                                                 @includeIf('admin.components.validationMessage')
                                                 <div class="tab-content p-3 border bg-light" id="nav-tabContent">
-                                                    <div class="tab-pane fade " id="nav-home" role="tabpanel"
+                                                    <div class="tab-pane fade overflow-auto " id="nav-home" role="tabpanel"
                                                         aria-labelledby="nav-home-tab">
                                                         <p>
 

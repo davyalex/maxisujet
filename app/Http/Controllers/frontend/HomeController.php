@@ -25,6 +25,17 @@ class HomeController extends Controller
         //get subject recent
         $sujet_recents = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])->take(6)->get();
         
+
+//Liste des sujets les plus telechargés
+$top_downloads=Sujet::withCount('downloading')->get();
+
+// dd($top_downloads->toArray());
+
         return view('front.pages.home',  compact('sujet_recents', 'actualites' , 'astuces', 'actualite', 'astuce'));
+    }
+
+
+    public function statistic(){
+
     }
 }

@@ -56,4 +56,11 @@ class Sujet extends Model
     }
 
 
+    public function downloading()
+    {
+        return $this->hasMany(Telechargement::class);
+    }
+
+
+
 }

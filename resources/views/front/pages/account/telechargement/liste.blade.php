@@ -1,6 +1,7 @@
-<ul>
+<div class=" overflow-auto">
+    <ul class="overflow-auto">
     @foreach ($user['sujet_download'] as $key => $item)
-        <li style="list-style: none">
+        <li style="list-style: none" class=" overflow-auto">
             {{ ++$key }} - <a class="btn btn-link" data-bs-toggle="collapse"
                 href="#collapsewithlink{{ $key }}" role="button" aria-expanded="false"
                 aria-controls="collapsewithlink"> sujet# {{ $item['sujet_title'] }} télechargé le
@@ -38,3 +39,5 @@
         </li>
     @endforeach
 </ul>
+
+</div>
