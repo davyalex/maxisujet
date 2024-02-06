@@ -41,6 +41,7 @@
             <div class="account-wrapper">
                 <h3 class="">S'inscrire</h3>
                 <span class="text-bold">Inscrivez vous pour télecharger les sujets</span>
+                <h4 class="title_code" style="color:rgb(250, 121, 15)">Entrer ce code pour continuer votre inscription</h4>
                 <form novalidate class="account-form mt-3 needs-validation form-horizontal" method="POST"
                     action="{{ route('user.register') }}">
                     @csrf
@@ -96,10 +97,10 @@
 
 
 
-                    <div class="form-group">
-                        <button class="lab-btn btn-code"><span>Continuer</span></button>
-                        <button type="submit" class="lab-btn btn-register"><span>S'inscrire</span></button>
+                    <div class="form-group form_hide">
+                        <button class="lab-btn btn-code "><span>Continuer</span></button>
                     </div>
+                    <button type="submit" class="lab-btn btn-register"><span>S'inscrire</span></button>
                 </form>
                 <div class="account-bottom">
                     <span class="d-block cate pt-10">Vous avez déjà un compte? <a
@@ -147,6 +148,11 @@
 
             //on cache le champs captcha
             $('#captcha_insert').hide();
+
+            $('.title_code').hide();
+
+
+
 
 
 
@@ -212,20 +218,28 @@
                         var code = Math.random().toString(36).slice(2)
                         $("#captcha").html(code);
                         $('#captcha_insert').show(200);
-                                            $('.form_hide').hide(200);
+                        $('.form_hide').hide(200);
+                        $('.title_code').show(200);
+                        
+
+
+
 
 
                     } else if ($('#profil_autre').is(':hidden') && profil.length > 0) {
                         var code = Math.random().toString(36).slice(2)
                         $("#captcha").html(code);
                         $('#captcha_insert').show(200);
-                                            $('.form_hide').hide(200);
+                        $('.form_hide').hide(200);
+                        $('.title_code').show(200);
+
+
 
 
                     } else if ($('#profil_autre').is(':visible') && $('#profil_autre').val().length == 0) {
                         $("#captcha").html('');
                         $('#captcha_insert').hide(200);
-                    } 
+                    }
 
                 }
 
@@ -237,6 +251,8 @@
                 var code = $("#captcha").html()
                 if (code !== captcha_insert) {
                     $('#Msg_captcha').html("Le code inseré est incorrect").css('color', 'red');
+                    $('.btn-register').hide(200);
+
 
                 } else {
                     $('#Msg_captcha').html("Le code correct").css('color', 'green');
