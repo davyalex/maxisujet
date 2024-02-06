@@ -177,6 +177,8 @@ Route::controller(NewsFrontController::class)->group(function () {
 Route::controller(AuthUserController::class)->group(function () {
   route::get('/connexion', 'login')->name('user.login');
   route::post('/connexion', 'login')->name('user.login');
+  route::post('/connexion', 'login')->name('user.login');
+
 
   route::get('/inscription', 'register')->name('user.register');
   route::post('/inscription', 'register')->name('user.register');

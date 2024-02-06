@@ -44,46 +44,61 @@
                 <form novalidate class="account-form mt-3 needs-validation form-horizontal" method="POST"
                     action="{{ route('user.register') }}">
                     @csrf
-                    <div class="form-group">
-                        <select class="form-control" name="profil" id="profil" required>
-                            <option selected disabled value>Sélectionner votre profil</option>
-                            <option value="eleve">Eleve</option>
-                            <option value="etudiant">Etudiant(e)</option>
-                            <option value="enseignant">Enseignant(e)</option>
-                            <option value="autre">Autre</option>
-                        </select>
-                        <div class="invalid-feedback"> {{ $msg_validation }} </div>
-                    </div>
-                    <div class="form-group profil_autre">
-                        <input type="text" class="form-control" placeholder="votre profil Ex :repetiteur, parent: "
-                            name="profil" required>
-                        <div class="invalid-feedback"> {{ $msg_validation }} </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nom utilisateur" name="username" required>
-                        <div class="invalid-feedback"> {{ $msg_validation }} </div>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Email" name="email" required>
-                        <div class="invalid-feedback"> {{ $msg_validation }} </div>
-                    </div>
-                    <div class="form-group">
-                        <input id="password" class="form-control" type="password" placeholder="Mot de passe" name="password" required>
-                        <div class="invalid-feedback"> {{ $msg_validation }} </div>
-                    </div>
-                    <div class="form-group">
-                        <input id="confirm_password" class="form-control" type="password" placeholder="Confirmer le mot de password"
-                            name="confirm_password" required>
-                        <div class="invalid-feedback"> {{ $msg_validation }} </div>
-                                                <p id="Msg_pwd"></p>
-                    </div>
+                    <div class="form_hide">
+                        <div class="form-group">
+                            <select class="form-control" name="profil" id="profil" required>
+                                <option selected disabled value>Sélectionner votre profil</option>
+                                <option value="eleve">Eleve</option>
+                                <option value="etudiant">Etudiant(e)</option>
+                                <option value="enseignant">Enseignant(e)</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                            <div class="invalid-feedback"> {{ $msg_validation }} </div>
+                        </div>
+                        <div class="form-group profil_autre">
+                            <input id="profil_autre" type="text" class="form-control"
+                                placeholder="votre profil Ex :repetiteur, parent: " name="profil_autre">
+                            <div class="invalid-feedback"> {{ $msg_validation }} </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="username" type="text" class="form-control" placeholder="Nom utilisateur"
+                                name="username" required>
+                            <div class="invalid-feedback"> {{ $msg_validation }} </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="email" class="form-control" type="text" placeholder="Email" name="email"
+                                required>
+                            <div class="invalid-feedback"> {{ $msg_validation }} </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="password" class="form-control" type="password" placeholder="Mot de passe"
+                                name="password" required>
+                            <div class="invalid-feedback"> {{ $msg_validation }} </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="confirm_password" class="form-control" type="password"
+                                placeholder="Confirmer le mot de password" name="confirm_password" required>
+                            <div class="invalid-feedback"> {{ $msg_validation }} </div>
+                            <p id="Msg_pwd"></p>
+                        </div>
 
 
-                    <input type="text" name="role" value="client" hidden>
-                    <input type="text" name="url_previous" value="{{ url()->previous() }}" hidden>
+                        <input type="text" name="role" value="client" hidden>
+                        <input type="text" name="url_previous" value="{{ url()->previous() }}" hidden>
+                    </div>
+
+                    <!-- ========== Start generate random code ========== -->
+                    <h4 id="captcha"></h4>
+                    <!-- ========== End generate random code ========== -->
+                    <input class="form-control" type="text" name="captcha" placeholder="Tapez le code generé içi"
+                        id="captcha_insert" required>
+                    <p id="Msg_captcha"></p>
+
+
 
                     <div class="form-group">
-                        <button type="submit" class="lab-btn"><span>S'inscrire</span></button>
+                        <button class="lab-btn btn-code"><span>Continuer</span></button>
+                        <button type="submit" class="lab-btn btn-register"><span>S'inscrire</span></button>
                     </div>
                 </form>
                 <div class="account-bottom">
@@ -123,32 +138,127 @@
 
             //Gestion du formulaire
 
-            //on cache le champs profil autre
+            //on cache la div du champs profil autre
             $('.profil_autre').hide();
+
+            //on cache les boutton register, continuer
+            $('.btn-code').hide();
+            $('.btn-register').hide();
+
+            //on cache le champs captcha
+            $('#captcha_insert').hide();
+
+
 
 
             //on verifie si les deux mot passe correspondent
             $('#password, #confirm_password').on('keyup', function() {
-                if ($('#password').val() == $('#confirm_password').val()) {
-                    $('#Msg_pwd').html('les mots de passe sont identiques!').css('color', 'white');
-                } else
+                var password = $('#password').val()
+                var confirm_password = $('#confirm_password').val()
+
+                if (password == confirm_password && password.length >= 8 && confirm_password.length >= 8) {
+                    $('#Msg_pwd').html('les mots de passe sont identiques!').css('color', 'green');
+                    $('.btn-code').show(200);
+                } else if (password != confirm_password) {
                     $('#Msg_pwd').html('les mots de passe ne sont pas identique!').css('color', 'red');
+                    $('.btn-code').hide(200);
+                } else if (password.length < 8 && confirm_password.length < 8) {
+                    $('#Msg_pwd').html("le mot de passe doit etre 8 caractere maximum").css('color', 'red');
+                    $('.btn-code').hide(200);
+                }
+
             });
+
+
 
             //on affiche le champs profil autre si  l'utilisateur coche la case "Autre"
-            $('#profil').change(function () { 
-                if($("option:selected").val() === "autre"){
-                   $('.profil_autre').show(200);  
-                }else{
-                     $('.profil_autre').hide(200); 
+            $('#profil').change(function() {
+                if ($("option:selected").val() === "autre") {
+                    $('.profil_autre').show(200);
+                    $('#profil_autre').prop('required', true);
+                } else {
+                    $('.profil_autre').hide(200);
+                    $('#profil_autre').prop('required', false);
+                    $('#profil_autre').val('');
                 };
-                
+            });
+
+
+
+            // on genere le code captcha
+            $(".btn-code").click(function(e) {
+                // e.preventDefault();
+
+                var profil = $('#profil').val();
+                var username = $('#username').val();
+                var email = $('#email').val();
+                var password = $('#password').val()
+                var confirm_password = $('#confirm_password').val()
+
+                //on verifie si les champs ne  sont pas vides
+                if (
+                    profil.length > 0 &&
+                    username.length > 0 &&
+                    email.length > 0 &&
+                    password.length > 0 &&
+                    confirm_password.length > 0
+                )
+
+                {
+
+
+                    if ($('#profil_autre').is(':visible') && $('#profil_autre').val().length > 0) {
+                        // on genere le code
+                        var code = Math.random().toString(36).slice(2)
+                        $("#captcha").html(code);
+                        $('#captcha_insert').show(200);
+                                            $('.form_hide').hide(200);
+
+
+                    } else if ($('#profil_autre').is(':hidden') && profil.length > 0) {
+                        var code = Math.random().toString(36).slice(2)
+                        $("#captcha").html(code);
+                        $('#captcha_insert').show(200);
+                                            $('.form_hide').hide(200);
+
+
+                    } else if ($('#profil_autre').is(':visible') && $('#profil_autre').val().length == 0) {
+                        $("#captcha").html('');
+                        $('#captcha_insert').hide(200);
+                    } 
+
+                }
+
+            });
+
+
+            $('#captcha_insert').keyup(function(e) {
+                var captcha_insert = $('#captcha_insert').val();
+                var code = $("#captcha").html()
+                if (code !== captcha_insert) {
+                    $('#Msg_captcha').html("Le code inseré est incorrect").css('color', 'red');
+
+                } else {
+                    $('#Msg_captcha').html("Le code correct").css('color', 'green');
+                    $('.btn-code').hide();
+                    $("#captcha").show();
+                    $('#captcha_insert').show(200);
+                    $('.btn-register').show(200);
+                }
+
+
             });
 
 
 
 
 
+
+
+
+            // on genere le code
+            // var code = Math.random().toString(36).slice(2)
+            // $("#captcha").html(code);
 
             // $(".multiple").select2({
             //     placeholder: "Choisir......",
