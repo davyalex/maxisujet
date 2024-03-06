@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Sujet;
 use App\Models\Niveau;
 use App\Models\Matiere;
@@ -30,15 +31,34 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-    
+        //supprimer tous les utilisateurs ou is_email_verified=0 et created_at  depasse 24H
+        $now = Carbon::now()->addDay(7)->format('Y-m-d H:i:s'); //ajout de 1 jour
+        // dd($now);
+        //    User::where('is_email_verified', 0)->where(function ($query) use($now){
+        //         //    $query->whereNull('email_verified_at')
+        //         $query->where('created_at','<',$now);
+        //    })->delete();
+        // User::where('created_at', '<', now()->addDay(7))
+        // ->where('is_email_verified', 0)
+        // ->delete();
+
+
+        // $admin = User::whereHas('roles', fn($q)=>$q->where('name', 'administrateur'))->get();
+        // $admin_email = [];
+        //     foreach ($admin as $value) {
+        //         $email = $value['email'];
+        //         array_push($admin_email, $email);
+        //     }
+
+
         //categories 
         $categories = Categorie::with('sujets')
-        ->orderBy('title', 'ASC')->get();
+            ->orderBy('title', 'ASC')->get();
 
         $categorie_news = CategoryNews::with('news')
-        ->orderBy('title', 'ASC')->get();
+            ->orderBy('title', 'ASC')->get();
 
-        
+
 
         //niveaux
         $niveaux = Niveau::with('parent')->orderBy('parent_id', 'DESC')
@@ -49,7 +69,7 @@ class AppServiceProvider extends ServiceProvider
 
         //niveaux avec les sous niveaux
         $niveaux_with_subNiveaux = Niveau::where('parent_id', null)->orderBy('parent_id', 'DESC')
-            ->with('subNiveaux', fn($q)=>$q->with('subNiveaux'))
+            ->with('subNiveaux', fn ($q) => $q->with('subNiveaux'))
             ->get();
 
 
@@ -69,7 +89,7 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-        view()->composer('*', function ($view) use ($categorie_news,$roles,$categories, $niveaux, $matieres, $niveaux_with_subNiveaux, $etablissements) {
+        view()->composer('*', function ($view) use ($categorie_news, $roles, $categories, $niveaux, $matieres, $niveaux_with_subNiveaux, $etablissements) {
             $view->with([
                 'categories' => $categories,
                 'categorie_news' => $categorie_news,

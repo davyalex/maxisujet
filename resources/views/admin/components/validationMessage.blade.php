@@ -81,8 +81,7 @@
 
       <script>
         $(document).ready(function () {
-          console.log('eee');
-          $('.msg').delay(5000).fadeOut('slow');
+          $('.msg').delay(15000).fadeOut('slow');
           
         });
       </script>

@@ -110,7 +110,7 @@
 
                                                     {{-- si  utilisateur n'est pas connecté on le redirige vers login --}}
                                                     @guest
-                                                        <a href="{{ route('auth.login') }}"
+                                                        <a href="{{ route('user.login') }}"
                                                             class="lab-btn mt-2"><span>Télecharger le
                                                                 sujet
                                                                 <i class="icofont-lock"></i></span></a>
@@ -222,7 +222,7 @@
                                         </a>
                                         <div class="meta-post">
                                             <ul class="lab-ul">
-                                                <li><i class="icofont-ui-user"></i>{{ $item['user']['username'] }} </li>
+                                                <li><i class="icofont-ui-user"></i>{{ $item['user']['username'] ?? '' }} </li>
                                                 <li><i class="icofont-calendar"></i>
                                                     {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }} </li>
                                             </ul>
@@ -417,7 +417,7 @@
                                                     <div class="meta-post">
                                                         <ul class="lab-ul">
                                                             <li><i
-                                                                    class="icofont-ui-user"></i>{{ $item['user']['username'] }}
+                                                                    class="icofont-ui-user"></i>{{ $item['user']['username'] ?? '' }}
                                                             </li>
                                                             <li><i class="icofont-calendar"></i>
                                                                 {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}
