@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
 use App\Http\Controllers\Controller;
+use App\Mail\RegisterEmailAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -27,19 +28,12 @@ class AuthUserController extends Controller
             return view('front.pages.Auth.register');
         } elseif (request()->method() == 'POST') {
 
-            //supprime les users ou email is not verified
-            User::where('created_at', '<', now()->addDay(1))
-                ->where('is_email_verified', 0)
-                ->delete();
-
             //on verifie si l'email entrée  : si  email existe deja dans la base on affiche un message d'erreur sinon on enregistre le nouvel utilisateur
             $user_email_verify = User::whereEmail($request['email'])
-                // ->where('is_email_verified', 1)
-                ->get();
-            $user_username_verify = User::whereUsername($request['username'])
-                // ->where('is_email_verified', 1)
                 ->get();
 
+            $user_username_verify = User::whereUsername($request['username'])
+                ->get();
 
             if ($user_email_verify->count() > 0) {
                 return back()->withError('Ce email est dejà associé un compte, veuillez utiliser un autre');
@@ -53,7 +47,7 @@ class AuthUserController extends Controller
                     'profil' => 'required'
                 ]);
 
-                $profil = $request['profil']=='autre' ? $request['profil_autre'] : $request['profil'] ;
+                $profil = $request['profil'] == 'autre' ? $request['profil_autre'] : $request['profil'];
 
                 $user = User::firstOrCreate([
                     'username' => $request->username,
@@ -117,6 +111,7 @@ class AuthUserController extends Controller
 
             if (Auth::attempt((array($fieldType => $request['username'], 'password' => $request['password'])))) {
                 event(new LoginAt(Auth::user()));
+
                 return redirect()->route('user_account.dashboard')->withSuccess('connexion reussi,  points ' . Auth::user()->point . '!');
             } else {
                 return back()->withError('Identifiant ou mot de passe incorrect');
@@ -155,8 +150,13 @@ class AuthUserController extends Controller
                 Auth::login($user_exist);
                 event(new NewRegister(Auth::user()));
 
+                //send email to all user admin
+                $admin = User::whereHas('roles', fn ($q) => $q->where('name', 'administrateur'))->get();
 
-                
+                foreach ($admin as $user) {
+                    Mail::to($user->email)->send(new RegisterEmailAdmin($user));
+                }
+
                 return redirect()->route('user_account.dashboard')->withSuccess('connexion reussi,  points ' . Auth::user()->point . '!');
             } else {
                 $message = "Votre e-mail est déjà vérifié, Vous pouvez maintenant vous connecter.";

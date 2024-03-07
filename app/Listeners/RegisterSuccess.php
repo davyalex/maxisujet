@@ -32,6 +32,7 @@ class RegisterSuccess
         //give point to user  if to first login or new register
         if (Auth::check()) {
             $event->user->increment('point', 20);
+            
         }
     }
 }
