@@ -57,7 +57,7 @@
                     <span class="d-block cate pt-10">Pas de compte? <a href="{{route('user.register')}}">Inscrivez-vous</a></span>
                 </div>
                 <p class="mt-3">
-                    <a class="fw-200 btn btn-link" href="">Vous avez oublié votre de passe ? cliquez içi</a>
+                    <a class="fw-200 btn btn-link" href="{{route('forget.password.get')}}">Vous avez oublié votre mot de passe ? cliquez içi</a>
                 </p>
             </div>
         </div>

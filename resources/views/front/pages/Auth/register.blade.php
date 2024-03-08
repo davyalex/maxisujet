@@ -169,7 +169,7 @@
                     $('#Msg_pwd').html('les mots de passe ne sont pas identique!').css('color', 'red');
                     $('.btn-code').hide(200);
                 } else if (password.length < 8 && confirm_password.length < 8) {
-                    $('#Msg_pwd').html("le mot de passe doit etre 8 caractere maximum").css('color', 'red');
+                    $('#Msg_pwd').html("le mot de passe doit etre 8 caractere minimun").css('color', 'red');
                     $('.btn-code').hide(200);
                 }
 

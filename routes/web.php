@@ -178,24 +178,29 @@ Route::controller(AuthUserController::class)->group(function () {
   route::get('/connexion', 'login')->name('user.login');
   route::post('/connexion', 'login')->name('user.login');
   route::post('/connexion', 'login')->name('user.login');
-  Route::get('account/verify/{token}', [AuthUserController::class, 'verifyAccount'])->name('user.verifyEmail');
-
+  route::get('account/verify/{token}', [AuthUserController::class, 'verifyAccount'])->name('user.verifyEmail');
 
   route::get('/inscription', 'register')->name('user.register');
   route::post('/inscription', 'register')->name('user.register');
   route::get('logout', 'logout')->name('user.logout')->middleware(['auth', 'is_verify_email']);
+
+  //forget password
+  Route::get('forget-password', [AuthUserController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+  Route::post('forget-password', [AuthUserController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+  Route::get('reset-password/{token}', [AuthUserController::class, 'showResetPasswordForm'])->name('reset.password.get');
+  Route::post('reset-password', [AuthUserController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 });
 
 //user account dashboard
 Route::controller(AccountController::class)->group(function () {
-  route::get('/mon-compte', 'dashboard')->name('user_account.dashboard')->middleware(['auth' , 'is_verify_email']);
-  route::get('/mon-compte/sujet/edit/{id}', 'edit')->name('user_account.edit-sujet')->middleware(['auth' , 'is_verify_email']);
+  route::get('/mon-compte', 'dashboard')->name('user_account.dashboard')->middleware(['auth', 'is_verify_email']);
+  route::get('/mon-compte/sujet/edit/{id}', 'edit')->name('user_account.edit-sujet')->middleware(['auth', 'is_verify_email']);
 });
 
 Route::controller(CommentaireController::class)->group(function () {
-  route::post('store', 'store')->name('addComment')->middleware(['auth' , 'is_verify_email']);
+  route::post('store', 'store')->name('addComment')->middleware(['auth', 'is_verify_email']);
 });
 
 Route::controller(TelechargementController::class)->group(function () {
-  route::get('saveDownload', 'download')->name('download')->middleware(['auth' , 'is_verify_email']);
+  route::get('saveDownload', 'download')->name('download')->middleware(['auth', 'is_verify_email']);
 });

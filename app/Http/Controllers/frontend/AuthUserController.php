@@ -9,9 +9,10 @@ use App\Models\UserVerify;
 use App\Events\NewRegister;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Login;
-use App\Http\Controllers\Controller;
 use App\Mail\RegisterEmailAdmin;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -165,10 +166,73 @@ class AuthUserController extends Controller
         }
     }
 
+
+
     //logout
     public function logout()
     {
         Auth::logout();
         return Redirect()->route('user.login')->withSuccess('deconnexion réussi');
     }
+
+
+
+
+
+    /******************************************* start FORGET PASSWORD************************************* */
+
+    //get form for send email
+    public function showForgetPasswordForm(Request $request)
+    {
+        return view('front.pages.Auth.forgetPassword.email_reset');
+    }
+
+    public function submitForgetPasswordForm(Request $request)
+    {
+
+        $mail_verify = User::whereEmail($request['email'])
+            ->first();
+        if (!$mail_verify) {
+            return back()->withError('Ce email n\'existe pas');
+        } else {
+            $request->validate([
+                'email' => 'required|email|exists:users',
+            ]);
+
+            DB::table('password_reset_tokens')->whereEmail($request['email'])->delete();
+
+            $token = Str::random(64);
+
+            DB::table('password_reset_tokens')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+
+            Mail::send('front.pages.Auth.forgetPassword.email_send', ['token' => $token], function ($message) use ($request) {
+                $message->to($request->email);
+                $message->subject('réinitialiser son mot de passe');
+            });
+
+            return back()->with('success', 'Nous avons envoyé par e-mail le lien de réinitialisation de votre mot de passe !');
+        }
+    }
+
+    public function showResetPasswordForm($token)
+    {
+        return view('front.pages.Auth.forgetPassword.new_password_reset', ['token' => $token]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /******************************************* end FORGET PASSWORD************************************* */
 }
