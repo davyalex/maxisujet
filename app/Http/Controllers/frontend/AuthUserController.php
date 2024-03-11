@@ -113,7 +113,7 @@ class AuthUserController extends Controller
             if (Auth::attempt((array($fieldType => $request['username'], 'password' => $request['password'])))) {
                 event(new LoginAt(Auth::user()));
 
-                return redirect()->route('user_account.dashboard')->withSuccess('connexion reussi,  points ' . Auth::user()->point . '!');
+                return redirect()->route('user_account.dashboard')->withSuccess('Vous etes bien connecté,  Le total de vos points est  ' . Auth::user()->point . '!');
             } else {
                 return back()->withError('Identifiant ou mot de passe incorrect');
             }
@@ -158,7 +158,7 @@ class AuthUserController extends Controller
                     Mail::to($user->email)->send(new RegisterEmailAdmin($user));
                 }
 
-                return redirect()->route('user_account.dashboard')->withSuccess('connexion reussi,  points ' . Auth::user()->point . '!');
+                return redirect()->route('user_account.dashboard')->withSuccess('Vous etes bien connecté,  Le total de vos points est  ' . Auth::user()->point . '!');
             } else {
                 $message = "Votre e-mail est déjà vérifié, Vous pouvez maintenant vous connecter.";
                 return redirect()->route('user.login')->with('success', $message);
@@ -187,6 +187,7 @@ class AuthUserController extends Controller
         return view('front.pages.Auth.forgetPassword.email_reset');
     }
 
+    //send  mail with link reset password
     public function submitForgetPasswordForm(Request $request)
     {
 
@@ -218,10 +219,74 @@ class AuthUserController extends Controller
         }
     }
 
-    public function showResetPasswordForm($token)
+    //form for new password
+
+    public function showResetPasswordForm(Request $request)
     {
-        return view('front.pages.Auth.forgetPassword.new_password_reset', ['token' => $token]);
+        $token  = request('token');
+
+        $verifyTokenExist = DB::table('password_reset_tokens')
+            ->where([
+                // 'email' => $request->email,
+                'token' => $token
+            ])
+            ->first();
+
+        if ($verifyTokenExist) {
+            //checking the time of token is expired or not
+
+            $currentTime = Carbon::now();
+            $timeWhenTokenCreated = Carbon::parse($verifyTokenExist->created_at);
+
+            $difference = $currentTime->diffInMinutes($timeWhenTokenCreated);
+
+            if ($difference >  15) {
+                DB::table('password_reset_tokens')->where(['token' => $token])->delete();
+
+                return redirect()->route('user.login')->withError('Le lien de reinitialisation à expiré');
+            } else {
+                return view('front.pages.Auth.new_password_reset');
+            }
+        } else {
+            return redirect()->route('user.login')->withError('Le lien de reinitialisation à expiré');
+        }
     }
+
+
+
+    //store  the new password in database and redirect to login page
+    public function submitResetPasswordForm(Request $request)
+    {
+
+        $request->validate([
+            // 'email' => 'required|email|exists:users',
+            'password' => 'required',
+            'confirm_password' => 'required'
+        ]);
+
+        $verifyTokenExist = DB::table('password_reset_tokens')
+            ->where([
+                // 'email' => $request->email,
+                'token' => $request->token
+            ])
+            ->first();
+
+
+
+        if (!$verifyTokenExist) {
+            return back()->withError('Token invalid');
+        } else {
+            $user = User::where('email', $verifyTokenExist->email)
+                ->update(['password' => Hash::make($request->password)]);
+
+            DB::table('password_reset_tokens')->where(['token' => $request->token])->delete();
+
+            return redirect(route('user.login'))->withSuccess('Votre mot de passe a été réinitialisé avec succès ! Connectez-vous maintenant');
+        }
+    }
+
+
+
 
 
 

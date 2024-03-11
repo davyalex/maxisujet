@@ -187,7 +187,7 @@ Route::controller(AuthUserController::class)->group(function () {
   //forget password
   Route::get('forget-password', [AuthUserController::class, 'showForgetPasswordForm'])->name('forget.password.get');
   Route::post('forget-password', [AuthUserController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
-  Route::get('reset-password/{token}', [AuthUserController::class, 'showResetPasswordForm'])->name('reset.password.get');
+  Route::get('reset-password', [AuthUserController::class, 'showResetPasswordForm'])->name('reset.password.get');
   Route::post('reset-password', [AuthUserController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 });
 

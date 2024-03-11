@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 
-@section('title', 'Nouveau mot de passe')
+{{-- @section('title', 'Nouveau mot de passe') --}}
 
 @section('content')
     @php
@@ -41,7 +41,7 @@
             <div class="account-wrapper">
                 <h3 class="">Definir un nouveau mot de passe</h3>
                 <form novalidate class="account-form mt-3 needs-validation form-horizontal" method="POST"
-                    action="{{ route('user.register') }}">
+                    action="{{ route('reset.password.post') }}">
                     @csrf
                     <div>
                         <div class="form-group">
@@ -55,6 +55,7 @@
                             <div class="invalid-feedback"> {{ $msg_validation }} </div>
                             <p id="Msg_pwd"></p>
                         </div>
+                        <input type="text" value="{{request('token')}}" name="token" hidden>
                     </div>
 
                     <button type="submit" class="lab-btn btn-register"><span>Valider</span></button>
