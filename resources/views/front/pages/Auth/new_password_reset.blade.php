@@ -45,13 +45,13 @@
                     @csrf
                     <div>
                         <div class="form-group">
-                            <input id="password" class="form-control" type="password" placeholder="Mot de passe"
+                            <input id="password" class="form-control" type="password" placeholder="Nouveau mot de passe"
                                 name="password" required>
                             <div class="invalid-feedback"> {{ $msg_validation }} </div>
                         </div>
                         <div class="form-group">
                             <input id="confirm_password" class="form-control" type="password"
-                                placeholder="Confirmer le mot de password" name="confirm_password" required>
+                                placeholder="Confirmer le nouveau mot de passe" name="confirm_password" required>
                             <div class="invalid-feedback"> {{ $msg_validation }} </div>
                             <p id="Msg_pwd"></p>
                         </div>
@@ -93,6 +93,9 @@
             ()
 
 
+//cacher le btn register
+$('.btn-register').hide();
+
             //on verifie si les deux mot passe correspondent
             $('#password, #confirm_password').on('keyup', function() {
                 var password = $('#password').val()
@@ -100,13 +103,13 @@
 
                 if (password == confirm_password && password.length >= 8 && confirm_password.length >= 8) {
                     $('#Msg_pwd').html('les mots de passe sont identiques!').css('color', 'green');
-                    $('.btn-code').show(200);
+                    $('.btn-register').show(200);
                 } else if (password != confirm_password) {
                     $('#Msg_pwd').html('les mots de passe ne sont pas identique!').css('color', 'red');
-                    $('.btn-code').hide(200);
+                    $('.btn-register').hide(200);
                 } else if (password.length < 8 && confirm_password.length < 8) {
                     $('#Msg_pwd').html("le mot de passe doit etre 8 caractere minimun").css('color', 'red');
-                    $('.btn-code').hide(200);
+                    $('.btn-register').hide(200);
                 }
 
             });
