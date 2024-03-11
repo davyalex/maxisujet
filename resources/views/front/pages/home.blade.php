@@ -88,7 +88,8 @@
                                                 @if (Auth::user()->point > 0)
                                                     <a href="{{ asset('storage/' . $item->sujet_file) }}"
                                                     @elseif(Auth::user()->point == 0) <a href="#" @endif
-                                                        class="lab-btn mt-2 btn-download" data-id="{{ $item['id'] }}"
+                                                        class="lab-btn mt-2 btn-download"
+                                                        data-id="{{ $item['id'] }}"
                                                         data-file="{{ $item['sujet_file'] }}"><span>Télecharger le
                                                             sujet
                                                             <i class="icofont-download"></i></span></a>
@@ -97,13 +98,14 @@
 
                                                     <!-- ========== Verification sur le lien ========== -->
                                                     @if (Auth::user()->point > 0)
-                                                        <a href="{{ asset('storage/' . $item->corrige_file) }}"
-                                                        @elseif(Auth::user()->point == 0) <a href="#" @endif
+                                                        <a href="{{ asset('storage/' . $item->corrige_file) }}" 
+                                                           @elseif (Auth::user()->point == 0) <a href="#" @endif
                                                             class="lab-btn mt-2 btn-download  {{ $item->corrige_file ? ' ' : 'd-none' }} "
                                                             data-id="{{ $item['id'] }}"
                                                             data-file="{{ $item['corrige_file'] }}"><span>Télecharger
                                                                 le corrigé
-                                                                <i class="icofont-download"></i></span></a>
+                                                                <i class="icofont-download"></i></span>
+                                                        </a>
                                                     @endauth
 
 
@@ -126,10 +128,10 @@
                                                         aria-expanded="false" aria-controls="collapsewithlink">
                                                         <span>Détails
                                                             <i class="icofont-eye"></i></span> </a>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    @include('front.components.detail_sujet')
+
+                                        </div>
+                                    </div>
+                                    @include('front.components.detail_sujet')
                                     {{-- @include('front.components.modal_detail_sujet') --}}
                                 @endforeach
 
@@ -222,7 +224,8 @@
                                         </a>
                                         <div class="meta-post">
                                             <ul class="lab-ul">
-                                                <li><i class="icofont-ui-user"></i>{{ $item['user']['username'] ?? '' }} </li>
+                                                <li><i class="icofont-ui-user"></i>{{ $item['user']['username'] ?? '' }}
+                                                </li>
                                                 <li><i class="icofont-calendar"></i>
                                                     {{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }} </li>
                                             </ul>

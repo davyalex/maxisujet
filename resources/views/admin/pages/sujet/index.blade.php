@@ -30,6 +30,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Approved</th>
                                         <th>categorie</th>
                                         <th>Matiere</th>
                                         <th>Niveau</th>
@@ -41,8 +42,10 @@
                                 <tbody>
 
                                     @foreach ($sujets as $key => $item)
-                                        <tr>
+                                        <tr id="row_{{$item['id']}}">
                                             <td>{{ ++$key }} </td>
+                                            <td class="badge badge-{{ $item['approved'] == 0 ? 'primary' : 'success' }}">
+                                                {{ $item['approved'] == 0 ? 'No' : 'Yes' }} </td>
                                             <td>{{ $item['categorie']['title'] }} </td>
                                             <td>
                                                 @foreach ($item['matieres'] as $matieres)
@@ -73,15 +76,29 @@
 
 
                                             <td>
-                                                {{-- <a href="{{ route('sujet.edit', $item['id']) }}" data-toggle="modal"
-                                                    data-target="#modalEdit{{ $item['id'] }}"><i
-                                                        class="fas fa-edit fs-20" style="font-size: 20px;"></i></a> --}}
-                                                <a href="{{ route('sujet.edit', $item['id']) }}"><i
-                                                        class="fas fa-edit fs-20" style="font-size: 20px;"></i></a>
 
-                                                <a href="#" class="delete" role="button"
-                                                    data-id="{{ $item['id'] }}"><i class="fas fa-trash text-danger"
-                                                        style="font-size: 20px;"></i></a>
+
+
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Actions
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="{{ route('sujet.approved', $item['id']) }}"
+                                                            class="dropdown-item {{$item['approved'] == 1 ? 'd-none' : ''}}"><i class="fas fa-check"></i> Approved</a>
+
+                                                        <a href="{{ route('sujet.edit', $item['id']) }}"
+                                                            class="dropdown-item "><i class="fas fa-edit"></i> Edit</a>
+
+                                                        <a href="#" class="dropdown-item delete" role="button"
+                                                            data-id="{{ $item['id'] }}"><i class="fas fa-trash"></i>
+                                                            Delete</a>
+
+
+                                                    </div>
+                                                </div>
+
                                             </td>
                                         </tr>
                                         {{-- modal edit form --}}
@@ -127,7 +144,7 @@
             $('.delete').on("click", function(e) {
                 e.preventDefault();
                 var Id = $(this).attr('data-id');
-                Swal.fire({else
+                Swal.fire({
                     title: "Etes vous sûr ?",
                     text: "Vous ne pourrez pas revenir en arrière !",
                     icon: "warning",
@@ -160,10 +177,8 @@
                                         timer: 500,
                                         timerProgressBar: true,
                                     });
-                                    setTimeout(function() {
-                                        window.location.href =
-                                            "{{ route('sujet.index') }}";
-                                    }, 500);
+                                    $('#row_'+Id).remove();
+                                   
                                 }
                             }
                         });

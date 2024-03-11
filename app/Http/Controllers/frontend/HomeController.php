@@ -23,7 +23,9 @@ class HomeController extends Controller
 
         // dd($astuce);
         //get subject recent
-        $sujet_recents = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])->take(6)->get();
+        $sujet_recents = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement'])->take(6)
+      ->whereApproved(1)
+        ->get();
         
 
 //Liste des sujets les plus telechargés

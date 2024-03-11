@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Models\User;
 use App\Models\Sujet;
 use App\Models\Categorie;
+use App\Mail\NewSujetEmail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class SujetController extends Controller
@@ -15,7 +18,9 @@ class SujetController extends Controller
     //index
     public function index()
     {
-        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'user'])->get();
+        $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'user'])
+            ->orderBy('created_at', 'desc')
+            ->get();
         // dd($sujets->toArray());
         return view('admin.pages.sujet.index', compact('sujets'));
     }
@@ -37,16 +42,16 @@ class SujetController extends Controller
         if ($request->hasFile('corrige_file')) {
             $fileNameCorrige =  $uuid2 . '.' . $request->corrige_file->extension();
             $request->corrige_file->storeAs('public/', $fileNameCorrige);
-        }else {
+        } else {
             $fileNameCorrige = '';
         }
 
         //get category name from category_id
         $category_name = Categorie::whereId($request['category_id'])->first();
         $category_name =  $category_name->title;
-        
+
         $sujet = Sujet::firstOrCreate([
-            'sujet_title' =>  $category_name.mt_rand(),
+            'sujet_title' =>  $category_name . mt_rand(),
             'category_id' => $request['category_id'],
             'description' => $request['description'],
             'annee' => $request['annee'],
@@ -68,6 +73,14 @@ class SujetController extends Controller
             $sujet->matieres()->attach($request['matieres']);
         }
 
+
+        //send email to all user admin
+        $admin = User::whereHas('roles', fn ($q) => $q->where('name', 'administrateur'))->get();
+
+        foreach ($admin as $user) {
+            Mail::to($user->email)->send(new NewSujetEmail($user));
+        }
+
         return back()->with('success', 'Nouveau sujet crée avec success');
     }
 
@@ -75,13 +88,13 @@ class SujetController extends Controller
     //edit
     public function edit(Request $request, $id)
     {
-        $sujet = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement','user'])
-        ->whereId($id)
-        ->first();
+        $sujet = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'user'])
+            ->whereId($id)
+            ->first();
         // dd($sujet->toArray());
         return view('admin.pages.sujet.edit', compact('sujet'));
     }
-        
+
 
 
 
@@ -156,5 +169,32 @@ class SujetController extends Controller
         return response()->json([
             'status' => 200
         ]);
+    }
+
+
+    //approved sujet
+    public function approved($id)
+    {
+
+        //change state approuved to 1
+
+        Sujet::find($id)->update([
+            'approved' => 1
+        ]);
+
+        //send mail after approuved sujet
+        $sujet = Sujet::whereId($id)
+            ->with('user')->first();
+        $user = $sujet->user;
+
+        Mail::send('admin.pages.email.email_approved_sujet', ['user' =>$user, 'sujet' => $sujet], function ($message) use ($user) {
+            $message->to($user['email']);
+            $message->subject('Votre sujet à été approuvé !');
+        });
+        
+       
+
+
+        return back()->with('success', 'Le sujet a été validé !');
     }
 }

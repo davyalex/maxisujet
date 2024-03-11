@@ -145,6 +145,8 @@ Route::controller(SujetController::class)->prefix('sujet')->group(function () {
   route::get('edit/{id}', 'edit')->name('sujet.edit');
   route::post('update/{id}', 'update')->name('sujet.update');
   route::post('destroy/{id}', 'destroy')->name('sujet.destroy');
+  route::get('approved/{id}', 'approved')->name('sujet.approved');
+
 });
 
 

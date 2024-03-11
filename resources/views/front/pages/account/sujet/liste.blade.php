@@ -5,10 +5,11 @@
                  @foreach ($sujets as $item)
                      <div class="col">
                          <div class="sujet-recent bg-white p-2">
-                             <a href="#">
+                             <a href="#" class="d-flex justify-content-around">
                                  <h3>
                                      {{ $item['sujet_title'] }}
                                  </h3>
+                                <span class="text-{{$item['approved']==0 ? 'primary' : 'success'}}"> {{$item['approved']==0 ? 'En attente de validation' : 'Sujet approuvé'}} </span>
                              </a>
                              <div class="meta-post">
                                  <span style="font-weight: bold" class="">Categorie</span>:

@@ -12,6 +12,7 @@ class Sujet extends Model
     protected $fillable = [
         'sujet_title',
         'category_id',
+        'approved', 
         'user_id',
         'etablissement_id',
         'annee',

@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('sujets', function (Blueprint $table) {
             //
-            $table->string('profil')->nullable()->after('username');
-
+            $table->boolean('approved')->default(0);
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('sujets', function (Blueprint $table) {
             //
         });
     }

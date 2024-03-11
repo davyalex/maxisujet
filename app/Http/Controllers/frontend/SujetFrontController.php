@@ -21,7 +21,7 @@ class SujetFrontController extends Controller
                     $q->where('niveau_sujet.niveau_id', request('niveau'));
                 });
             })
-
+            ->whereApproved(1)
             ->get();
 
 
@@ -61,9 +61,10 @@ class SujetFrontController extends Controller
                 return $q->whereHas('matieres', function ($q) use ($matieres) {
                     $q->where('matiere_sujet.matiere_id', $matieres);
                 });
-            })->get();
+            })
+            ->whereApproved(1)
+            ->get();
 
         return view('front.pages.sujet', compact('sujets'));
-
     }
 }
