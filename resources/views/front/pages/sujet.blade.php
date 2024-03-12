@@ -9,8 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="pageheader-content text-center">
-                        <h2> <span style="color:rgb(255, 84, 5)">{{ count($sujets) }} </span> Sujets disponibles</h2>
+                    <div class="pageheader-content text-center py-5">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
                                 <li class="breadcrumb-item"><a href="javascript:history.back()"><i
@@ -21,6 +20,31 @@
                                 <li class="breadcrumb-item active" aria-current="page">Listes des sujets</li>
                             </ol>
                         </nav>
+
+                        <h6> <span style="color:rgb(255, 84, 5)">{{ count($sujets) }} </span> Sujets <span
+                                style="color:rgb(255, 84, 5)">{{ request('title') }} </span> disponibles </h6>
+
+                        {{-- @if ($titre)
+                            <div class="request_title ">
+                                <span class="{{ $titre[0]['categorie_title'] ?? 'd-none' }}"> <b>Categorie</b> :
+                                    {{ $titre[0]['categorie_title']['title'] }}</span>
+                                <br><span class="{{ $titre[0]['matieres_title'] ?? 'd-none' }}"> <b>Matieres</b> :
+                                    @foreach ($titre[0]['matieres_title'] as $item)
+                                        {{ $item['title'] }},
+                                    @endforeach
+                                </span>
+                                <br><span class="{{ $titre[0]['niveaux_title'] ?? 'd-none' }}"> <b>Niveaux</b> :
+                                    @foreach ($titre[0]['niveaux_title'] as $item)
+                                        {{ $item['title'] }},
+                                    @endforeach
+                                </span>
+                                <br><span class="{{ $titre[0]['annee_title'] ?? 'd-none' }}"> <b>Année</b> :
+                                    {{ $titre[0]['annee_title'] }}</span>
+                                <br><span class="{{ $titre[0]['code_sujet_title'] ?? 'd-none' }}"> <b>Code sujet</b> :
+                                    {{ $titre[0]['code_sujet_title'] }}</span>
+                            </div>
+                        @endif --}}
+
                     </div>
                 </div>
             </div>
@@ -53,7 +77,7 @@
                                         <ul class="widget-wrapper">
                                             @foreach ($categories as $item)
                                                 <li>
-                                                    <a href="/sujet?category={{ $item['id'] }}"
+                                                    <a href="/sujet?category={{ $item['id'] }} && title={{ $item['title'] }}"
                                                         class="d-flex flex-wrap justify-content-between"><span><i
                                                                 class="icofont-double-right"></i> {{ $item['title'] }}
                                                         </span><span> {{ $item->sujets->count() }} </span></a>

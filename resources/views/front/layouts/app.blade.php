@@ -62,7 +62,7 @@
 <div class="container-fluid">
     <div class="row">
         <!--div google ads start -->
-        <div class="col-md-1 col-sm-0 col-xs-0 col-lg-1"></div>
+        <div class="col-md-1 col-sm-12 col-xs-12 col-lg-1"></div>
         <!--div google ads end -->
 
 
@@ -73,7 +73,7 @@
         </div>
 
         <!--div google ads start -->
-        <div class="col-md-1 ol-sm-0 col-xs-0 col-lg-1"></div>
+        <div class="col-md-1 ol-sm-12 col-xs-12 col-lg-1"></div>
         <!--div google ads end -->
     </div>
 </div>

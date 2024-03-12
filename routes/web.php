@@ -146,7 +146,6 @@ Route::controller(SujetController::class)->prefix('sujet')->group(function () {
   route::post('update/{id}', 'update')->name('sujet.update');
   route::post('destroy/{id}', 'destroy')->name('sujet.destroy');
   route::get('approved/{id}', 'approved')->name('sujet.approved');
-
 });
 
 
@@ -206,3 +205,7 @@ Route::controller(CommentaireController::class)->group(function () {
 Route::controller(TelechargementController::class)->group(function () {
   route::get('saveDownload', 'download')->name('download')->middleware(['auth', 'is_verify_email']);
 });
+
+
+
+ 

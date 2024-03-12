@@ -23,7 +23,7 @@ class Categorie extends Model
 
         public function sujets(): HasMany
         {
-            return $this->hasMany(Sujet::class, 'category_id');
+            return $this->hasMany(Sujet::class, 'category_id')->whereApproved(1);
         }
 
 
