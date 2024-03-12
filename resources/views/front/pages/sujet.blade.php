@@ -22,7 +22,52 @@
                         </nav>
 
                         <h6> <span style="color:rgb(255, 84, 5)">{{ count($sujets) }} </span> Sujets <span
-                                style="color:rgb(255, 84, 5)">{{ request('title') }} </span> disponibles </h6>
+                                style="color:rgb(255, 84, 5)">{{ request('title') }} </span> disponibles selon les critères
+                            suivants: </h6>
+
+
+                        <!-- ========== Start critere de recherche ========== -->
+                        <div class="">
+                            <p>
+                                @if ($categorie_req)
+                                    Catégories : <b>{{ $categorie_req['title'] }}</b>,
+                                @endif
+                            </p>
+
+                            <p>
+                                @if ($matieres_req)
+                                    Matieres:
+                                    @foreach ($matieres_req as $item)
+                                        <b>{{ $item['title'] }} ,</b>
+                                    @endforeach
+                                @endif
+                            </p>
+
+                            <p>
+                                @if ($niveaux_req)
+                                    Niveaux:
+                                    @foreach ($niveaux_req as $item)
+                                       <b> {{ $item['title'] }} ,</b>
+                                    @endforeach
+                                @endif
+                            </p>
+
+                            <p>
+                                @if ($annee_req)
+                                    Année : <b>{{ $annee_req }}</b>,
+                                @endif
+                            </p>
+
+                            <p>
+                                @if ($code_req)
+                                    Code du sujet : <b>{{ $code_req }}</b>,
+                                @endif
+                            </p>
+                        </div>
+                        <!-- ========== End critere de recherche ========== -->
+
+
+
 
                         {{-- @if ($titre)
                             <div class="request_title ">

@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <label>Code sujet</label>
-                    <input name="code_sujet" class="form-control">
+                    <input name="code_sujet" {{old('code_sujet')}} class="form-control">
                 </div>
                 <div class="col-md-8 col-sm-12 col-xs-12 ">
                     <button type="submit" class="btn btn-primary btn-search w-100 mt-4">Rechercher</button>

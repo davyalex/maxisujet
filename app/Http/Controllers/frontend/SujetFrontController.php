@@ -46,6 +46,7 @@ class SujetFrontController extends Controller
         $annee = $request['annee'];
 
 
+
         $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'commentaires'])
             ->when($category, function ($q) use ($category) {
                 return $q->where('category_id', $category);
@@ -89,34 +90,73 @@ class SujetFrontController extends Controller
 
 
 
-        //Get title of request
-        // $titre = [];
-        // if (!empty($code_sujet)) {
-        //     array_push($titre, $annee);
-        // } elseif (!empty($category)) {
-        //     $categorie = Categorie::findOrFail($category);
-        //     array_push($titre, $categorie);
-        // } elseif (!empty($matieres)) {
-        //     $matiere = Matiere::whereIn('id', $matieres)->get();
-        //     array_push($titre, $matiere);
-        // } elseif (!empty($niveaux)) {
-        //     $niveau = Niveau::whereIeen('id', $niveaux)->get();
-        //     array_push($titre, $niveau);
-        // } elseif (!empty($annee)) {
-        //     $annee = Sujet::where('annee', $annee)->get();
-        //     array_push($titre, $annee);
-        // }
+        // Get title of request
+        $matieres_req = '';
+        $categorie_req = '';
+        $code_req = '';
+        $niveaux_req = '';
+        $annee_req = '';
+
+
+
+        if (!empty($category)) {
+            $categorie = Categorie::findOrFail($category);
+            $categorie_req = $categorie;
+        }else{
+            $categorie_req = '';
+        }
+
+
+        if (!empty($matieres)) {
+            $matiere = Matiere::whereIn('id', $matieres)->get();
+            $matieres_req = $matiere;
+        }else{
+            $matieres_req = '';
+
+        }
+
+        if (!empty($niveaux)) {
+            $niveau = Niveau::whereIn('id', $niveaux)->get();
+            $niveaux_req = $niveau;
+        } else {
+            $niveaux_req = '';
+        }
+
+
+        if (!empty($annee)) {
+           
+            $annee_req = $annee;
+        } else {
+            $annee_req = '';
+        }
+
+        if (!empty($code_sujet)) {
+            $code_req = $code_sujet;
+        } else {
+            $code_req = '';
+        }
+
+
+
 
 
 
         // dd([
-        //     $sujets,
-        //     $titre
+        //     $matieres_req,
+        //     $categorie_req,
+        //     $niveaux_req,
+        //     $code_req,
+        //     $annee_req
         // ]);
 
 
-        // dd($sujets->toArray());
-
-        return view('front.pages.sujet', compact('sujets'));
+        return view('front.pages.sujet', compact(
+            'sujets',
+            'matieres_req',
+            'categorie_req',
+            'code_req',
+            'niveaux_req',
+            'annee_req',
+        ));
     }
 }
