@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="header-bottom">
+    <div class="header-bottom" style="background-color:#1f1f33;">
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
@@ -56,7 +56,7 @@
                 <div class="menu-area">
                     <div class="menu">
                         <ul class="lab-ul">
-                            <li>
+                            <li class="">
                                 <a href="{{ route('home') }}">Accueil</a>
                                 {{-- <ul class="lab-ul">
                                     <li><a href="index.html" class="active">Home One</a></li>
@@ -74,7 +74,7 @@
                                 <a href="#0" class="">Categories</a>
                                 <ul class="lab-ul">
                                     @foreach ($categories as $item)
-                                        <li><a href="/sujet?category={{ $item['id'] }}&&title={{$item['title']}}"
+                                        <li><a href="/sujet?category={{ $item['id'] }}&&title={{ $item['title'] }}"
                                                 class="text-uppercase">{{ $item['title'] }} </a></li>
                                     @endforeach
                                 </ul>
@@ -86,14 +86,15 @@
                                         @foreach ($cycle->subNiveaux as $niveaux)
                                             @if ($niveaux->subNiveaux->count() < 1)
                                                 <li><a
-                                                        href="/sujet?niveau={{ $niveaux['id'] }}&&title={{$niveaux['title']}}">{{ $niveaux['title'] }}</a>
+                                                        href="/sujet?niveau={{ $niveaux['id'] }}&&title={{ $niveaux['title'] }}">{{ $niveaux['title'] }}</a>
                                                 </li>
                                             @elseif ($niveaux->subNiveaux->count() > 0)
                                                 <li>
                                                     <a href="#0"> {{ $niveaux['title'] }} </a>
                                                     <ul class="lab-ul">
                                                         @foreach ($niveaux->subNiveaux as $subNiveau2)
-                                                            <li><a href="/sujet?niveau={{ $subNiveau2['id'] }}&&title={{$subNiveau2['title']}}">{{ $subNiveau2['title'] }}
+                                                            <li><a
+                                                                    href="/sujet?niveau={{ $subNiveau2['id'] }}&&title={{ $subNiveau2['title'] }}">{{ $subNiveau2['title'] }}
                                                                 </a></li>
                                                         @endforeach
                                                     </ul>

@@ -5524,7 +5524,8 @@ button {
     }
 }
 .menu > ul > li > a {
-    color: #101115;
+    /* color: #101115; */
+    color:white;
     font-size: 15px;
     font-weight: 700;
     padding: 15px 22px;
