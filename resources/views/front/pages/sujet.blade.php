@@ -31,6 +31,8 @@
                             <p>
                                 @if ($categorie_req)
                                     Catégories : <b>{{ $categorie_req['title'] }}</b>,
+                                    @else
+                                    {{ request('title') }}
                                 @endif
                             </p>
 

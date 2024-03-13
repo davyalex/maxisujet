@@ -12,39 +12,59 @@ use App\Models\Niveau;
 class SujetFrontController extends Controller
 {
     //
-    public function allSujet()
+    public function allSujet(Request $request)
     {
         //
-
+        $category = $request['category'];
+        $niveaux = $request['niveau'];
+       
         $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'commentaires'])
-            ->when(request('category'), function ($q) {
-                return $q->where('category_id', request('category'));
+            ->when($category, function ($q)  use ($category) {
+                return $q->where('category_id', $category);
             })
-            ->when(request('niveau'), function ($q) {
-                return $q->whereHas('niveaux', function ($q) {
-                    $q->where('niveau_sujet.niveau_id', request('niveau'));
+            ->when($niveaux, function ($q)  use ($niveaux) {
+                return $q->whereHas('niveaux', function ($q)  use ($niveaux) {
+                    $q->where('niveau_sujet.niveau_id', $niveaux);
                 });
             })
             ->whereApproved(1)
             ->get();
 
 
+        // 
+        // Get title of request
+        $matieres_req = '';
+        $categorie_req = '';
+        $code_req = '';
+        $niveaux_req = '';
+        $annee_req = '';
 
-        return view('front.pages.sujet', compact('sujets'));
+
+
+      
+
+
+
+
+        return view('front.pages.sujet', compact(
+            'sujets',
+            'matieres_req',
+            'categorie_req',
+            'code_req',
+            'niveaux_req',
+            'annee_req',
+        ));
     }
 
 
     public function search(Request $request)
     {
 
-
-
         $category = $request['categorie'];
         $code_sujet = $request['code_sujet'];
         $niveaux = $request['niveaux'];
         $matieres = $request['matieres'];
         $annee = $request['annee'];
-
 
 
         $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'commentaires'])
@@ -58,7 +78,6 @@ class SujetFrontController extends Controller
             ->when($code_sujet, function ($q) use ($code_sujet) {
                 return $q->where('sujet_title', $code_sujet);
             })
-
 
             ->when($niveaux, function ($q) use ($niveaux) {
                 return $q->whereHas('niveaux', function ($q) use ($niveaux) {
@@ -102,7 +121,7 @@ class SujetFrontController extends Controller
         if (!empty($category)) {
             $categorie = Categorie::findOrFail($category);
             $categorie_req = $categorie;
-        }else{
+        } else {
             $categorie_req = '';
         }
 
@@ -110,9 +129,8 @@ class SujetFrontController extends Controller
         if (!empty($matieres)) {
             $matiere = Matiere::whereIn('id', $matieres)->get();
             $matieres_req = $matiere;
-        }else{
+        } else {
             $matieres_req = '';
-
         }
 
         if (!empty($niveaux)) {
@@ -124,7 +142,7 @@ class SujetFrontController extends Controller
 
 
         if (!empty($annee)) {
-           
+
             $annee_req = $annee;
         } else {
             $annee_req = '';
