@@ -196,6 +196,10 @@ Route::controller(AuthUserController::class)->group(function () {
 Route::controller(AccountController::class)->group(function () {
   route::get('/mon-compte', 'dashboard')->name('user_account.dashboard')->middleware(['auth', 'is_verify_email']);
   route::get('/mon-compte/sujet/edit/{id}', 'edit')->name('user_account.edit-sujet')->middleware(['auth', 'is_verify_email']);
+  route::get('/edit-profil', 'editProfil')->name('user_account.edit-profil')->middleware(['auth', 'is_verify_email']);
+  route::post('/profil/update/{id}', 'updateProfilInfo')->name('user_account.update-profil-info')->middleware(['auth', 'is_verify_email']);
+  route::post('/profil/update-password/{id}', 'updateProfilPwd')->name('user_account.update-profil-pwd')->middleware(['auth', 'is_verify_email']);
+
 });
 
 Route::controller(CommentaireController::class)->group(function () {
@@ -205,7 +209,3 @@ Route::controller(CommentaireController::class)->group(function () {
 Route::controller(TelechargementController::class)->group(function () {
   route::get('saveDownload', 'download')->name('download')->middleware(['auth', 'is_verify_email']);
 });
-
-
-
- 

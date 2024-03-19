@@ -38,20 +38,38 @@
             </div>
             <div class="account-wrapper">
                 <h3 class="">Mot de passe oublié</h3>
-                <span class="text-bold">Veuillez entrer votre email  <br>pour la recuperation de votre mot de passe</span>
+                <span class="text-bold">Veuillez entrer votre email <br>pour la recuperation de votre mot de passe</span>
                 <form class="account-form mt-3" method="POST" action="{{ route('forget.password.post') }}">
                     @csrf
                     <div class="form-group">
-                        <input type="text" placeholder="Nom utilisateur ou Email" name="email" required>
+                        <input type="text" placeholder="Nom utilisateur ou Email" name="email" id="email" required>
                     </div>
-                   
+
                     <div class="form-group">
-                        <button type="submit" class="lab-btn"><span>Valider</span></button>
+                        <button type="submit" class="lab-btn"><span class="">Valider</span>
+                            <div class="spinner-grow text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Login Section Section Ends Here -->
+    <script>
+        $(document).ready(function() {
+            $('.spinner-grow').hide();
+        
+            $('form').submit(function (e) { 
+                  var email = $('#email').val()
+                if (email) {
+                    $('.lab-btn').prop("disabled", true);
+                    $(".spinner-grow").show();
+                }
+            });
+
+        });
+    </script>
 
 @endsection

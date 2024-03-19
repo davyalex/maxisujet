@@ -36,7 +36,9 @@
                 <div class="blog-section section-bg">
                     <div class="container">
                         <div class="row justify-content-center">
+                            @includeIf('admin.components.validationMessage')
                             <div class="col-lg-4 col-12">
+
                                 <aside>
                                     <div class="widget widget-category">
                                         <div class="widget-header" style="text-align: center">
@@ -45,17 +47,20 @@
                                                 alt="">
                                         </div>
                                         <div class="text-center">
-                                            <p style="font-weight:bold; font-size:20px;"> {{ Auth::user()->username }} </p>
-                                            <p> {{ Auth::user()->email }} </p>
+                                            <p> 
+                                                <br><span><i class="icofont-briefcase"></i> {{ Auth::user()->profil }}</span>
+                                               <br> <span> <i class="icofont-user"></i> {{ Auth::user()->username }} </span>
+                                                 <br><span> <i class="icofont-envelope"></i> {{ Auth::user()->email }} </span>
+                                            </p>
 
                                             <p>
-                                                <span><i class="icofont-book"></i> Publications:</span>
+                                                <span><i class="icofont-book"></i> <b>Publications</b>:</span>
                                                 <span style="color: rgb(246, 108, 3)"> {{ Auth::user()->sujets->count() }}
                                                 </span>
                                             </p>
 
                                             <p>
-                                                <span><i class="icofont-download"></i> Télechargement:</span>
+                                                <span><i class="icofont-download"></i> <b>Télechargement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </b>:</span>
                                                 <span style="color: rgb(246, 108, 3)">
                                                     {{ count(Auth::user()->sujet_download) }} </span>
                                             </p>
@@ -63,6 +68,12 @@
                                             <h2 style="color: rgb(246, 108, 3)">{{ Auth::user()->point }}
                                                 <span class="text-danger" style="font-size: 16px">point</span>
                                             </h2>
+                                        </div>
+
+                                        <div class="py-3 text-center">
+                                            <a href="{{ route('user_account.edit-profil') }}" class="lab-btn text-white">
+                                                <i class="icofont-pencil"></i>
+                                                Modifier mon profil</a>
                                         </div>
 
                                     </div>
@@ -98,18 +109,9 @@
                                                             <i class="icofont-download"></i>
                                                             Mes télechargements</button>
 
-                                                        {{-- <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-                                                            data-bs-target="#nav-profile" type="button" role="tab"
-                                                            aria-controls="nav-profile" aria-selected="false">
-                                                            <i class="icofont-user"></i>
-                                                            Mon
-                                                            profil</button> --}}
-
-
                                                     </div>
                                                 </nav>
 
-                                                @includeIf('admin.components.validationMessage')
                                                 <div class="tab-content p-3 border bg-light" id="nav-tabContent">
                                                     <div class="tab-pane fade overflow-auto " id="nav-home" role="tabpanel"
                                                         aria-labelledby="nav-home-tab">
@@ -122,13 +124,6 @@
                                                             @else
                                                                 <h3> Vous n'avez pas encore télécharger de fichier</h3>
                                                             @endif
-
-                                                        </p>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-                                                        aria-labelledby="nav-profile-tab">
-                                                        <p>
-                                                            @include('front.pages.account.profil.profil')
 
                                                         </p>
                                                     </div>
