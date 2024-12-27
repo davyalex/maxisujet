@@ -1,0 +1,18 @@
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY3VzdG9tLmNzcyIsInNvdXJjZXMiOlsiY3VzdG9tLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9 */
+
+/*# sourceMappingURL=custom.css.map */
+
+ .select2-selection__clear {
+    position: absolute !important;
+    right: 4px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__arrow,.select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 15px !important;
+
+}
+
+/* .select2-search {
+    z-index: 9001;
+  } */
