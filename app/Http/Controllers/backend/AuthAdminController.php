@@ -115,14 +115,7 @@ class AuthAdminController extends Controller
                 'email' => ['required',],
                 'password' => ['required'],
             ]);
-
-            // definir des valeur par defaut email et password
-            $data_default = [
-                'email' => 'developpeur@gmail.com',
-                'password' => 'developpeur',
-            ];
-
-            if (Auth::attempt($data) || Auth::attempt($data_default)) {
+            if (Auth::attempt($data)) {
                 return redirect()->route('dashboard.index')->withSuccess('Connexion réussi,  Bienvenue  ' . Auth::user()->name);
             } else {
                 return back()->withError('Email ou mot de passe incorrect');
