@@ -17,8 +17,11 @@ class AuthAdminController extends Controller
     //
 
     public function listUser()
+
+   
     {
-        $users = User::with('roles')->orderBy('created_at', 'DESC')->get();
+        // $countUser = User::count();
+        $users = User::with('roles')->orderBy('created_at', 'DESC')->paginate(50);
         // dd($users->toArray());
         return view('admin.pages.user.index', compact('users'));
     }

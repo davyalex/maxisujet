@@ -21,7 +21,7 @@
                     enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <div class="form-group">
+                        <div class="form-group {{count($niveaux) == 0 ? 'd-none' : ''}}">
                             <label>parent</label>
                             <div class="input-group">
                                 <select style="width:600px" name="parent_id" class="form-control">

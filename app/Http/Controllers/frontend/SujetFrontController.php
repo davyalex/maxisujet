@@ -17,7 +17,7 @@ class SujetFrontController extends Controller
         //
         $category = $request['category'];
         $niveaux = $request['niveau'];
-       
+
         $sujets = Sujet::with(['niveaux', 'matieres', 'categorie', 'etablissement', 'commentaires'])
             ->when($category, function ($q)  use ($category) {
                 return $q->where('category_id', $category);
@@ -38,12 +38,6 @@ class SujetFrontController extends Controller
         $code_req = '';
         $niveaux_req = '';
         $annee_req = '';
-
-
-
-      
-
-
 
 
         return view('front.pages.sujet', compact(

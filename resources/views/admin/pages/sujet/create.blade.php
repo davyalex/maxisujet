@@ -9,7 +9,7 @@
 <!-- Modal with form -->
 <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-fullscreen">
             <div class="modal-header">
                 <h5 class="modal-title" id="formModal">Ajouter un sujet</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

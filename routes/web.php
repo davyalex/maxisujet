@@ -135,6 +135,14 @@ Route::prefix("admin")->middleware(['admin'])->group(function () {
     route::get('edit/{id}', 'edit')->name('sujet.edit');
     route::post('update/{id}', 'update')->name('sujet.update');
     route::post('destroy/{id}', 'destroy')->name('sujet.destroy');
+
+    // route for insert data from file
+    route::get('insert-data-from-file', 'insertDataFromFile')->name('sujet.insert-data-from-file');
+
+    route::get('import-from-csv', 'importFromCsv');
+    route::get('import-niveaux-from-csv', 'importNiveauxSujetsFromFile');
+
+
   });
 });
 

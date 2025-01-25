@@ -12,7 +12,7 @@ class Sujet extends Model
     protected $fillable = [
         'sujet_title',
         'category_id',
-        'approved', 
+        'approved',
         'user_id',
         'etablissement_id',
         'annee',
@@ -22,34 +22,37 @@ class Sujet extends Model
         'created_at',
         'updated_at',
         'deleted_at'
-        ];
+    ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-        public function niveaux():BelongsToMany {
-            return $this->belongsToMany(Niveau::class)->withTimestamps();
-        }
+    public function niveaux(): BelongsToMany
+    {
+        return $this->belongsToMany(Niveau::class)->withTimestamps();
+    }
 
-        public function matieres():BelongsToMany {
-            return $this->belongsToMany(Matiere::class)->withTimestamps();
-        }
+    public function matieres(): BelongsToMany
+    {
+        return $this->belongsToMany(Matiere::class)->withTimestamps();
+    }
 
-        public function categorie()
-        {
-            return $this->belongsTo(Categorie::class, 'category_id');
-        }
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class, 'category_id');
+    }
 
-        public function etablissement()
-        {
-            return $this->belongsTo(Etablissement::class, 'etablissement_id');
-        }
+    public function etablissement()
+    {
+        return $this->belongsTo(Etablissement::class, 'etablissement_id');
+    }
 
-        public function commentaires(){
-            return $this->hasMany(Commentaire::class);
-        }
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
 
     public function user_download(): BelongsToMany
     {
@@ -61,7 +64,4 @@ class Sujet extends Model
     {
         return $this->hasMany(Telechargement::class);
     }
-
-
-
 }
