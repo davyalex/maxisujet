@@ -172,7 +172,7 @@
                                                         @auth
                                                             <!-- ========== Verification sur le lien ========== -->
                                                             @if (Auth::user()->point > 0)
-                                                                <a href="{{ asset('storage/' . $item->sujet_file) }}"
+                                                                <a href="{{ asset('storage/sujets/' . $item->sujet_file) }}"
                                                                 @elseif(Auth::user()->point == 0) <a href="#"
                                                                     @endif
                                                                     class="lab-btn mt-2 btn-download"
@@ -185,7 +185,7 @@
 
                                                                 <!-- ========== Verification sur le lien ========== -->
                                                                 @if (Auth::user()->point > 0)
-                                                                    <a href="{{ asset('storage/' . $item->corrige_file) }}"
+                                                                    <a href="{{ asset('storage/corriges/' . $item->corrige_file) }}"
                                                                     @elseif (Auth::user()->point == 0) <a href="#"
                                                                         @endif
                                                                         class="lab-btn mt-2 btn-download  {{ $item->corrige_file ? ' ' : 'd-none' }} "

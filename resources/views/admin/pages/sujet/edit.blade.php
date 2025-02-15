@@ -128,7 +128,7 @@
 
                                 <div class="form-group my-4">
                                     <label>Fichier du sujet</label>
-                                    <a class="btn btn-outline-info" href="{{ asset('storage/' . $sujet->sujet_file) }}">
+                                    <a class="btn btn-outline-info" href="{{ asset('storage/sujets/' . $sujet->sujet_file) }}">
                                         {{ $sujet->sujet_file }}
                                         <i class="fas fa-download"></i>
                                     </a>
@@ -144,7 +144,7 @@
 
                                 <div class="form-group">
                                     <label>Corrigé du sujet</label>
-                                    <a class="btn btn-outline-info" href="{{ asset('storage/' . $sujet->corrige_file) }}">
+                                    <a class="btn btn-outline-info" href="{{ asset('storage/corriges/' . $sujet->corrige_file) }}">
                                         {{ $sujet->corrige_file }}
                                         <i class="fas fa-download"></i>
                                     </a>

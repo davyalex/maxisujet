@@ -12,6 +12,7 @@ use App\Models\CategoryNews;
 use App\Models\Etablissement;
 use Spatie\Permission\Models\Role;
 use App\Models\CategoryInformation;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrap();
 
 //supprimer tous les utilisateur qui n'ont pas confirmé leur inscription dans un delai de 15 min
         $admin = User::where('is_email_verified', 0)->get();

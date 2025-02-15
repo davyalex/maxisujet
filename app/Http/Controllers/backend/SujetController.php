@@ -85,7 +85,7 @@ class SujetController extends Controller
         $admin = User::whereHas('roles', fn($q) => $q->where('name', 'administrateur'))->get();
 
         foreach ($admin as $user) {
-            Mail::to($user->email)->send(new NewSujetEmail($user));
+            Mail::to($user->email)->queue(new NewSujetEmail($user));
         }
 
         return back()->with('success', 'Nouveau sujet crée avec success');
@@ -180,9 +180,9 @@ class SujetController extends Controller
 
         if ($request->hasFile('sujet_file')) {
             $fileNameSujet =  $uuid1 . '.' . $request->sujet_file->extension();
-            $request->sujet_file->storeAs('public/', $fileNameSujet);
+            $request->sujet_file->storeAs('public/sujets', $fileNameSujet);
             if ($request['sujet_file_exist']) {
-                Storage::delete('public/' . $request['sujet_file_exist']);
+                Storage::delete('public/sujets' . $request['sujet_file_exist']);
             }
         } else {
             $fileNameSujet = $request['sujet_file_exist'];
@@ -190,9 +190,9 @@ class SujetController extends Controller
 
         if ($request->hasFile('corrige_file')) {
             $fileNameCorrige =  $uuid2 . '.' . $request->corrige_file->extension();
-            $request->corrige_file->storeAs('public/', $fileNameCorrige);
+            $request->corrige_file->storeAs('public/corriges', $fileNameCorrige);
             if ($request['corrige_file_exist']) {
-                Storage::delete('public/' . $request['corrige_file_exist']);
+                Storage::delete('public/corriges' . $request['corrige_file_exist']);
             }
         } else {
             $fileNameCorrige = $request['corrige_file_exist'];
@@ -272,80 +272,80 @@ class SujetController extends Controller
 
 
     // function for insert matiere and niveaux from file
-    public function insertDataFromFile()
-    {
-        // Liste des niveaux définie directement dans le contrôleur
-        $data = <<<EOT
-        
-    LM1 BOUAFLÉ
-    LYCÉE MAMIE ADJOUA DE YAMOUSSOUKRO
-    PIGIER
-    COLLÈGE MITTERRAND
-    PENSIONNAT MÉTHODISTE DES FILLES D'ANYAMA
-    LYCEE SAINTE MARIE
-    COLLÈGE SAINT FRANÇOIS 2 YOPOUGON
-    COLLÈGE SAINT FRANÇOIS
-    GROUPE SCOLAIRE LES PINGOUINS
-    COLLEGE LE CLASSIQUE
-    LYCÉE MAMIE ADJOUA
-    COLLEGE SONA DE YOPOUGON
-    COLLEGE LES GRACES
-    COLLÈGE SAINT EMMANUEL
-    LYCÉE MODERNE BAD DE YAMOUSSOUKRO
-    COLLÈGE SAINT EMMANUEL YOPOUGON NIANGON
-    ESMA ODIENNE
-    GROUPE LOKO
-    INSTITUT LKM
-    EPCC
-    MARIE BLANCHE
-    CHAMBRE DE COMMERCE
-    LYCEE CLASSIQUE D'ABIDJAN
-    YCEE MUNICIPAL DE KOROGHO
-    LYCEE CLASSIQUE
-    COLLEGE MARIE BLANCHE
-    COLLEGE  MARIE BLANCHE
-    GROUPE SCOLAIRE
-    COLLEGE LES GRACES_MATHEMATIQUE
-    LYCEE MODERNE 1 D'ABOBO
-    ISSEA
-    LKM
-    CHAMBRE COMMERCE
-    PIGER
-    LYCEE GARÇON BINGERVILLE
-    NATIONAL
-    CBCG COCODY
+    // public function insertDataFromFile()
+    // {
+    //     // Liste des niveaux définie directement dans le contrôleur
+    //     $data = <<<EOT
 
-    EOT;
+    //         LM1 BOUAFLÉ
+    //         LYCÉE MAMIE ADJOUA DE YAMOUSSOUKRO
+    //         PIGIER
+    //         COLLÈGE MITTERRAND
+    //         PENSIONNAT MÉTHODISTE DES FILLES D'ANYAMA
+    //         LYCEE SAINTE MARIE
+    //         COLLÈGE SAINT FRANÇOIS 2 YOPOUGON
+    //         COLLÈGE SAINT FRANÇOIS
+    //         GROUPE SCOLAIRE LES PINGOUINS
+    //         COLLEGE LE CLASSIQUE
+    //         LYCÉE MAMIE ADJOUA
+    //         COLLEGE SONA DE YOPOUGON
+    //         COLLEGE LES GRACES
+    //         COLLÈGE SAINT EMMANUEL
+    //         LYCÉE MODERNE BAD DE YAMOUSSOUKRO
+    //         COLLÈGE SAINT EMMANUEL YOPOUGON NIANGON
+    //         ESMA ODIENNE
+    //         GROUPE LOKO
+    //         INSTITUT LKM
+    //         EPCC
+    //         MARIE BLANCHE
+    //         CHAMBRE DE COMMERCE
+    //         LYCEE CLASSIQUE D'ABIDJAN
+    //         YCEE MUNICIPAL DE KOROGHO
+    //         LYCEE CLASSIQUE
+    //         COLLEGE MARIE BLANCHE
+    //         COLLEGE  MARIE BLANCHE
+    //         GROUPE SCOLAIRE
+    //         COLLEGE LES GRACES_MATHEMATIQUE
+    //         LYCEE MODERNE 1 D'ABOBO
+    //         ISSEA
+    //         LKM
+    //         CHAMBRE COMMERCE
+    //         PIGER
+    //         LYCEE GARÇON BINGERVILLE
+    //         NATIONAL
+    //         CBCG COCODY
 
-        // Diviser chaque ligne
-        $lines = explode("\n", $data);
+    //         EOT;
 
-        foreach ($lines as $line) {
-            // Diviser chaque élément dans la ligne par une virgule
-            $elements = array_map('trim', explode(',', $line));
+    //     // Diviser chaque ligne
+    //     $lines = explode("\n", $data);
 
-            foreach ($elements as $element) {
-                if (!empty($element)) {
-                    // Vérifier si l'élément existe 
-                    $exists = DB::table('etablissements')->where('title', $element)->exists();
+    //     foreach ($lines as $line) {
+    //         // Diviser chaque élément dans la ligne par une virgule
+    //         $elements = array_map('trim', explode(',', $line));
 
-                    if (!$exists) {
-                        // Insérer l'élément dans la table
-                        DB::table('etablissements')->insert([
-                            'title' => $element,
-                            // 'parent_id' => null,
-                            'created_at' => now(),
-                            'updated_at' => now(),
+    //         foreach ($elements as $element) {
+    //             if (!empty($element)) {
+    //                 // Vérifier si l'élément existe 
+    //                 $exists = DB::table('etablissements')->where('title', $element)->exists();
 
-                        ]);
-                    }
-                }
-            }
-        }
+    //                 if (!$exists) {
+    //                     // Insérer l'élément dans la table
+    //                     DB::table('etablissements')->insert([
+    //                         'title' => $element,
+    //                         // 'parent_id' => null,
+    //                         'created_at' => now(),
+    //                         'updated_at' => now(),
 
-        // Retourner une réponse (ou redirection)
-        return response()->json(['message' => 'Les données ont été ajoutés avec succès.']);
-    }
+    //                     ]);
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     // Retourner une réponse (ou redirection)
+    //     return response()->json(['message' => 'Les données ont été ajoutés avec succès.']);
+    // }
 
 
     // public function importFromCsv()
@@ -400,77 +400,77 @@ class SujetController extends Controller
     //     return response()->json(['success' => 'Les sujets ont été importés avec succès !'], 200);
     // }
 
-    public function importFromCsv()
-    {
-        // Chemin du fichier CSV
-        $filePath = storage_path('app/sujets.csv');
+    // public function importFromCsv()
+    // {
+    //     // Chemin du fichier CSV
+    //     $filePath = storage_path('app/sujets.csv');
 
-        if (!file_exists($filePath)) {
-            return response()->json(['error' => 'Fichier CSV introuvable !'], 404);
-        }
+    //     if (!file_exists($filePath)) {
+    //         return response()->json(['error' => 'Fichier CSV introuvable !'], 404);
+    //     }
 
-        // Lecture du fichier CSV avec un séparateur de point-virgule
-        $csvData = array_map(function ($line) {
-            return str_getcsv($line, ';'); // Spécifier le séparateur de point-virgule
-        }, file($filePath));
+    //     // Lecture du fichier CSV avec un séparateur de point-virgule
+    //     $csvData = array_map(function ($line) {
+    //         return str_getcsv($line, ';'); // Spécifier le séparateur de point-virgule
+    //     }, file($filePath));
 
-        $header = array_map('trim', $csvData[0]); // Première ligne (en-têtes) et suppression des espaces
-        unset($csvData[0]); // Supprimer l'en-tête des données
+    //     $header = array_map('trim', $csvData[0]); // Première ligne (en-têtes) et suppression des espaces
+    //     unset($csvData[0]); // Supprimer l'en-tête des données
 
-        $data = [];
-        foreach ($csvData as $row) {
-            $rowData = array_combine($header, $row);
+    //     $data = [];
+    //     foreach ($csvData as $row) {
+    //         $rowData = array_combine($header, $row);
 
-            // Vérifier la validité de l'etablissement_id
-            $etablissementId = (int) $rowData['etablissement_id'];
-            if (!$this->isValidEtablissementId($etablissementId)) {
-                $etablissementId = null; // Si non valide, assigner NULL
-            }
+    //         // Vérifier la validité de l'etablissement_id
+    //         $etablissementId = (int) $rowData['etablissement_id'];
+    //         if (!$this->isValidEtablissementId($etablissementId)) {
+    //             $etablissementId = null; // Si non valide, assigner NULL
+    //         }
 
-            $data[] = [
-                'sujet_title' => $rowData['sujet_title'],
-                'description' => $rowData['description'],
-                'user_id' => (int) $rowData['user_id'],
-                'category_id' => (int) $rowData['category_id'],
-                'etablissement_id' => $etablissementId,
-                'sujet_file' => $rowData['sujet_file'],
-                'corrige_file' => $rowData['corrige_file'],
-                'annee' => (int) $rowData['annee'],
-                'created_at' => Carbon::createFromFormat('d/m/Y - H:i', $rowData['created_at'])->toDateTimeString(),
-                'updated_at' => Carbon::createFromFormat('d/m/Y - H:i', $rowData['updated_at'])->toDateTimeString(),
-                'approved' => (int) $rowData['approved'],
-            ];
-        }
+    //         $data[] = [
+    //             'sujet_title' => $rowData['sujet_title'],
+    //             'description' => $rowData['description'],
+    //             'user_id' => (int) $rowData['user_id'],
+    //             'category_id' => (int) $rowData['category_id'],
+    //             'etablissement_id' => $etablissementId,
+    //             'sujet_file' => $rowData['sujet_file'],
+    //             'corrige_file' => $rowData['corrige_file'],
+    //             'annee' => (int) $rowData['annee'],
+    //             'created_at' => Carbon::createFromFormat('d/m/Y - H:i', $rowData['created_at'])->toDateTimeString(),
+    //             'updated_at' => Carbon::createFromFormat('d/m/Y - H:i', $rowData['updated_at'])->toDateTimeString(),
+    //             'approved' => (int) $rowData['approved'],
+    //         ];
+    //     }
 
-        try {
-            // Démarrer une transaction pour l'insertion par lots
-            DB::beginTransaction();
+    //     try {
+    //         // Démarrer une transaction pour l'insertion par lots
+    //         DB::beginTransaction();
 
-            // Insertion par lots pour éviter les problèmes de mémoire
-            foreach (array_chunk($data, 100) as $chunk) {
-                // Vérifier la structure de chaque chunk avant l'insertion
-                // Si vous obtenez un tableau de tableau associatif, vous pouvez faire l'insertion
-                DB::table('sujets')->insert($chunk);
-            }
+    //         // Insertion par lots pour éviter les problèmes de mémoire
+    //         foreach (array_chunk($data, 100) as $chunk) {
+    //             // Vérifier la structure de chaque chunk avant l'insertion
+    //             // Si vous obtenez un tableau de tableau associatif, vous pouvez faire l'insertion
+    //             DB::table('sujets')->insert($chunk);
+    //         }
 
-            // Commit de la transaction si tout se passe bien
-            DB::commit();
+    //         // Commit de la transaction si tout se passe bien
+    //         DB::commit();
 
-            return response()->json(['success' => 'Les sujets ont été importés avec succès !'], 200);
-        } catch (\Exception $e) {
-            // En cas d'erreur, annuler la transaction
-            DB::rollBack();
+    //         return response()->json(['success' => 'Les sujets ont été importés avec succès !'], 200);
+    //     } catch (\Exception $e) {
+    //         // En cas d'erreur, annuler la transaction
+    //         DB::rollBack();
 
-            // Retourner l'erreur
-            return response()->json(['error' => 'Erreur lors de l\'importation : ' . $e->getMessage()], 500);
-        }
-    }
+    //         // Retourner l'erreur
+    //         return response()->json(['error' => 'Erreur lors de l\'importation : ' . $e->getMessage()], 500);
+    //     }
+    // }
 
-    // Fonction de validation de l'existence de l'id dans la table etablissements
-    private function isValidEtablissementId($etablissementId)
-    {
-        return DB::table('etablissements')->where('id', $etablissementId)->exists();
-    }
+    // // Fonction de validation de l'existence de l'id dans la table etablissements
+    // private function isValidEtablissementId($etablissementId)
+    // {
+    //     return DB::table('etablissements')->where('id', $etablissementId)->exists();
+    // }
 
 
 
@@ -548,13 +548,14 @@ class SujetController extends Controller
     // }
 
 
-    public function importNiveauxSujetsFromFile(){
-        // recuperer les user
-        User::chunk(100, function ($users) {
-            foreach ($users as $user) {
-               // affecter le role client
-               $user->assignRole('client');// 2 est le role client
-            }
-        });
-    }
+    // public function importNiveauxSujetsFromFile()
+    // {
+    //     // recuperer les user
+    //     User::chunk(100, function ($users) {
+    //         foreach ($users as $user) {
+    //             // affecter le role client
+    //             $user->assignRole('client'); // 2 est le role client
+    //         }
+    //     });
+    // }
 }

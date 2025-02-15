@@ -41,7 +41,7 @@
 
                                     @foreach ($niveaux as $key => $item)
                                         <tr>
-                                            <td>{{ ++$key }} </td>
+                                            <td class="row_{{ $item['id'] }}">{{ ++$key }} </td>
                                             <td>{{ $item['title'] }} </td>
                                             <td>{{ $item['parent'] ? $item['parent']['title'] : '' }} </td>
                                             <td>{{ $item['created_at']->format('d-m-Y') }} </td>
@@ -55,9 +55,9 @@
                                                         style="font-size: 20px;"></i></a>
                                             </td>
                                         </tr>
-                                        {{-- modal edit form --}}
                                         @include('admin.pages.niveau.edit')
                                     @endforeach
+                                    {{-- modal edit form --}}
                                 </tbody>
                             </table>
 
@@ -95,51 +95,106 @@
     {{-- script JS for delete data --}}
     <script>
         $(document).ready(function() {
-            $('.delete').on("click", function(e) {
-                e.preventDefault();
-                var Id = $(this).attr('data-id');
-                Swal.fire({
-                    title: "Etes vous sûr ?",
-                    text: "Vous ne pourrez pas revenir en arrière !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Oui, Supprimer!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/admin/niveau/destroy/" + Id,
-                            dataType: "json",
-                            data: {
-                                _token: '{{ csrf_token() }}',
 
-                            },
-                            success: function(response) {
-                                if (response.status === 200) {
-                                    Swal.fire({
-                                        toast: true,
-                                        icon: 'success',
-                                        title: 'Opération reussi',
-                                        animation: false,
-                                        position: 'top',
-                                        background: '#3da108e0',
-                                        iconColor: '#fff',
-                                        color: '#fff',
-                                        showConfirmButton: false,
-                                        timer: 500,
-                                        timerProgressBar: true,
-                                    });
-                                    setTimeout(function() {
-                                        window.location.href =
-                                            "{{ route('niveau.index') }}";
-                                    }, 500);
-                                }
+            // Vérifiez si la DataTable est déjà initialisée
+            if ($.fn.DataTable.isDataTable('#tableExport')) {
+                // Si déjà initialisée, détruisez l'instance existante
+                $('#tableExport').DataTable().destroy();
+            }
+
+            $('#tableExport').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'print'
+                ],
+
+                // Utilisez drawCallback pour exécuter delete_row après chaque redessin
+                drawCallback: function(settings) {
+                    // Appeler la fonction delete après chaque redessin de la table
+                    $('.delete').on("click", function(e) {
+                        e.preventDefault();
+                        var Id = $(this).attr('data-id');
+                        Swal.fire({
+                            title: "Êtes-vous sûr ?",
+                            text: "Vous ne pourrez pas revenir en arrière !",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Oui, Supprimer !"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/admin/niveau/destroy/" + Id,
+                                    dataType: "json",
+                                    data: {
+                                        _token: '{{ csrf_token() }}',
+                                    },
+                                    success: function(response) {
+                                        if (response.status === 200) {
+                                            Swal.fire({
+                                                toast: true,
+                                                icon: 'success',
+                                                title: 'Opération réussie',
+                                                animation: false,
+                                                position: 'top',
+                                                background: '#3da108e0',
+                                                iconColor: '#fff',
+                                                color: '#fff',
+                                                showConfirmButton: false,
+                                                timer: 500,
+                                                timerProgressBar: true,
+                                            });
+
+                                            // Supprimer la ligne
+                                            $('.row_' + Id).remove();
+                                        }
+                                    }
+                                });
                             }
                         });
+                    });
+                },
+
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('niveau.index') }}", // Remplacez par la route appropriée
+                    type: 'GET',
+                    data: function(d) {
+                        d.page = d.start / d.length + 1; // Calculer la page côté serveur
+                        d.limit = d.length; // Nombre d'éléments par page
                     }
-                });
+                },
+
+                columns: [{
+                        data: 'id'
+                    },
+                    {
+                        data: 'title'
+                    },
+                    {
+                        data: 'parent'
+                    },
+                    {
+                        data: 'created_at'
+                    },
+                    {
+                        data: 'action',
+                        orderable: false,
+                        searchable: false
+                    } // Désactiver l'ordre et la recherche pour la colonne d'action
+                ],
+
+                pageLength: 10,
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                order: [
+                    [1, 'asc']
+                ], // Trier par titre par défaut
             });
         });
     </script>

@@ -42,7 +42,7 @@
 
                         @include('admin.components.validationMessage')
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
+                            <table class="table table-striped table-hover" id="#" style="width:100%;">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -57,15 +57,16 @@
                                 <tbody>
 
                                     @foreach ($users as $key => $item)
-                                        <tr>
+                                        <tr id="row_{{ $item['id'] }}">
                                             <td>{{ ++$key }} </td>
                                             <td>{{ $item['username'] }} </td>
                                             <td>{{ $item['email'] }} </td>
                                             <td>{{ $item['roles'][0]['name'] }} </td>
                                             <td>{{ $item['created_at']->format('d-m-Y') }} </td>
                                             <td>
-                                                <a href="#" data-toggle="modal" data-target="#modalEdit{{$item['id']}}"><i
-                                                        class="fas fa-edit fs-20" style="font-size: 20px;"></i></a>
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#modalEdit{{ $item['id'] }}"><i class="fas fa-edit fs-20"
+                                                        style="font-size: 20px;"></i></a>
 
                                                 <a href="#" class="delete" role="button"
                                                     data-id="{{ $item['id'] }}"><i class="fas fa-trash text-danger"
@@ -75,8 +76,14 @@
                                         {{-- modal edit form --}}
                                         @include('admin.pages.user.edit')
                                     @endforeach
+                                    <!-- pagination-->
+                                   
                                 </tbody>
+                               
                             </table>
+                            <div class="">
+                                {{ $users->links() }}
+                            </div>
 
                             {{-- modal create form --}}
                             @include('admin.pages.user.create')
@@ -112,52 +119,80 @@
     {{-- script JS for delete data --}}
     <script>
         $(document).ready(function() {
-            $('.delete').on("click", function(e) {
-                e.preventDefault();
-                var Id = $(this).attr('data-id');
-                Swal.fire({
-                    title: "Etes vous sûr ?",
-                    text: "Vous ne pourrez pas revenir en arrière !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Oui, Supprimer!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/admin/auth-admin/destroy/" + Id,
-                            dataType: "json",
-                            data: {
-                                _token: '{{ csrf_token() }}',
 
-                            },
-                            success: function(response) {
-                                if (response.status === 200) {
-                                    Swal.fire({
-                                        toast: true,
-                                        icon: 'success',
-                                        title: 'Opération reussi',
-                                        animation: false,
-                                        position: 'top',
-                                        background: '#3da108e0',
-                                        iconColor: '#fff',
-                                        color: '#fff',
-                                        showConfirmButton: false,
-                                        timer: 500,
-                                        timerProgressBar: true,
-                                    });
-                                    setTimeout(function() {
-                                        window.location.href =
-                                            "{{ route('user.index') }}";
-                                    }, 500);
+
+            // Fonction pour supprimer une ligne
+            function delete_row() {
+                $('.delete').on("click", function(e) {
+                    e.preventDefault();
+                    var Id = $(this).attr('data-id');
+                    Swal.fire({
+                        title: "Etes vous sûr ?",
+                        text: "Vous ne pourrez pas revenir en arrière !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Oui, Supprimer!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/admin/auth-admin/destroy/" + Id,
+                                dataType: "json",
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+
+                                },
+                                success: function(response) {
+                                    if (response.status === 200) {
+                                        Swal.fire({
+                                            toast: true,
+                                            icon: 'success',
+                                            title: 'Opération reussi',
+                                            animation: false,
+                                            position: 'top',
+                                            background: '#3da108e0',
+                                            iconColor: '#fff',
+                                            color: '#fff',
+                                            showConfirmButton: false,
+                                            timer: 500,
+                                            timerProgressBar: true,
+                                        });
+                                        // supprimer la ligne de la table
+                                        $('#row_' + Id).remove();
+                                        // setTimeout(function() {
+                                        //     window.location.href =
+                                        //         "{{ route('user.index') }}";
+                                        // }, 500);
+                                    }
                                 }
-                            }
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
 
+                });
+            }
+
+
+            // Vérifiez si la DataTable est déjà initialisée
+            if ($.fn.DataTable.isDataTable('#tableExport')) {
+                // Si déjà initialisée, détruisez l'instance existante
+                $('#tableExport').DataTable().destroy();
+            }
+
+            // Initialisez la DataTable avec les options et le callback
+            var table = $('#tableExport').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'print'
+                ],
+
+                // Utilisez drawCallback pour exécuter delete_row après chaque redessin
+                drawCallback: function(settings) {
+                    // var route = "depense"
+                    delete_row();
+                }
             });
         });
     </script>

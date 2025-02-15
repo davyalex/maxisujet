@@ -17,7 +17,7 @@
                             <span><i class="icofont-file-pdf"></i> Fichier du sujet corrigé</span>
 
 
-                            <a class="btn btn-outline-info" href="{{ asset('storage/' . $item->corrige_file) }}">
+                            <a class="btn btn-outline-info" href="{{ asset('storage/corriges/' . $item->corrige_file) }}">
                                 <i class="icofont-download"></i> </a>
 
                         </li>
@@ -26,7 +26,7 @@
                             <span style="font-weight:bold" class="">Sujet</span>:
                             <span><i class="icofont-file-pdf"></i> Fichier du sujet</span>
 
-                            <a class="btn btn-outline-info" href="{{ asset('storage/' . $item->sujet_file) }}">
+                            <a class="btn btn-outline-info" href="{{ asset('storage/sujets/' . $item->sujet_file) }}">
                                 <i class="icofont-download"></i> </a>
                         </li>
                     </ul>

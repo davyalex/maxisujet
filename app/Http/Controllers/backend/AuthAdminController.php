@@ -16,12 +16,33 @@ class AuthAdminController extends Controller
 {
     //
 
-    public function listUser()
+    public function listUser(Request $request)
 
-   
+
     {
         // $countUser = User::count();
-        $users = User::with('roles')->orderBy('created_at', 'DESC')->paginate(50);
+        $users = User::with('roles')->orderBy('created_at', 'DESC')->paginate(10);
+
+        if ($request->ajax()) {
+            // Formater les données pour inclure les actions
+            $data = $users->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'username' => $item->username,
+                    'email' => $item->email,
+                    'roles' => $item->roles->pluck('name')->implode(', '), // Récupérer les noms des rôles
+                    'created_at' => $item->created_at->format('d-m-Y'),
+                    'action' => view('admin.users.actions', ['user' => $item])->render(), // Exemple d'action
+                ];
+            });
+
+            return response()->json([
+                'data' => $data,
+                'recordsTotal' => $users->total(),
+                'recordsFiltered' => $users->total(),
+                'draw' => $request->get('draw'),
+            ]);
+        }
         // dd($users->toArray());
         return view('admin.pages.user.index', compact('users'));
     }

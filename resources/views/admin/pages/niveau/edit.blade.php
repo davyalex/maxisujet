@@ -4,7 +4,7 @@
 <!-- Modal with form -->
 <div class="modal fade" id="modalEdit{{ $item['id'] }}" tabindex="-1" role="dialog" aria-labelledby="formModal"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="formModal">Modification</h5>
@@ -20,7 +20,7 @@
                         <div class="form-group {{count($niveaux) == 1 ? 'd-none' : ''}}">
                             <label>parent</label>
                             <div class="input-group">
-                                <select style="width:600px" name="parent_id" class="form-control  ">
+                                <select style="width:600px" name="parent_id" class="form-control" >
                                     <option disabled selected value></option>
                                     @foreach ($niveaux as $niveau)
                                         <option value="{{ $niveau['id'] }}"

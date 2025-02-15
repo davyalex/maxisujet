@@ -8,7 +8,7 @@
 
 <!-- Modal with form -->
 <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modal-fullscreen">
             <div class="modal-header">
                 <h5 class="modal-title" id="formModal">Ajouter un sujet</h5>
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label>Niveau</label>
                             <div class="input-group">
-                                <select style="width:600px" name="niveaux[]" class="form-control select2" multiple
+                                <select style="width:800px" name="niveaux[]" class="form-control select2" multiple
                                     required>
                                     {{-- On affiche tous les niveau et sous niveaux --}}
                                     @foreach ($niveaux_with_subNiveaux as $item)
@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label>Matiere</label>
                             <div class="input-group">
-                                <select style="width:600px" name="matieres[]" class="form-control select2" multiple
+                                <select style="width:800px" name="matieres[]" class="form-control select2" multiple
                                     required>
                                     <option></option>
                                     @foreach ($matieres as $item)

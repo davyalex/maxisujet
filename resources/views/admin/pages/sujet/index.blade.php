@@ -30,7 +30,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Approved</th>
+                                        <th>Approuvé</th>
+                                        <th>code</th>
                                         <th>categorie</th>
                                         <th>Matiere</th>
                                         <th>Niveau</th>
@@ -42,11 +43,13 @@
                                 <tbody>
 
                                     @foreach ($sujets as $key => $item)
-                                        <tr id="row_{{$item['id']}}">
+                                        <tr id="row_{{ $item['id'] }}">
                                             <td>{{ ++$key }} </td>
-                                            <td class="badge badge-{{ $item['approved'] == 0 ? 'primary' : 'success' }}">
-                                                {{ $item['approved'] == 0 ? 'No' : 'Yes' }} </td>
+                                            <td class=" text-bold text-{{ $item['approved'] == 0 ? 'info' : 'success' }}">
+                                                {{ $item['approved'] == 0 ? 'Non' : 'Oui' }} </td>
                                             <td>{{ $item['categorie']['title'] }} </td>
+                                            <td>{{ $item['sujet_title'] }}</td>
+
                                             <td>
                                                 @foreach ($item['matieres'] as $matieres)
                                                     <span>{{ $matieres['title'] }} </span><br>
@@ -61,14 +64,16 @@
                                             <td>
                                                 <span>{{ $item->sujet_file }}</span>
                                                 <br> <a class="btn btn-outline-info"
-                                                    href="{{ asset('storage/' . $item->sujet_file) }}">
+                                                    href="{{ asset('storage/sujets/' . $item->sujet_file) }}"
+                                                    target="_blank">
                                                     <i class="fas fa-download">Telecharger</i> </a>
 
                                             </td>
                                             <td>
                                                 <span>{{ $item->corrige_file }}</span>
                                                 <br><a class="btn btn-outline-info"
-                                                    href="{{ asset('storage/' . $item->corrige_file) }}">
+                                                    href="{{ asset('storage/corriges/' . $item->corrige_file) }}"
+                                                    target="_blank">
                                                     <i class="fas fa-download">Telecharger</i>
                                                 </a>
 
@@ -86,7 +91,8 @@
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <a href="{{ route('sujet.approved', $item['id']) }}"
-                                                            class="dropdown-item {{$item['approved'] == 1 ? 'd-none' : ''}}"><i class="fas fa-check"></i> Approved</a>
+                                                            class="dropdown-item {{ $item['approved'] == 1 ? 'd-none' : '' }}"><i
+                                                                class="fas fa-check"></i> Approved</a>
 
                                                         <a href="{{ route('sujet.edit', $item['id']) }}"
                                                             class="dropdown-item "><i class="fas fa-edit"></i> Edit</a>
@@ -141,50 +147,76 @@
     {{-- script JS for delete data --}}
     <script>
         $(document).ready(function() {
-            $('.delete').on("click", function(e) {
-                e.preventDefault();
-                var Id = $(this).attr('data-id');
-                Swal.fire({
-                    title: "Etes vous sûr ?",
-                    text: "Vous ne pourrez pas revenir en arrière !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Oui, Supprimer!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/admin/sujet/destroy/" + Id,
-                            dataType: "json",
-                            data: {
-                                _token: '{{ csrf_token() }}',
 
-                            },
-                            success: function(response) {
-                                if (response.status === 200) {
-                                    Swal.fire({
-                                        toast: true,
-                                        icon: 'success',
-                                        title: 'Opération reussi',
-                                        animation: false,
-                                        position: 'top',
-                                        background: '#3da108e0',
-                                        iconColor: '#fff',
-                                        color: '#fff',
-                                        showConfirmButton: false,
-                                        timer: 500,
-                                        timerProgressBar: true,
-                                    });
-                                    $('#row_'+Id).remove();
-                                   
+            // function for delete data
+            function delete_row() {
+                $('.delete').on("click", function(e) {
+                    e.preventDefault();
+                    var Id = $(this).attr('data-id');
+                    Swal.fire({
+                        title: "Etes vous sûr ?",
+                        text: "Vous ne pourrez pas revenir en arrière !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Oui, Supprimer!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/admin/sujet/destroy/" + Id,
+                                dataType: "json",
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+
+                                },
+                                success: function(response) {
+                                    if (response.status === 200) {
+                                        Swal.fire({
+                                            toast: true,
+                                            icon: 'success',
+                                            title: 'Opération reussi',
+                                            animation: false,
+                                            position: 'top',
+                                            background: '#3da108e0',
+                                            iconColor: '#fff',
+                                            color: '#fff',
+                                            showConfirmButton: false,
+                                            timer: 500,
+                                            timerProgressBar: true,
+                                        });
+                                        $('#row_' + Id).remove();
+
+                                    }
                                 }
-                            }
-                        });
-                    }
+                            });
+                        }
+                    });
                 });
+            }
+
+
+            // Vérifiez si la DataTable est déjà initialisée
+            if ($.fn.DataTable.isDataTable('#tableExport')) {
+                // Si déjà initialisée, détruisez l'instance existante
+                $('#tableExport').DataTable().destroy();
+            }
+
+            // Initialisez la DataTable avec les options et le callback
+            var table = $('#tableExport').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'print'
+                ],
+
+                // Utilisez drawCallback pour exécuter delete_row après chaque redessin
+                drawCallback: function(settings) {
+                    // var route = "depense"
+                    delete_row();
+                }
             });
+
         });
     </script>
 @endsection

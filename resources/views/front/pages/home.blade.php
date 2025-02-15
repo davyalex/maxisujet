@@ -86,7 +86,7 @@
                                             @auth
                                                 <!-- ========== Verification sur le lien ========== -->
                                                 @if (Auth::user()->point > 0)
-                                                    <a href="{{ asset('storage/' . $item->sujet_file) }}"
+                                                    <a target="_blank" href="{{ asset('storage/sujets/' . $item->sujet_file) }}"
                                                     @elseif(Auth::user()->point == 0) <a href="#" @endif
                                                         class="lab-btn mt-2 btn-download"
                                                         data-id="{{ $item['id'] }}"
@@ -98,9 +98,9 @@
 
                                                     <!-- ========== Verification sur le lien ========== -->
                                                     @if (Auth::user()->point > 0)
-                                                        <a href="{{ asset('storage/' . $item->corrige_file) }}" 
+                                                        <a target="_blank" href="{{ asset('storage/corriges/' . $item->corrige_file) }}" 
                                                            @elseif (Auth::user()->point == 0) <a href="#" @endif
-                                                            class="lab-btn mt-2 btn-download  {{ $item->corrige_file ? ' ' : 'd-none' }} "
+                                                            class="lab-btn mt-2 btn-download  {{ $item->corrige_file ? ' ' : 'd-none' }}"
                                                             data-id="{{ $item['id'] }}"
                                                             data-file="{{ $item['corrige_file'] }}"><span>Télecharger
                                                                 le corrigé

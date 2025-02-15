@@ -10,12 +10,32 @@ class NiveauController extends Controller
 {
     //
     //index __Liste Niveau
-    public function index()
+    public function index(Request $request)
     {
         //liste de tous les niveaux
-        $niveaux = Niveau::with('parent')->orderBy('parent_id', 'DESC')->get();
+        $niveaux = Niveau::with('parent')->orderBy('title', 'ASC')->paginate(10);
+
+        if ($request->ajax()) {
+            // Formater les données pour inclure les actions
+            $data = $niveaux->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'title' => $item->title,
+                    'parent' => $item->parent ? $item->parent->title : 'N/A',  // Titre du parent ou "N/A"
+                    'created_at' => $item->created_at->format('d-m-Y'),
+                    'action' => view('admin.pages.niveau.actions', compact('item'))->render(),  // Vue pour les actions
+                ];
+            });
+
+            return response()->json([
+                'data' => $data,
+                'recordsTotal' => $niveaux->total(),
+                'recordsFiltered' => $niveaux->total(),
+                'draw' => $request->get('draw'),
+            ]);
+        }
         //liste des niveaux uniquement parent
-        $niveaux_parent = Niveau::where('parent_id', null)->orderBy('parent_id', 'DESC')->get();
+        $niveaux_parent = Niveau::where('parent_id', null)->orderBy('title', 'ASC')->get();
 
         // dd($niveaux->toArray());
         return view('admin.pages.niveau.index', compact('niveaux', 'niveaux_parent'));
