@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-//supprimer tous les utilisateur qui n'ont pas confirmé leur inscription dans un delai de 15 min
+        //supprimer tous les utilisateur qui n'ont pas confirmé leur inscription dans un delai de 15 min
         $admin = User::where('is_email_verified', 0)->get();
 
         $now = Carbon::now();
@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
             $minute = $now->diffInMinutes($date);
 
             if ($minute == 15) {
-               $value->delete();
+                $value->delete();
             }
         }
         // dd($admin_email);
@@ -75,7 +75,7 @@ class AppServiceProvider extends ServiceProvider
 
         //niveaux avec les sous niveaux
         $niveaux_with_subNiveaux = Niveau::where('parent_id', null)->orderBy('parent_id', 'DESC')
-            ->with('subNiveaux', fn ($q) => $q->with('subNiveaux'))
+            ->with('subNiveaux', fn($q) => $q->with('subNiveaux'))
             ->get();
 
 

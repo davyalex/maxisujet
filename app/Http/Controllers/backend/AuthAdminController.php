@@ -11,40 +11,45 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\Facades\DataTables;
 
 class AuthAdminController extends Controller
 {
     //
 
-    public function listUser(Request $request)
+    public function index(Request $request)
 
 
     {
         // $countUser = User::count();
-        $users = User::with('roles')->orderBy('created_at', 'DESC')->paginate(10);
+        // $users = User::with('roles')->orderBy('created_at', 'DESC')->paginate(10);
 
         if ($request->ajax()) {
-            // Formater les données pour inclure les actions
-            $data = $users->map(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'username' => $item->username,
-                    'email' => $item->email,
-                    'roles' => $item->roles->pluck('name')->implode(', '), // Récupérer les noms des rôles
-                    'created_at' => $item->created_at->format('d-m-Y'),
-                    'action' => view('admin.users.actions', ['user' => $item])->render(), // Exemple d'action
-                ];
-            });
+            $users = User::with('roles')->select('id', 'username', 'email', 'created_at');
 
-            return response()->json([
-                'data' => $data,
-                'recordsTotal' => $users->total(),
-                'recordsFiltered' => $users->total(),
-                'draw' => $request->get('draw'),
-            ]);
+            return DataTables::of($users)
+                ->addColumn('roles', function ($user) {
+                    return $user->roles->pluck('name')->implode(', ');
+                })
+                ->addColumn('actions', function ($user) {
+                    return '
+
+                     <a href="' . route('user.editUser', $user->id) . '">
+                    <i class="fas fa-edit fs-20" style="font-size: 20px;"></i>
+                </a>
+
+                     <a href="#" class="delete" role="button"
+                    data-id="' . $user->id . '"><i class="fas fa-trash text-danger"
+                    style="font-size: 20px;"></i></a>
+                    ';
+                })
+
+                ->rawColumns(['actions'])
+                ->make(true);
         }
+
         // dd($users->toArray());
-        return view('admin.pages.user.index', compact('users'));
+        return view('admin.pages.user.index');
     }
 
 
@@ -93,10 +98,16 @@ class AuthAdminController extends Controller
         }
     }
 
-    public function edit($id)
+    public function editMyAccount($id)
     {
         $user = User::with('roles')->whereId($id)->first();
         return view('admin.pages.user.profil.edit', compact('user'));
+    }
+
+    public function editUser($id)
+    {
+        $user = User::with('roles')->whereId($id)->first();
+        return view('admin.pages.user.edit', compact('user'));
     }
 
     public function update(Request $request, $id)

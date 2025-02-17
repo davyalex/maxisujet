@@ -49,10 +49,12 @@ Route::controller(AuthAdminController::class)->group(function () {
 Route::prefix("admin")->middleware(['admin'])->group(function () {
   //Authentification 
   Route::controller(AuthAdminController::class)->prefix('auth-admin')->group(function () {
-    route::get('', 'listUser')->name('user.index');
+    route::get('', 'index')->name('user.index');
     // route::get('create', 'create')->name('user.create');
     route::post('store', 'store')->name('user.store');
-    route::get('edit/{id}', 'edit')->name('user.edit');
+    route::get('edit/{id}', 'editMyAccount')->name('user.edit'); // edit my account
+    route::get('editUser/{id}', 'editUser')->name('user.editUser'); // edit my account
+
     route::post('update/{id}', 'update')->name('user.update');
     route::post('destroy/{id}', 'destroy')->name('user.destroy');
     route::get('logout', 'logout')->name('user.logout');

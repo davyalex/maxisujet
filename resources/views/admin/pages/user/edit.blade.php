@@ -1,60 +1,140 @@
-@php
-    $msg_validation = ' Champs obligatoire';
-@endphp
-<!-- Modal with form -->
-<div class="modal fade" id="modalEdit{{$item['id']}}" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="formModal">Modification</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('user.update', $item['id']) }}" class="needs-validation" novalidate="" method="post"
-                enctype="multipart/form-data">
-                @csrf
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>userName</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="davyalex" name="username" value="{{$item['username']}}"
-                                required>
-                            <div class="invalid-feedback">
-                                {{ $msg_validation }}
-                            </div>
+@extends('admin.layouts.app')
+
+@section('title', 'Modifier un utilisateur')
+
+
+
+@section('css')
+    {{-- <link rel="stylesheet" href="{{ asset('admin/assets/bundles/jquery-selectric/selectric.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('admin/assets/bundles/select2/dist/css/select2.min.css') }}">
+@endsection
+
+@section('content')
+    <section class="section">
+        <div class="container mt-1">
+            <div class="row">
+                <div
+                    class="col-12 ">
+                    {{-- @if (session('user_auth'))
+                        @php
+                            $getData = Session::get('user_auth');
+                        @endphp
+
+                        <div class="alert alert-primary">
+                            <h5>Les informations de connexions du dernier utilisateur</h5>
+                            Email: {{ $getData['email'] }}
+                            <br> Mot de passe : {{ $getData['pwd'] }}
+
+                        </div>
+                    @endif --}}
+
+                    <div class="card card-primary">
+                        @include('admin.components.validationMessage')
+                        <div>
+
+                        </div>
+                        <div class="card-header">
+                            <h4>Modifier un utilisateur</h4>
+                        </div>
+                        <div class="card-body">
+                            <form class="needs-validation" novalidate="" method="POST"
+                                action="{{ route('user.update', $user['id']) }}">
+                                @csrf
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <label for="frist_name">Username</label>
+                                        <input id="frist_name" value="{{ $user['username'] }}" type="text"
+                                            class="form-control" name="username" autofocus required>
+                                        <div class="invalid-feedback">
+                                            Champs obligatoire
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="last_name">Email</label>
+                                        <input id="last_name" value="{{ $user['email'] }}" type="email"
+                                            class="form-control" name="email" required>
+                                        <div class="invalid-feedback">
+                                            Champs obligatoire
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <label for="last_name">Rôle</label>
+                                        <select class="form-control" name="role" id=""
+                                            required>
+                                            <option desabled value selected>Selectionner</option>
+                                            @foreach ($roles as $data)
+                                                <option value="{{ $data['name'] }}"
+                                                    {{ $user['roles'][0]['name'] == $data['name'] ? 'selected' : '' }}>
+                                                    {{ $data['name'] }} </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Champs obligatoire
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="email">Email</label>
+                                        <input id="email" value="{{ $user['email'] }}" type="email"
+                                            class="form-control" name="email" required>
+                                        <div class="invalid-feedback">
+                                            Champs obligatoire
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="password2" class="d-block">Role</label>
+                                        <select name="role" class="form-control select2" required>
+                                            <option disabled selected value>Choisir un role</option>
+                                            @if ($user->roles->containsStrict('id', $item['id'])) @selected(true) @endif
+                                            @foreach ($roles as $item)
+                                                <option value="{{ $item['name'] }}"
+                                                    {{ $item['name'] == $user['role'] ? 'selected' : '' }}>
+                                                    {{ $item['name'] }} </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Champs obligatoire
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+
+
+                                {{-- <div class="row">
+                                    <div class="form-group col-8">
+                                        <label for="password" class="d-block">Mot de passe (<small
+                                                class="text-danger">Entrer un nouveau mot de passe si vous souhaitez le
+                                                modifier </small>) </label>
+                                        <input id="password" type="password" class="form-control" name="password"
+                                            aria-autocomplete="none" autocomplete="off">
+
+                                    </div>
+
+                                    <div class="form-group col-4 my-auto">
+                                        @include('admin.components.hideshowpwd')
+
+                                    </div>
+                                </div> --}}
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                        Modifier
+                                    </button>
+                                </div>
+                            </form>
                         </div>
 
-                        <label>Email</label>
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="support@gmail.com"
-                                name="email" value="{{$item['email']}}" required>
-                            <div class="invalid-feedback">
-                                {{ $msg_validation }}
-                            </div>
-                        </div>
-
-                        <label>Role</label>
-                      
-                        <div class="input-group">
-                            <select style="width:600px" class="form-control" name="role" id="" required>
-                                <option desabled value selected>Selectionner</option>
-                                @foreach ($roles as $data)
-                                    <option value="{{ $data['name']}}" {{$item['roles'][0]['name']==$data['name'] ? 'selected' : ''}}> {{ $data['name'] }} </option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback">
-                                {{ $msg_validation }}
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <div class="card-footer text-right">
-                    <button type="submit" class="btn btn-primary">Valider</button>
-                </div>
-            </form>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+@endsection
+
+@section('script')
+    <script src="{{ asset('admin/assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script> --}}
+@endsection
